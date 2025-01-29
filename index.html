@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Police Department</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-image: url(https://wallpapercave.com/wp/wp4293569.png); /* Replace with a suitable background image URL */
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+        .login-container {
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+        }
+        .login-container h1 {
+            margin: 0;
+        }
+        .login-container input {
+            padding: 10px;
+            font-size: 18px;
+            border: none;
+            margin: 10px 0;
+            border-radius: 5px;
+            width: 80%;
+        }
+        .login-container button {
+            padding: 10px 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            background-color: #0078d4;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .login-container button:hover {
+            background-color: #005a9e;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Investigation Department</h1>
+        <p>Enter your (team)name to login</p>
+        <input type="text" id="nameInput" placeholder="Your Name">
+        <button onclick="submitName()">Login</button>
+    </div>
+    <script>
+        function submitName() {
+            const name = document.getElementById('nameInput').value;
+            if (name) {
+                localStorage.setItem('username', name);
+                localStorage.setItem('startTime', Date.now());
+                window.location.href = 'welcome.html';
+            } else {
+                alert('Please enter your name.');
+            }
+        }
+    </script>
+</body>
+</html>

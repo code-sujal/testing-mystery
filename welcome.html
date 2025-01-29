@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome - Police Department</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-image: url(https://cdn.wallpapersafari.com/37/48/wEcgWaH.webp); /* Add your image URL here */
+            background-size: cover; /* Makes the background cover the entire page */
+            background-position: center; /* Centers the background image */
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: white;
+        }
+        header {
+            background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent header background */
+            padding: 10px;
+            text-align: center;
+            border-radius: 0 0 15px 15px;
+        }
+        header h1 {
+            margin: 0;
+        }
+        .desktop {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            border-radius: 15px;
+            margin: 20px;
+        }
+        .icons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            align-items: flex-start;
+            width: 100%;
+        }
+        .icon {
+            width: 100px;
+            text-align: center;
+            margin: 10px;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: transform 0.3s;
+        }
+        .icon img {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+        }
+        .icon:hover {
+            transform: scale(1.05);
+        }
+        .taskbar {
+            background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent taskbar background */
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            border-radius: 15px 15px 0 0;
+        }
+        .taskbar p {
+            margin: 0;
+        }
+        .start-menu {
+            background-color: rgba(30, 30, 30, 0.9);
+            color: white;
+            position: absolute;
+            bottom: 60px;
+            left: 10px;
+            width: 250px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            display: none;
+            flex-direction: column;
+            padding: 10px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+        .start-menu button {
+            background-color: #333;
+            color: white;
+            border: none;
+            padding: 10px;
+            text-align: left;
+            width: 100%;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+            border-radius: 5px;
+            margin: 5px 0;
+        }
+        .start-menu button img {
+            margin-right: 10px;
+            width: 20px;
+            height: 20px;
+        }
+        .start-menu button:hover {
+            background-color: #555;
+        }
+        .start-btn {
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        .start-btn img {
+            width: 30px;
+            height: 30px;
+        }
+        .taskbar-icons {
+            display: flex;
+            gap: 10px;
+        }
+        .taskbar-icons .icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 5px;
+            transition: transform 0.3s;
+        }
+        .taskbar-icons .icon img {
+            width: 100%;
+            height: 100%;
+        }
+        .taskbar-icons .icon:hover {
+            transform: scale(1.1);
+        }
+        #timer {
+            font-size: 1.5em;
+            color: red;
+        }
+        .greeting {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Unauthorized Access - Police Department Case Files</h1>
+    </header>
+    <div class="desktop">
+        <div class="greeting">
+            <h2 id="greeting">Welcome, Vigilante</h2>
+            <p class="popup">WARNING: Unauthorized access detected. System will shut down in <span id="timer">60:00</span>. Proceed with caution.</p>
+        </div>
+        <div class="icons">
+            <div class="icon" onclick="openFolder('This PC')">
+                <img src="https://www.freeiconspng.com/thumbs/computer-icon/computer-icon--vista-hardware-devices-iconset--icons-land-17.png" alt="This PC">
+                <p>This PC</p>
+            </div>
+            <div class="icon" onclick="openFolder('Recycle Bin')">
+                <img src="png-transparent-recycle-bin-logo-trash-recycling-bin-file-deletion-computer-file-recycle-bin-glass-recycling-waste-containment-thumbnail-removebg-preview.png" alt="Recycle Bin">
+                <p>Recycle Bin</p>
+            </div>
+            <div class="icon" onclick="openFolder('Case Files')">
+                <img src="https://cdn-icons-png.flaticon.com/512/3767/3767084.png" alt="Case Files">
+                <p>Case Files</p>
+            </div>
+            <div class="icon" onclick="openFolder('Evidence')">
+                <img src="https://cdn-icons-png.flaticon.com/512/3767/3767084.png" alt="Evidence">
+                <p>Evidence</p>
+            </div>
+            <div class="icon" onclick="openPuzzle()">
+                <img src="https://cdn-icons-png.flaticon.com/512/3767/3767084.png" alt="Suspects">
+                <p>Suspects</p>
+            </div>
+        </div>
+    </div>
+    <div class="taskbar">
+        <button class="start-btn" onclick="toggleStartMenu()">
+            <img src="https://mailmeteor.com/logos/assets/PNG/Microsoft_Logo_512px.png" alt="Start">
+        </button>
+        <div class="taskbar-icons">
+            <div class="icon" onclick="openApp('Radar')">
+                <img src="radar.png" alt="Radar">
+            </div>
+            <div class="icon" onclick="openApp('Track Phone')">
+                <img src="track.png" alt="Track Phone">
+            </div>
+            <div class="icon" onclick="openApp('Investigation Files')">
+                <img src="https://cdn-icons-png.flaticon.com/512/3767/3767084.png" alt="Investigation Files">
+            </div>
+        </div>
+        <div class="start-menu" id="startMenu">
+            <button onclick="openFolder('Settings')">
+                <img src="https://files.softicons.com/download/toolbar-icons/stainless-applications-icons-by-iconleak/ico/9.ico" alt="Settings"> <!-- Replace with a suitable icon URL -->
+                Settings
+            </button>
+            <button onclick="openFolder('Documents')">
+                <img src="https://cdn-icons-png.flaticon.com/512/3767/3767084.png" alt="Documents"> <!-- Replace with a suitable icon URL -->
+                Documents
+            </button>
+            <button onclick="openFolder('Pictures')">
+                <img src="picture.png" alt="Pictures"> <!-- Replace with a suitable icon URL -->
+                Pictures
+            </button>
+            <button onclick="openFolder('Satellite Connectivity')">
+                <img src="https://cdn-icons-png.flaticon.com/512/1042/1042820.png" alt="Satellite Connectivity"> <!-- Replace with a suitable icon URL -->
+                Satellite Connectivity
+            </button>
+            <button onclick="openFolder('Vehicle Tracking')">
+                <img src="https://cdn-icons-png.flaticon.com/512/3466/3466202.png" alt="Vehicle Tracking"> <!-- Replace with a suitable icon URL -->
+                Vehicle Tracking
+            </button>
+        </div>
+        <p id="timeDisplay"></p>
+    </div>
+
+    <!-- Puzzle Modal -->
+    <!-- Puzzle Modal -->
+<div class="modal fade" id="puzzleModal" tabindex="-1" aria-labelledby="puzzleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="puzzleModalLabel">Solve the Puzzle</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p style="color: black;"><strong>Riddle:</strong> I speak without a mouth and hear without ears. I have no body, but I come alive with wind. What am I?</p>
+                <input type="text" id="puzzleAnswer" class="form-control" placeholder="Enter your answer here">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="checkPuzzle()">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+   <!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const name = localStorage.getItem('username');
+        const startTime = localStorage.getItem('startTime');
+        const timeLimit = 60 * 60 * 1000; // 1 hour in milliseconds
+
+        if (name) {
+            document.getElementById('greeting').textContent = `Welcome, ${name}`;
+        } else {
+            const username = prompt("Enter your username:");
+            if (username) {
+                localStorage.setItem('username', username);
+                localStorage.setItem('startTime', Date.now());
+                document.getElementById('greeting').textContent = `Welcome, ${username}`;
+            }
+        }
+
+        function updateTimer() {
+            const elapsedTime = Date.now() - parseInt(localStorage.getItem('startTime'), 10);
+            const remainingTime = Math.max(timeLimit - elapsedTime, 0);
+            const minutes = Math.floor(remainingTime / 60000);
+            const seconds = Math.floor((remainingTime % 60000) / 1000);
+            document.getElementById('timer').textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+
+            if (remainingTime <= 0) {
+                alert("Session expired. Please log in again.");
+                localStorage.removeItem('username');
+                localStorage.removeItem('startTime');
+                location.reload();
+            }
+        }
+
+        setInterval(updateTimer, 1000);
+
+        function updateTimeDisplay() {
+            const now = new Date();
+            document.getElementById('timeDisplay').textContent = now.toLocaleTimeString();
+        }
+        setInterval(updateTimeDisplay, 1000);
+
+        window.toggleStartMenu = function() {
+            const startMenu = document.getElementById('startMenu');
+            startMenu.style.display = startMenu.style.display === 'flex' ? 'none' : 'flex';
+        };
+
+        window.openFolder = function(folderName) {
+            alert(`Opening ${folderName}`);
+        };
+
+        window.openApp = function(appName) {
+            alert(`Launching ${appName}`);
+        };
+
+        window.openPuzzle = function() {
+            $('#puzzleModal').modal('show');
+        };
+
+        
+    });
+    // Function to show wave loader and open folder after 3 seconds
+    window.checkPuzzle = function() {
+    const answer = document.getElementById('puzzleAnswer').value.toLowerCase();
+    if (answer === "echo") {
+        // Show loading page
+        document.body.innerHTML += `
+            <div id="loadingPage" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); color: white; display: flex; justify-content: center; align-items: center; z-index: 9999;">
+                <div class="loading-content">
+                    <h2>Accessing Suspects...</h2>
+                    <div class="spinner-border text-light" role="status"></div>
+                </div>
+            </div>
+        `;
+
+        // Hide the puzzle modal
+        $('#puzzleModal').modal('hide');
+
+        // After 3 seconds, open the folder
+        setTimeout(function() {
+            openFolder('Suspects');
+            document.getElementById('loadingPage').remove();  // Remove the loading screen
+        }, 3000);
+    } else {
+        alert("Incorrect answer. Try again.");
+    }
+};
+
+
+
+    
+
+</script>
+</body>
+</html>
