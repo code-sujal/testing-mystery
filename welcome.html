@@ -9,7 +9,7 @@
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-image: url(https://cdn.wallpapersafari.com/37/48/wEcgWaH.webp); /* Add your image URL here */
+            background-image: url(bg.jpg); /* Add your image URL here */
             background-size: cover; /* Makes the background cover the entire page */
             background-position: center; /* Centers the background image */
             margin: 0;
@@ -152,35 +152,100 @@
             border-radius: 10px;
             backdrop-filter: blur(10px);
         }
+        .chapter-objectives {
+            position: absolute;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+        .chapter-objectives h3 {
+            margin: 0 0 10px 0;
+        }
+        .chapter-objectives ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        .chapter-objectives li {
+            margin: 5px 0;
+        }
+
+        #emailWindow {
+            position: absolute;
+            width: 400px;
+            height: 300px;
+            background-color: #fff;
+            border: 1px solid #000;
+            z-index: 100;
+            display: none; /* Initially hidden */
+        }
+        #emailHeader {
+            background-color: #2196F3;
+            color: #fff;
+            padding: 10px;
+            cursor: move;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        #emailContent {
+            padding: 10px;
+            height: calc(100% - 40px);
+            overflow-y: auto;
+        }
+        .minimize-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
-    
+    <div id="emailWindow">
+        <div id="emailHeader">
+            <span>Email Application</span>
+            <button class="minimize-btn" onclick="toggleMinimize()">_</button>
+        </div>
+        <div id="emailContent">
+            <!-- Email application content goes here -->
+            <p>Welcome to your email inbox.</p>
+        </div>
+    </div>
     <div class="desktop">
         <div class="greeting">
             <h2 id="greeting">Welcome, Vigilante</h2>
             <p class="popup">WARNING: Unauthorized access detected. System will shut down in <span id="timer">60:00</span>. Proceed with caution.</p>
         </div>
         <div class="icons">
-            <div class="icon" onclick="openFolder('This PC')">
-                <img src="https://www.freeiconspng.com/thumbs/computer-icon/computer-icon--vista-hardware-devices-iconset--icons-land-17.png" alt="This PC">
-                <p>This PC</p>
+            <div class="icon" onclick="openFolder('Email')">
+                <a href="email.html"><img src="email.png" alt="This PC"></a>
+                <p>Email</p>
             </div>
-            <div class="icon" onclick="openFolder('Recycle Bin')">
-                <img src="png-transparent-recycle-bin-logo-trash-recycling-bin-file-deletion-computer-file-recycle-bin-glass-recycling-waste-containment-thumbnail-removebg-preview.png" alt="Recycle Bin">
-                <p>Recycle Bin</p>
+            <div class="icon" onclick="openFolder('Chat')">
+                <img src="chat.png" alt="Recycle Bin">
+                <p>Chat</p>
             </div>
             <div class="icon" onclick="openFolder('Case Files')">
                 <img src="https://cdn-icons-png.flaticon.com/512/3767/3767084.png" alt="Case Files">
-                <p>Case Files</p>
+                <p>Files</p>
             </div>
             <div class="icon" onclick="openFolder('Evidence')">
-                <img src="https://cdn-icons-png.flaticon.com/512/3767/3767084.png" alt="Evidence">
-                <p>Evidence</p>
+                <img src="browser.png" alt="Evidence">
+                <p>Browser</p>
             </div>
             <div class="icon" onclick="openPuzzle()">
-                <img src="https://cdn-icons-png.flaticon.com/512/3767/3767084.png" alt="Suspects">
-                <p>Suspects</p>
+                <img src="png-transparent-recycle-bin-logo-trash-recycling-bin-file-deletion-computer-file-recycle-bin-glass-recycling-waste-containment-thumbnail-removebg-preview.png" alt="Suspects">
+                <p>Recycle Bin</p>
+            </div>
+            <div class="icon" onclick="openPuzzle()">
+                <img src="https://cdn-icons-png.flaticon.com/512/9241/9241732.png" alt="Suspects">
+                <p>CCTV</p>
             </div>
         </div>
     </div>
@@ -201,146 +266,147 @@
         </div>
         <div class="start-menu" id="startMenu">
             <button onclick="openFolder('Settings')">
-                <img src="https://files.softicons.com/download/toolbar-icons/stainless-applications-icons-by-iconleak/ico/9.ico" alt="Settings"> <!-- Replace with a suitable icon URL -->
+                <img src="https://files.softicons.com/download/toolbar-icons/stainless-applications-icons-by-iconleak/ico/9.ico" alt="Settings">
                 Settings
             </button>
             <button onclick="openFolder('Documents')">
-                <img src="https://cdn-icons-png.flaticon.com/512/3767/3767084.png" alt="Documents"> <!-- Replace with a suitable icon URL -->
+                <img src="https://cdn-icons-png.flaticon.com/512/3767/3767084.png" alt="Documents">
                 Documents
             </button>
             <button onclick="openFolder('Pictures')">
-                <img src="picture.png" alt="Pictures"> <!-- Replace with a suitable icon URL -->
+                <img src="picture.png" alt="Pictures">
                 Pictures
             </button>
             <button onclick="openFolder('Satellite Connectivity')">
-                <img src="https://cdn-icons-png.flaticon.com/512/1042/1042820.png" alt="Satellite Connectivity"> <!-- Replace with a suitable icon URL -->
+                <img src="https://cdn-icons-png.flaticon.com/512/1042/1042820.png" alt="Satellite Connectivity">
                 Satellite Connectivity
             </button>
             <button onclick="openFolder('Vehicle Tracking')">
-                <img src="https://cdn-icons-png.flaticon.com/512/3466/3466202.png" alt="Vehicle Tracking"> <!-- Replace with a suitable icon URL -->
+                <img src="https://cdn-icons-png.flaticon.com/512/3466/3466202.png" alt="Vehicle Tracking">
                 Vehicle Tracking
             </button>
         </div>
         <p id="timeDisplay"></p>
     </div>
 
+    <!-- Chapter Objectives Section -->
+    <div class="chapter-objectives">
+        <h3>Chapter 1  Objectives:</h3>
+        <ul>
+            <li>Open Email,and get clues!</li>
+            <li>With all the clues from email, switch to other app</li>
+            <li>This chapter will be completed,once you obtain email password of victim.(Keep that safe it would be used in next chapter)</li>
+        </ul>
+    </div>
+
     <!-- Puzzle Modal -->
-    <!-- Puzzle Modal -->
-<div class="modal fade" id="puzzleModal" tabindex="-1" aria-labelledby="puzzleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="puzzleModalLabel">Solve the Puzzle</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p style="color: black;"><strong>Riddle:</strong> I speak without a mouth and hear without ears. I have no body, but I come alive with wind. What am I?</p>
-                <input type="text" id="puzzleAnswer" class="form-control" placeholder="Enter your answer here">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="checkPuzzle()">Submit</button>
+    <div class="modal fade" id="puzzleModal" tabindex="-1" aria-labelledby="puzzleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="puzzleModalLabel">Solve the Puzzle</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p style="color: black;"><strong>Riddle:</strong> I speak without a mouth and hear without ears. I have no body, but I come alive with wind. What am I?</p>
+                    <input type="text" id="puzzleAnswer" class="form-control" placeholder="Enter your answer here">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="checkPuzzle()">Submit</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const name = localStorage.getItem('username');
+            const startTime = localStorage.getItem('startTime');
+            const timeLimit = 60 * 60 * 1000; // 1 hour in milliseconds
 
-   <!-- Bootstrap JS and dependencies -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const name = localStorage.getItem('username');
-        const startTime = localStorage.getItem('startTime');
-        const timeLimit = 60 * 60 * 1000; // 1 hour in milliseconds
-
-        if (name) {
-            document.getElementById('greeting').textContent = `Welcome, ${name}`;
-        } else {
-            const username = prompt("Enter your username:");
-            if (username) {
-                localStorage.setItem('username', username);
-                localStorage.setItem('startTime', Date.now());
-                document.getElementById('greeting').textContent = `Welcome, ${username}`;
+            if (name) {
+                document.getElementById('greeting').textContent = `Welcome, ${name}`;
+            } else {
+                const username = prompt("Enter your username:");
+                if (username) {
+                    localStorage.setItem('username', username);
+                    localStorage.setItem('startTime', Date.now());
+                    document.getElementById('greeting').textContent = `Welcome, ${username}`;
+                }
             }
-        }
 
-        function updateTimer() {
-            const elapsedTime = Date.now() - parseInt(localStorage.getItem('startTime'), 10);
-            const remainingTime = Math.max(timeLimit - elapsedTime, 0);
-            const minutes = Math.floor(remainingTime / 60000);
-            const seconds = Math.floor((remainingTime % 60000) / 1000);
-            document.getElementById('timer').textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            function updateTimer() {
+                const elapsedTime = Date.now() - parseInt(localStorage.getItem('startTime'), 10);
+                const remainingTime = Math.max(timeLimit - elapsedTime, 0);
+                const minutes = Math.floor(remainingTime / 60000);
+                const seconds = Math.floor((remainingTime % 60000) / 1000);
+                document.getElementById('timer').textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
 
-            if (remainingTime <= 0) {
-                alert("Session expired. Please log in again.");
-                localStorage.removeItem('username');
-                localStorage.removeItem('startTime');
-                location.reload();
+                if (remainingTime <= 0) {
+                    alert("Session expired. Please log in again.");
+                    localStorage.removeItem('username');
+                    localStorage.removeItem('startTime');
+                    location.reload();
+                }
             }
-        }
 
-        setInterval(updateTimer, 1000);
+            setInterval(updateTimer, 1000);
 
-        function updateTimeDisplay() {
-            const now = new Date();
-            document.getElementById('timeDisplay').textContent = now.toLocaleTimeString();
-        }
-        setInterval(updateTimeDisplay, 1000);
+            function updateTimeDisplay() {
+                const now = new Date();
+                document.getElementById('timeDisplay').textContent = now.toLocaleTimeString();
+            }
+            setInterval(updateTimeDisplay, 1000);
 
-        window.toggleStartMenu = function() {
-            const startMenu = document.getElementById('startMenu');
-            startMenu.style.display = startMenu.style.display === 'flex' ? 'none' : 'flex';
-        };
+            window.toggleStartMenu = function() {
+                const startMenu = document.getElementById('startMenu');
+                startMenu.style.display = startMenu.style.display === 'flex' ? 'none' : 'flex';
+            };
 
-        window.openFolder = function(folderName) {
-            alert(`Opening ${folderName}`);
-        };
+            window.openFolder = function(folderName) {
+                alert(`Opening ${folderName}`);
+            };
 
-        window.openApp = function(appName) {
-            alert(`Launching ${appName}`);
-        };
+            window.openApp = function(appName) {
+                alert(`Launching ${appName}`);
+            };
 
-        window.openPuzzle = function() {
-            $('#puzzleModal').modal('show');
-        };
+            window.openPuzzle = function() {
+                $('#puzzleModal').modal('show');
+            };
+
+            window.checkPuzzle = function() {
+                const answer = document.getElementById('puzzleAnswer').value.toLowerCase();
+                if (answer === "echo") {
+                    // Show loading page
+                    document.body.innerHTML += `
+                        <div id="loadingPage" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); color: white; display: flex; justify-content: center; align-items: center; z-index: 9999;">
+                            <div class="loading-content">
+                                <h2>Accessing Suspects...</h2>
+                                <div class="spinner-border text-light" role="status"></div>
+                            </div>
+                        </div>
+                    `;
+
+                    // After 3 seconds, open the folder
+                    setTimeout(function() {
+                        openFolder('Suspects');
+                        document.getElementById('loadingPage').remove();  // Remove the loading screen
+                    }, 3000);
+                } else {
+                    alert("Incorrect answer. Try again.");
+                }
+            };
+        });
 
         
-    });
-    // Function to show wave loader and open folder after 3 seconds
-    window.checkPuzzle = function() {
-    const answer = document.getElementById('puzzleAnswer').value.toLowerCase();
-    if (answer === "echo") {
-        // Show loading page
-        document.body.innerHTML += `
-            <div id="loadingPage" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); color: white; display: flex; justify-content: center; align-items: center; z-index: 9999;">
-                <div class="loading-content">
-                    <h2>Accessing Suspects...</h2>
-                    <div class="spinner-border text-light" role="status"></div>
-                </div>
-            </div>
-        `;
-
-        
-
-        // After 3 seconds, open the folder
-        setTimeout(function() {
-            openFolder('Suspects');
-            document.getElementById('loadingPage').remove();  // Remove the loading screen
-        }, 3000);
-    } else {
-        alert("Incorrect answer. Try again.");
-    }
-};
-
-
-
-    
-
-</script>
+    </script>
 </body>
 </html>

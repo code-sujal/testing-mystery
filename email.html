@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detective Email App</title>
+    <link rel="stylesheet" href="email.css">
+</head>
+<body>
+
+    <!-- 📩 Email Application Container -->
+    <div class="email-app">
+
+        <!-- 📌 Minimal Sidebar -->
+        <div class="sidebar">
+            <h2>Mailbox</h2>
+            <ul id="folders">
+                <li class="folder active" data-folder="Inbox">
+                    <img src="inbox.png" alt="Inbox"> Inbox
+                </li>
+                <li class="folder" data-folder="Sent">
+                    <img src="sent.png" alt="Sent"> Sent
+                </li>
+                <li class="folder" data-folder="Drafts">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1060/1060379.png" alt="Drafts"> Drafts
+                </li>
+                <li class="folder" data-folder="Spam">
+                    <img src="https://cdn-icons-png.flaticon.com/512/6410/6410052.png" alt="Spam"> Spam
+                </li>
+                <li class="folder" data-folder="Trash">
+                    <img src="https://cdn-icons-png.flaticon.com/512/4021/4021663.png" alt="Trash"> Trash
+                </li>
+            </ul>
+        </div>
+
+        <!-- 📨 Main Email Section -->
+        <div class="main-content">
+            <!-- 🔍 Search Bar -->
+            <div class="search-container">
+                <input type="text" id="search" placeholder="Search emails...">
+                <div id="search-suggestions" class="suggestions"></div>
+            </div>
+
+            <!-- 📂 Email Lists -->
+            <div class="email-list-container">
+                <h2 id="folder-title">Inbox</h2>  <!-- Dynamically Updated Folder Title -->
+                <div id="email-list"></div>
+            </div>
+        </div>
+
+        <!-- 📜 Email Detail View -->
+        <div id="email-detail" class="email-detail">
+            <button id="close-btn">
+                <img src="https://cdn-icons-png.flaticon.com/512/9068/9068678.png" alt="Close">
+            </button>
+        
+            <!-- 📧 Sender Info -->
+            <div class="email-header">
+                <img id="sender-image" src="" alt="Sender Image">
+                <div class="sender-info">
+                    <h3 id="sender-name"></h3>
+                    <p id="sender-email"></p>
+                    <p id="sent-date"></p>
+                </div>
+            </div>
+
+            <p id="email-date-time" class="email-date-time"></p>
+        
+            <!-- ✉️ Email Content -->
+            <h2 id="email-subject"></h2>
+            <p id="email-body"></p>
+        
+            <!-- 📎 Attachments -->
+            <div id="email-attachments" class="attachments"></div>
+        </div>
+        
+    </div>
+
+    <script src="email.js"></script>
+</body>
+</html>

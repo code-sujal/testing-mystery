@@ -1,0 +1,244 @@
+/* General Reset */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    background: #f4f4f4;
+}
+
+/* Email App Container */
+.email-app {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 240px;
+    background: #2c3e50;
+    color: white;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.sidebar h2 {
+    font-size: 18px;
+    margin-bottom: 25px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
+}
+
+/* Sidebar Navigation */
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    width: 100%;
+}
+
+/* Sidebar List Items */
+.sidebar ul li {
+    display: flex;
+    align-items: center;
+    padding: 15px 18px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+    border-radius: 8px;
+    margin-bottom: 12px; /* More spacing */
+}
+
+.sidebar ul li img {
+    width: 20px;
+    height: 20px;
+    margin-right: 14px;
+}
+
+/* Hover & Active Effects */
+.sidebar ul li:hover {
+    background-color: #34495e;
+    transform: translateX(5px);
+}
+
+.sidebar ul li.active {
+    background-color: #1abc9c;
+    font-weight: bold;
+    transform: translateX(5px);
+}
+
+/* Main Content */
+.main-content {
+    width: 80%;
+    padding: 20px;
+    position: relative;
+}
+
+/* Search Bar */
+#search {
+    width: 80%;  /* Reduced width for a compact design */
+    padding: 10px 15px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    background: #ecf0f1;
+    outline: none;
+    transition: background 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    margin: 0 auto; /* Centering the search bar */
+    display: block; /* Ensures centering works */
+}
+
+/* Hover & Focus Effects */
+#search:hover {
+    background: #dde4e8;
+}
+
+#search:focus {
+    background: white;
+    box-shadow: 0 0 8px rgba(44, 62, 80, 0.2);
+}
+
+/* Search Suggestions */
+#search-suggestions {
+    background: white;
+    border: 1px solid #ccc;
+    width: 100%;
+    display: none;
+    position: absolute;
+    z-index: 10;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+#search-suggestions div {
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #ddd;
+}
+
+#search-suggestions div:hover {
+    background: #f5f5f5;
+}
+
+/* Email List */
+.email-list-container {
+    margin-top: 10px;
+}
+
+#email-list {
+    margin-top: 10px;
+}
+
+.email {
+    background: white;
+    border-bottom: 1px solid #ccc;
+    padding: 12px;
+    cursor: pointer;
+    transition: background 0.2s ease-in-out;
+    border-radius: 5px;
+}
+
+.email:hover {
+    background: #e0e0e0;
+}
+
+/* Highlighted Search Text */
+.highlight {
+    background: yellow;
+    font-weight: bold;
+    color: black;
+}
+
+/* Email Detail View */
+.email-detail {
+    background: white;
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    display: none;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Show email detail view */
+.email-detail.show {
+    display: block;
+    animation: slideIn 0.3s ease-in-out;
+}
+
+/* Close Button */
+.close-btn {
+    background: red;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    cursor: pointer;
+    float: right;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.close-btn:hover {
+    background: darkred;
+}
+
+/* Attachments */
+#email-attachments {
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+#email-attachments a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#email-attachments a:hover {
+    text-decoration: underline;
+}
+
+/* Folder Title */
+#folder-title {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+/* Animation for Email Detail View */
+@keyframes slideIn {
+    from {
+        transform: translate(-50%, -10%);
+        opacity: 0;
+    }
+    to {
+        transform: translate(-50%, 0);
+        opacity: 1;
+    }
+}
+
+#close-btn {
+    background: none;
+    border: none;
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    cursor: pointer;
+    padding: 5px;
+}
+
+#close-btn img {
+    width: 24px; /* Adjust size */
+    height: 24px;
+    transition: opacity 0.3s ease-in-out;
+}
+
+#close-btn img:hover {
+    opacity: 0.7; /* Fade effect on hover */
+}
