@@ -153,16 +153,16 @@
             backdrop-filter: blur(10px);
         }
         .chapter-objectives {
-            position: absolute;
-            bottom: 100px;
-            left: 50%;
-            transform: translateX(-50%);
-            text-align: center;
-            background-color: rgba(0, 0, 0, 0.5);
-            padding: 10px;
-            border-radius: 10px;
-            backdrop-filter: blur(10px);
-        }
+    position: absolute;
+    top: 35px;
+    right: 80px; /* Adjusted the right value to shift it more towards the left */
+    width: 200px;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 10px;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    color: white;
+}
         .chapter-objectives h3 {
             margin: 0 0 10px 0;
         }
@@ -224,11 +224,11 @@
         </div>
         <div class="icons">
             <div class="icon" onclick="openFolder('Email')">
-                <a href="email.html"><img src="email.png" alt="This PC"></a>
+                <a href="email.html" target="_blank"><img src="email.png" alt="This PC"></a>
                 <p>Email</p>
             </div>
             <div class="icon" onclick="openFolder('Chat')">
-                <img src="chat.png" alt="Recycle Bin">
+                <img src="chat.png" alt="Chat">
                 <p>Chat</p>
             </div>
             <div class="icon" onclick="openFolder('Case Files')">
@@ -291,11 +291,9 @@
 
     <!-- Chapter Objectives Section -->
     <div class="chapter-objectives">
-        <h3>Chapter 1  Objectives:</h3>
+        <h3>Chapter 1 Objectives:</h3>
         <ul>
-            <li>Open Email,and get clues!</li>
-            <li>With all the clues from email, switch to other app</li>
-            <li>This chapter will be completed,once you obtain email password of victim.(Keep that safe it would be used in next chapter)</li>
+            <a href="https://docs.google.com/document/d/1eqrg52hw2Gznl6m036fLGDfI8iLA2IF85XakTLfKmcY/edit?usp=sharing" target="_blank">Click to view chapter 1 objectives</a>
         </ul>
     </div>
 
@@ -371,7 +369,7 @@
             };
 
             window.openFolder = function(folderName) {
-                alert(`Opening ${folderName}`);
+                
             };
 
             window.openApp = function(appName) {
@@ -405,8 +403,6 @@
                 }
             };
         });
-
-        
     </script>
 </body>
 </html>

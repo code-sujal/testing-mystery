@@ -144,6 +144,59 @@ body {
     background: #e0e0e0;
 }
 
+.email-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 10px;
+}
+
+.email-header img {
+    width: 40px; /* Adjust the size as needed */
+    height: 40px; /* Adjust the size as needed */
+    border-radius: 50%; /* Makes the image circular */
+    margin-right: 10px; /* Adds some space between the image and the text */
+    object-fit: cover; /* Ensures the image covers the area without distortion */
+}
+
+/* Profile Info */
+.profile-info {
+    position: absolute;
+    top: 20px;
+    right: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.profile-info img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    
+}
+
+.profile-info span {
+    font-size: 16px;
+}
+
+.sender-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.sender-info h3 {
+    margin: 0;
+    font-size: 16px;
+}
+
+.sender-info p {
+    margin: 2px 0;
+    font-size: 14px;
+    color: #666;
+}
+
 /* Highlighted Search Text */
 .highlight {
     background: yellow;
