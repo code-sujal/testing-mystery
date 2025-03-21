@@ -193,8 +193,7 @@
 
 <script>
     const correctPassword = "secret123"; // Set your desired password here
-    const storageKey = "mystery_game_main_tab";
-    const channel = new BroadcastChannel("mystery_game_channel");
+    const sessionKey = "mystery_game_active";
 
     function disableForm() {
         document.getElementById("nameInput").disabled = true;
@@ -213,32 +212,27 @@
     }
 
     function handleDuplicateTabs() {
-        const existingTab = localStorage.getItem(storageKey);
-
-        if (existingTab) {
-            // Disable form if another tab is active
-            disableForm();
+        if (sessionStorage.getItem(sessionKey)) {
+            disableForm(); // If another tab is already open, disable form inputs
         } else {
-            // Set this tab as the main tab
-            localStorage.setItem(storageKey, "true");
+            sessionStorage.setItem(sessionKey, "active"); // Mark this tab as active
             enableForm();
         }
 
-        // Communicate across tabs
-        channel.postMessage("check");
-
-        channel.onmessage = (event) => {
-            if (event.data === "check") {
-                // Notify the new tab that an active tab exists
-                channel.postMessage("already_open");
-            } else if (event.data === "already_open") {
-                disableForm(); // Block form inputs in the duplicate tab
+        // Listen for changes in sessionStorage (when a new tab opens)
+        window.addEventListener("storage", (event) => {
+            if (event.key === sessionKey) {
+                if (event.newValue) {
+                    disableForm(); // If a new tab opens, disable form in the duplicate tab
+                } else {
+                    enableForm(); // If an active tab closes, re-enable the form in another tab
+                }
             }
-        };
+        });
 
-        // Remove session info on tab close
+        // Remove session key on tab close
         window.addEventListener("beforeunload", () => {
-            localStorage.removeItem(storageKey);
+            sessionStorage.removeItem(sessionKey);
         });
     }
 
