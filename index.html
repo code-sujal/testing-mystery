@@ -192,204 +192,107 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 <script>
-    const correctPassword = "secret123"; // Common password for all users
+    const correctPassword = "secret123"; // Same password for all users
 
-// =========================[ COOKIE FUNCTIONS ]======================== //
-// Function to set a cookie with expiration
-function setCookie(name, value, hours) {
-    let expires = "";
-    if (hours) {
-        let date = new Date();
-        date.setTime(date.getTime() + (hours * 60 * 60 * 1000)); // Convert hours to milliseconds
-        expires = "; expires=" + date.toUTCString();
-    }
-    document.cookie = name + "=" + value + expires + "; path=/";
-}
-
-// Function to get a cookie by name
-function getCookie(name) {
-    let nameEQ = name + "=";
-    let cookies = document.cookie.split(';');
-    for (let i = 0; i < cookies.length; i++) {
-        let c = cookies[i].trim();
-        if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
-    }
-    return null;
-}
-
-// =========================[ LOCAL STORAGE FUNCTIONS ]======================== //
-// Initialize user database (only once)
-function initializeUserDatabase() {
-    let existingData = localStorage.getItem('userDatabase');
-
-    if (!existingData) {
-        console.log("Initializing user database..."); // Debugging
-
-        const defaultUserDatabase = {
-            "ShadowSleuth": false,
-            "CodeCracker": false,
-            "MysteryMaven": false,
-            "NightHawk": false,
-            "CipherChaser": false,
-            "HiddenProwler": false,
-            "SecretSpy": false,
-            "DarkWhisper": false,
-            "EnigmaSeeker": false,
-            "CloakDagger": false,
-            "CovertGaze": false,
-            "PhantomDetective": false,
-            "CrimsonCode": false,
-            "BlacklightHunter": false,
-            "DaggerEye": false,
-            "SilhouetteTracker": false,
-            "TruthUnveiler": false,
-            "ClandestineMind": false,
-            "VeilBreaker": false,
-            "TwilightAgent": false,
-            "FogShrouded": false,
-            "PuzzleSolver": false,
-            "DeepEnigma": false,
-            "NoirPursuer": false,
-            "LurkingShadow": false,
-            "EchoFinder": false,
-            "GrayFox": false,
-            "ObsidianEye": false,
-            "ChameleonCloak": false,
-            "RavenWatcher": false,
-            "StealthWarden": false,
-            "SilentCipher": false,
-            "UnmaskedPhantom": false,
-            "SpyglassHunter": false,
-            "ClockworkAgent": false,
-            "OmenDecoder": false,
-            "TruthTracker": false,
-            "WhisperFox": false,
-            "SmokeTracer": false,
-            "ShroudSeeker": false,
-            "KeyFinder": false,
-            "CipherSpecter": false,
-            "HiddenAce": false,
-            "RavenPuzzle": false,
-            "NoirShadow": false,
-            "DeepTracker": false,
-            "MaskedRiddle": false,
-            "UnseenHawk": false,
-            "ShadeDecoder": false,
-            "GhostKey": false
-        };
-
-        localStorage.setItem('userDatabase', JSON.stringify(defaultUserDatabase));
-    } else {
-        console.log("User database already exists.");
-    }
-}
-
-// Initialize database on script load
-initializeUserDatabase();
-
-// =========================[ LOGIN SYSTEM ]======================== //
-function submitCredentials() {
-    const username = document.getElementById('nameInput').value.trim();
-    const password = document.getElementById('passwordInput').value;
-
-    if (!username || !password) {
-        alert("Please enter both username and password.");
-        return;
+    // Function to get a cookie value
+    function getCookie(name) {
+        const cookieString = document.cookie.split("; ").find(row => row.startsWith(name + "="));
+        return cookieString ? cookieString.split("=")[1] : null;
     }
 
-    // Retrieve user database
-    let database = JSON.parse(localStorage.getItem('userDatabase') || "{}");
-    console.log("Checking username:", username);
-
-    if (!(username in database)) {
-        alert("Invalid username. Please check your credentials.");
-        return;
+    // Function to set a cookie
+    function setCookie(name, value, days) {
+        const expirationDate = new Date();
+        expirationDate.setTime(expirationDate.getTime() + (days * 24 * 60 * 60 * 1000));
+        document.cookie = `${name}=${value}; expires=${expirationDate.toUTCString()}; path=/`;
     }
 
-    // Check if the user already logged in (via Cookie)
-    if (getCookie(username)) {
-        alert(`Username "${username}" has already been used. You are eliminated!`);
-        window.close(); // Close tab if user is already logged in
-        return;
+    // Function to delete a cookie
+    function deleteCookie(name) {
+        document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
     }
 
-    // Check if the user already logged in (via LocalStorage)
-    if (database[username]) {
-        alert(`Username "${username}" has already been used. You are eliminated!`);
-        window.close(); // Close tab if user is already logged in
-        return;
+    // Initialize username database (hardcoded for simplicity)
+    const usernames = [
+        "ShadowSleuth", "CodeCracker", "MysteryMaven", "NightHawk", "CipherChaser",
+        "HiddenProwler", "SecretSpy", "DarkWhisper", "EnigmaSeeker", "CloakDagger",
+        "CovertGaze", "PhantomDetective", "CrimsonCode", "BlacklightHunter", "DaggerEye",
+        "SilhouetteTracker", "TruthUnveiler", "ClandestineMind", "VeilBreaker", "TwilightAgent",
+        "FogShrouded", "PuzzleSolver", "DeepEnigma", "NoirPursuer", "LurkingShadow",
+        "EchoFinder", "GrayFox", "ObsidianEye", "ChameleonCloak", "RavenWatcher",
+        "StealthWarden", "SilentCipher", "UnmaskedPhantom", "SpyglassHunter", "ClockworkAgent",
+        "OmenDecoder", "TruthTracker", "WhisperFox", "SmokeTracer", "ShroudSeeker",
+        "KeyFinder", "CipherSpecter", "HiddenAce", "RavenPuzzle", "NoirShadow",
+        "DeepTracker", "MaskedRiddle", "UnseenHawk", "ShadeDecoder", "GhostKey"
+    ];
+
+    function submitCredentials() {
+        const username = document.getElementById('nameInput').value.trim(); // Trim spaces
+        const password = document.getElementById('passwordInput').value;
+
+        if (username && password) {
+            // Check if the username is valid
+            if (!usernames.includes(username)) {
+                alert("Invalid username. Please check your credentials.");
+                return;
+            }
+
+            // Check if the user is already logged in using cookies
+            const userCookie = getCookie(username);
+            if (userCookie === "logged_in") {
+                alert(`Username "${username}" has already been used. You are eliminated!`);
+                window.close(); // Close the tab
+                return;
+            }
+
+            // Validate password
+            if (password === correctPassword) {
+                // Mark the user as logged in by setting a cookie
+                setCookie(username, "logged_in", 7); // Cookie valid for 7 days
+
+                // Simulate loader steps (unchanged from original code)
+                showLoader("Accessing Data...");
+                setTimeout(() => { showLoader("Acquiring Location..."); }, 2000);
+                setTimeout(() => { showLoader("Verifying Identity..."); }, 4000);
+                setTimeout(() => { showLoader("Checking Case Files..."); }, 6000);
+                setTimeout(() => { showLoader("Receiving Mission Details..."); }, 8000);
+                setTimeout(() => { showLoader("Activating VPN..."); }, 10000);
+                setTimeout(() => { showLoader("Initializing Radar Setup..."); }, 12000);
+                setTimeout(() => { showLoader("Almost There...."); }, 14000);
+                setTimeout(() => { showLoader("Almost There...."); }, 16000);
+
+                setTimeout(() => {
+                    hideLoader();
+                    alert(`Welcome, ${username}!`);
+                    window.location.href = 'gameinfo.html'; // Redirect to the game page
+                }, 18000);
+            } else {
+                alert("Incorrect password. Please try again.");
+            }
+        } else {
+            alert("Please enter both your username and password.");
+        }
     }
 
-    // Check password
-    if (password === correctPassword) {
-        // Mark user as logged in in both cookies and localStorage
-        database[username] = true;
-        localStorage.setItem('userDatabase', JSON.stringify(database));
-
-        // Set cookie for 3 hours
-        setCookie(username, "logged_in", 3);
-
-        // Store session info
-        sessionStorage.setItem('currentUsername', username);
-
-        // Simulate loading sequence
-        showLoader("Accessing Data...");
-        setTimeout(() => showLoader("Acquiring Location..."), 2000);
-        setTimeout(() => showLoader("Verifying Identity..."), 4000);
-        setTimeout(() => showLoader("Checking Case Files..."), 6000);
-        setTimeout(() => showLoader("Receiving Mission Details..."), 8000);
-        setTimeout(() => showLoader("Activating VPN..."), 10000);
-        setTimeout(() => showLoader("Initializing Radar Setup..."), 12000);
-        setTimeout(() => showLoader("Almost There...."), 14000);
-        setTimeout(() => showLoader("Almost There...."), 16000);
-
-        setTimeout(() => {
-            hideLoader();
-            alert(`Welcome, ${username}!`);
-            window.location.href = 'gameinfo.html'; // Redirect
-        }, 18000);
-    } else {
-        alert("Incorrect password. Please try again.");
+    // Functions for loader visualization
+    function showLoader(message) {
+        document.getElementById('loaderMessage').innerText = message;
+        document.getElementById('loaderScreen').style.display = 'flex';
     }
-}
 
-// =========================[ PREVENT MULTIPLE TABS ]======================== //
-const channel = new BroadcastChannel("mystery_game_channel");
-
-channel.postMessage("check");
-
-channel.onmessage = (event) => {
-    if (event.data === "check") {
-        channel.postMessage("already_open");
-    } else if (event.data === "already_open") {
-        alert("Another tab with the game is already open!");
-        window.close();
+    function hideLoader() {
+        document.getElementById('loaderScreen').style.display = 'none';
     }
-};
 
-// Ensure only one tab is active using sessionStorage
-if (sessionStorage.getItem("mystery_game_tab")) {
-    alert("Another tab is already running the game.");
-    window.close();
-} else {
-    sessionStorage.setItem("mystery_game_tab", "active");
-}
-
-window.addEventListener("beforeunload", () => {
-    sessionStorage.removeItem("mystery_game_tab");
-});
-
-// =========================[ LOADER FUNCTIONS ]======================== //
-function showLoader(message) {
-    document.getElementById('loaderMessage').innerText = message;
-    document.getElementById('loaderScreen').style.display = 'flex';
-}
-
-function hideLoader() {
-    document.getElementById('loaderScreen').style.display = 'none';
-}
-
+    // Clean up on tab close by deleting relevant cookies
+    window.addEventListener("beforeunload", () => {
+        const currentUsername = sessionStorage.getItem("currentUsername");
+        if (currentUsername) {
+            deleteCookie(currentUsername);
+        }
+    });
 </script>
+
 
 
 
