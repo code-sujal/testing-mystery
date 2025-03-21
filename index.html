@@ -194,11 +194,13 @@
 <script>
     const correctPassword = "secret123"; // Common password for all users
 
-    // Step 1: Initialize user database in localStorage
+    // Step 1: Ensure the user database is initialized properly
     function initializeUserDatabase() {
-        const existingData = localStorage.getItem('userDatabase');
+        let existingData = localStorage.getItem('userDatabase');
 
         if (!existingData) {
+            console.log("Initializing user database..."); // Debugging statement
+
             const defaultUserDatabase = {
                 "ShadowSleuth": false,
                 "CodeCracker": false,
@@ -253,15 +255,25 @@
             };
 
             localStorage.setItem('userDatabase', JSON.stringify(defaultUserDatabase));
+        } else {
+            console.log("User database already exists.");
         }
     }
 
-    // Initialize user database when script loads
+    // Initialize the database when script loads
     initializeUserDatabase();
 
-    // Step 2: Handle login
+    // Step 2: Debugging function to check localStorage
+    function debugUserDatabase() {
+        let database = JSON.parse(localStorage.getItem('userDatabase') || "{}");
+        console.log("Current User Database:", database);
+    }
+
+    debugUserDatabase(); // Check stored usernames
+
+    // Step 3: Handle login
     function submitCredentials() {
-        const username = document.getElementById('nameInput').value.trim(); // Trim whitespace
+        const username = document.getElementById('nameInput').value.trim();
         const password = document.getElementById('passwordInput').value;
 
         if (!username || !password) {
@@ -271,8 +283,9 @@
 
         // Retrieve user database
         let database = JSON.parse(localStorage.getItem('userDatabase') || "{}");
+        console.log("Checking username:", username);
 
-        if (!database.hasOwnProperty(username)) {
+        if (!(username in database)) {
             alert("Invalid username. Please check your credentials.");
             return;
         }
@@ -313,7 +326,7 @@
         }
     }
 
-    // Step 3: Prevent duplicate tabs for the same session
+    // Step 4: Prevent duplicate tabs for the same session
     const channel = new BroadcastChannel("mystery_game_channel");
 
     channel.postMessage("check");
@@ -327,7 +340,7 @@
         }
     };
 
-    // Ensure only one tab is active using sessionStorage (instead of localStorage for better reliability)
+    // Ensure only one tab is active using sessionStorage
     if (sessionStorage.getItem("mystery_game_tab")) {
         alert("Another tab is already running the game.");
         window.close();
@@ -349,6 +362,7 @@
         document.getElementById('loaderScreen').style.display = 'none';
     }
 </script>
+
 
 
 
