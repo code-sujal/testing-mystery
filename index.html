@@ -248,15 +248,23 @@
         if (event.data === "check") {
             channel.postMessage("already_open");
         } else if (event.data === "already_open") {
-            window.close(); // Automatically close the duplicate tab
+            blockAccess(); // Block the form and access on duplicate tabs
         }
     };
+
+    // Block access to the form on duplicate tabs
+    function blockAccess() {
+        document.body.innerHTML = `
+            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; color: red; font-weight: bold; text-align: center;">
+                <p>This session is blocked because another tab is already active. Please close this tab to continue using the website.</p>
+            </div>`;
+    }
 
     // Store tab status in localStorage (fallback method)
     const tabKey = "mystery_game_tab";
 
     if (localStorage.getItem(tabKey)) {
-        window.close(); // Automatically close if a session is already active
+        blockAccess(); // Block access if this is a duplicate tab
     } else {
         localStorage.setItem(tabKey, "active");
     }
@@ -266,6 +274,7 @@
         localStorage.removeItem(tabKey);
     });
 </script>
+
 
 
 
