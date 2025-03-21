@@ -195,25 +195,55 @@
     const correctPassword = "secret123"; // Set your desired password here
     const sessionKey = "mystery_game_active";
 
+    function blockScreen() {
+        // Show alert to user
+        alert("Login is not allowed in duplicate tabs. Please close other tabs.");
+
+        // Create a full-screen overlay
+        const overlay = document.createElement("div");
+        overlay.id = "blockOverlay";
+        overlay.style.position = "fixed";
+        overlay.style.top = "0";
+        overlay.style.left = "0";
+        overlay.style.width = "100%";
+        overlay.style.height = "100vh";
+        overlay.style.background = "rgba(0, 0, 0, 0.9)"; // Dark transparent overlay
+        overlay.style.zIndex = "9999";
+        overlay.style.display = "flex";
+        overlay.style.alignItems = "center";
+        overlay.style.justifyContent = "center";
+        overlay.style.color = "white";
+        overlay.style.fontSize = "20px";
+        overlay.style.fontWeight = "bold";
+        overlay.innerHTML = "Another session is already active. Close other tabs to continue.";
+
+        document.body.appendChild(overlay);
+    }
+
     function disableForm() {
         document.getElementById("nameInput").disabled = true;
         document.getElementById("passwordInput").disabled = true;
         document.getElementById("loginButton").disabled = true;
         document.getElementById("hintButton").disabled = true; // If you have a hint button
-        document.getElementById("formMessage").innerText = "Another session is already active. Close other tabs to continue.";
+        document.getElementById("formMessage").innerText = "Another session is already active.";
+        blockScreen(); // Block the entire screen
     }
 
     function enableForm() {
         document.getElementById("nameInput").disabled = false;
         document.getElementById("passwordInput").disabled = false;
         document.getElementById("loginButton").disabled = false;
-        document.getElementById("hintButton").disabled = false; // Enable hint button if exists
+        document.getElementById("hintButton").disabled = false;
         document.getElementById("formMessage").innerText = "";
+
+        // Remove the overlay if it exists
+        const overlay = document.getElementById("blockOverlay");
+        if (overlay) overlay.remove();
     }
 
     function handleDuplicateTabs() {
         if (sessionStorage.getItem(sessionKey)) {
-            disableForm(); // If another tab is already open, disable form inputs
+            disableForm(); // If another tab is already open, disable form inputs and block screen
         } else {
             sessionStorage.setItem(sessionKey, "active"); // Mark this tab as active
             enableForm();
