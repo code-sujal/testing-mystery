@@ -238,13 +238,6 @@
         }
     }
 
-    // Function to disable the login button
-    function disableLoginButton() {
-        const submitButton = document.getElementById('submitButton');
-        submitButton.disabled = true; // Disable the button
-        document.getElementById('formMessage').innerText = "This session is blocked because another tab is already active. Please close this tab.";
-    }
-
     // 🚀 TAB DUPLICATION PREVENTION SYSTEM 🚀
     const channel = new BroadcastChannel("mystery_game_channel");
 
@@ -255,7 +248,7 @@
         if (event.data === "check") {
             channel.postMessage("already_open");
         } else if (event.data === "already_open") {
-            disableLoginButton(); // Disable the button on duplicate tabs
+            window.close(); // Automatically close the duplicate tab
         }
     };
 
@@ -263,8 +256,7 @@
     const tabKey = "mystery_game_tab";
 
     if (localStorage.getItem(tabKey)) {
-        // Disable the button if this is a duplicate tab
-        disableLoginButton();
+        window.close(); // Automatically close if a session is already active
     } else {
         localStorage.setItem(tabKey, "active");
     }
@@ -274,6 +266,7 @@
         localStorage.removeItem(tabKey);
     });
 </script>
+
 
 
 
