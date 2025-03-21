@@ -195,6 +195,8 @@
     const correctPassword = "secret123"; // Same password for all users
 
     // Mystery-themed usernames for the game (stored in localStorage)
+    // Mystery-themed usernames for the game (initializing only if not already in localStorage)
+if (!localStorage.getItem('userDatabase')) {
     const userDatabase = {
         "ShadowSleuth": false,
         "CodeCracker": false,
@@ -247,86 +249,73 @@
         "ShadeDecoder": false,
         "GhostKey": false
     };
-
-    // Store it in localStorage
     localStorage.setItem('userDatabase', JSON.stringify(userDatabase));
+}
 
-    // Function to initialize Bootstrap popover
-    const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
-    const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
+// Function to validate username and password
+function submitCredentials() {
+    const username = document.getElementById('nameInput').value.trim(); // Trim spaces
+    const password = document.getElementById('passwordInput').value;
 
-    // Function to simulate the loader process with changing messages
-    function showLoader(message) {
-        document.getElementById('loaderMessage').innerText = message;
-        document.getElementById('loaderScreen').style.display = 'flex';
-    }
+    // Retrieve and parse the database from localStorage
+    const database = JSON.parse(localStorage.getItem('userDatabase'));
 
-    function hideLoader() {
-        document.getElementById('loaderScreen').style.display = 'none';
-    }
+    if (username && password) {
+        // Normalize the username to ensure case-insensitivity
+        const normalizedUsername = username.toLowerCase();
 
-    function submitCredentials() {
-        const username = document.getElementById('nameInput').value.trim(); // Trim spaces
-        const password = document.getElementById('passwordInput').value;
+        // Check if the username exists in the database
+        const isValidUsername = Object.keys(database).some(
+            key => key.toLowerCase() === normalizedUsername
+        );
 
-        // Retrieve the database from localStorage
-        const database = JSON.parse(localStorage.getItem('userDatabase'));
-
-        if (username && password) {
-            // Normalize username to be case-insensitive
-            const normalizedUsername = username.toLowerCase();
-
-            // Check if the username exists in the database
-            const isValidUsername = Object.keys(database).some(
-                key => key.toLowerCase() === normalizedUsername
-            );
-
-            if (!isValidUsername) {
-                alert("Invalid username. Please check your credentials.");
-                return;
-            }
-
-            // Retrieve the original key for the username
-            const originalUsername = Object.keys(database).find(
-                key => key.toLowerCase() === normalizedUsername
-            );
-
-            if (database[originalUsername]) {
-                // Username already logged in
-                alert(`Username "${username}" has already been used. You are eliminated!`);
-                window.close(); // Eliminate and close the tab
-                return;
-            }
-
-            if (password === correctPassword) {
-                // Mark the username as used
-                database[originalUsername] = true;
-                localStorage.setItem('userDatabase', JSON.stringify(database));
-
-                // Simulate loader steps
-                showLoader("Accessing Data...");
-                setTimeout(() => { showLoader("Acquiring Location..."); }, 2000);
-                setTimeout(() => { showLoader("Verifying Identity..."); }, 4000);
-                setTimeout(() => { showLoader("Checking Case Files..."); }, 6000);
-                setTimeout(() => { showLoader("Receiving Mission Details..."); }, 8000);
-                setTimeout(() => { showLoader("Activating VPN..."); }, 10000);
-                setTimeout(() => { showLoader("Initializing Radar Setup..."); }, 12000);
-                setTimeout(() => { showLoader("Almost There...."); }, 14000);
-                setTimeout(() => { showLoader("Almost There...."); }, 16000);
-
-                setTimeout(() => {
-                    hideLoader();
-                    localStorage.setItem('startTime', Date.now());
-                    alert(`Welcome, ${username}!`);
-                    window.location.href = 'gameinfo.html'; // Redirect to the game info page
-                }, 18000);
-            } else {
-                alert("Incorrect password. Please try again.");
-            }
-        } else {
-            alert("Please enter both your username and password.");
+        if (!isValidUsername) {
+            alert("Invalid username. Please check your credentials.");
+            return;
         }
+
+        // Find the original username key
+        const originalUsername = Object.keys(database).find(
+            key => key.toLowerCase() === normalizedUsername
+        );
+
+        // Check if the username is already used
+        if (database[originalUsername]) {
+            alert(`Username "${username}" has already been used. You are eliminated!`);
+            window.close(); // Close the tab
+            return;
+        }
+
+        // Validate password
+        if (password === correctPassword) {
+            // Mark the username as used
+            database[originalUsername] = true;
+            localStorage.setItem('userDatabase', JSON.stringify(database));
+
+            // Simulate the loader process
+            showLoader("Accessing Data...");
+            setTimeout(() => { showLoader("Acquiring Location..."); }, 2000);
+            setTimeout(() => { showLoader("Verifying Identity..."); }, 4000);
+            setTimeout(() => { showLoader("Checking Case Files..."); }, 6000);
+            setTimeout(() => { showLoader("Receiving Mission Details..."); }, 8000);
+            setTimeout(() => { showLoader("Activating VPN..."); }, 10000);
+            setTimeout(() => { showLoader("Initializing Radar Setup..."); }, 12000);
+            setTimeout(() => { showLoader("Almost There...."); }, 14000);
+            setTimeout(() => { showLoader("Almost There...."); }, 16000);
+
+            setTimeout(() => {
+                hideLoader();
+                alert(`Welcome, ${username}!`);
+                window.location.href = 'gameinfo.html'; // Redirect to the game page
+            }, 18000);
+        } else {
+            alert("Incorrect password. Please try again.");
+        }
+    } else {
+        alert("Please enter both your username and password.");
     }
+}
+
 
     // 🚀 TAB DUPLICATION PREVENTION SYSTEM 🚀
     const channel = new BroadcastChannel("mystery_game_channel");
