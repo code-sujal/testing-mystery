@@ -193,26 +193,38 @@
 
 <script>
     const correctPassword = "secret123"; // Set your desired password here
-    const sessionKey = "mystery_game_active";
     const storageKey = "mystery_game_main_tab";
     const channel = new BroadcastChannel("mystery_game_channel");
 
-    // =========================[ DUPLICATE TAB PREVENTION ]======================== //
+    function disableForm() {
+        document.getElementById("nameInput").disabled = true;
+        document.getElementById("passwordInput").disabled = true;
+        document.getElementById("loginButton").disabled = true;
+        document.getElementById("hintButton").disabled = true; // If you have a hint button
+        document.getElementById("formMessage").innerText = "Another session is already active. Close other tabs to continue.";
+    }
 
-    function preventDuplicateTabs() {
+    function enableForm() {
+        document.getElementById("nameInput").disabled = false;
+        document.getElementById("passwordInput").disabled = false;
+        document.getElementById("loginButton").disabled = false;
+        document.getElementById("hintButton").disabled = false; // Enable hint button if exists
+        document.getElementById("formMessage").innerText = "";
+    }
+
+    function handleDuplicateTabs() {
         const existingTab = localStorage.getItem(storageKey);
 
         if (existingTab) {
-            // Another tab is already open, close this one
-            alert("Another tab is already open! Closing this tab.");
-            window.close();
-            return;
+            // Disable form if another tab is active
+            disableForm();
+        } else {
+            // Set this tab as the main tab
+            localStorage.setItem(storageKey, "true");
+            enableForm();
         }
 
-        // Set this tab as the main one
-        localStorage.setItem(storageKey, "true");
-
-        // Detect if another tab tries to open
+        // Communicate across tabs
         channel.postMessage("check");
 
         channel.onmessage = (event) => {
@@ -220,8 +232,7 @@
                 // Notify the new tab that an active tab exists
                 channel.postMessage("already_open");
             } else if (event.data === "already_open") {
-                alert("Another tab is already open! Closing this tab.");
-                window.close();
+                disableForm(); // Block form inputs in the duplicate tab
             }
         };
 
@@ -231,9 +242,7 @@
         });
     }
 
-    preventDuplicateTabs();
-
-    // =========================[ LOADER SYSTEM ]======================== //
+    handleDuplicateTabs();
 
     function showLoader(message) {
         document.getElementById('loaderMessage').innerText = message;
@@ -243,8 +252,6 @@
     function hideLoader() {
         document.getElementById('loaderScreen').style.display = 'none';
     }
-
-    // =========================[ LOGIN SYSTEM ]======================== //
 
     function submitCredentials() {
         const name = document.getElementById('nameInput').value.trim();
