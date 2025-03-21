@@ -194,7 +194,7 @@
 <script>
     const correctPassword = "secret123"; // Same password for all users
 
-    // Initialize usernames in localStorage only if not already present
+    // Step 1: Initialize the user database in localStorage if not already present
     function initializeUserDatabase() {
         const defaultUserDatabase = {
             "ShadowSleuth": false,
@@ -254,18 +254,19 @@
         }
     }
 
-    // Call the initialization function when the script loads
+    // Call the initialization function
     initializeUserDatabase();
 
+    // Step 2: Function to handle login submission
     function submitCredentials() {
-        const username = document.getElementById('nameInput').value.trim(); // Trim spaces
+        const username = document.getElementById('nameInput').value.trim(); // Remove spaces
         const password = document.getElementById('passwordInput').value;
 
-        // Retrieve and parse the database from localStorage
+        // Load the database from localStorage
         const database = JSON.parse(localStorage.getItem('userDatabase'));
 
         if (username && password) {
-            // Check if the username exists in the database
+            // Check if the username exists
             if (!database.hasOwnProperty(username)) {
                 alert("Invalid username. Please check your credentials.");
                 return;
@@ -278,13 +279,16 @@
                 return;
             }
 
-            // Validate password
+            // Validate the password
             if (password === correctPassword) {
-                // Mark the username as logged in
+                // Mark username as logged in in localStorage
                 database[username] = true;
                 localStorage.setItem('userDatabase', JSON.stringify(database));
 
-                // Simulate loader steps
+                // Use sessionStorage to track current session
+                sessionStorage.setItem('currentUsername', username);
+
+                // Simulate the loader process (unchanged from original code)
                 showLoader("Accessing Data...");
                 setTimeout(() => { showLoader("Acquiring Location..."); }, 2000);
                 setTimeout(() => { showLoader("Verifying Identity..."); }, 4000);
@@ -298,7 +302,7 @@
                 setTimeout(() => {
                     hideLoader();
                     alert(`Welcome, ${username}!`);
-                    window.location.href = 'gameinfo.html'; // Redirect to the game page
+                    window.location.href = 'gameinfo.html'; // Redirect to game page
                 }, 18000);
             } else {
                 alert("Incorrect password. Please try again.");
@@ -308,7 +312,34 @@
         }
     }
 
-    // Function to simulate the loader process with changing messages
+    // Step 3: Prevent duplicate tabs for the same session
+    const channel = new BroadcastChannel("mystery_game_channel");
+
+    channel.postMessage("check");
+
+    channel.onmessage = (event) => {
+        if (event.data === "check") {
+            channel.postMessage("already_open");
+        } else if (event.data === "already_open") {
+            alert("Another tab with the game is already open!");
+            window.close();
+        }
+    };
+
+    // Store active tab in localStorage for fallback
+    const tabKey = "mystery_game_tab";
+
+    if (localStorage.getItem(tabKey)) {
+        window.close();
+    } else {
+        localStorage.setItem(tabKey, "active");
+    }
+
+    window.addEventListener("beforeunload", () => {
+        localStorage.removeItem(tabKey);
+    });
+
+    // Functions for loader visualization
     function showLoader(message) {
         document.getElementById('loaderMessage').innerText = message;
         document.getElementById('loaderScreen').style.display = 'flex';
@@ -317,35 +348,8 @@
     function hideLoader() {
         document.getElementById('loaderScreen').style.display = 'none';
     }
-
-    // 🚀 TAB DUPLICATION PREVENTION SYSTEM 🚀
-    const channel = new BroadcastChannel("mystery_game_channel");
-
-    // Check if another tab is already open
-    channel.postMessage("check");
-
-    channel.onmessage = (event) => {
-        if (event.data === "check") {
-            channel.postMessage("already_open");
-        } else if (event.data === "already_open") {
-            window.close(); // Automatically close the duplicate tab
-        }
-    };
-
-    // Store tab status in localStorage (fallback method)
-    const tabKey = "mystery_game_tab";
-
-    if (localStorage.getItem(tabKey)) {
-        window.close(); // Automatically close if a session is already active
-    } else {
-        localStorage.setItem(tabKey, "active");
-    }
-
-    // Remove the key when tab is closed
-    window.addEventListener("beforeunload", () => {
-        localStorage.removeItem(tabKey);
-    });
 </script>
+
 
 
 
