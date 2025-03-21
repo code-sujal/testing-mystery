@@ -249,8 +249,7 @@
         if (event.data === "check") {
             channel.postMessage("already_open");
         } else if (event.data === "already_open") {
-            alert("Game is already running in another tab! Close other tabs to continue.");
-            window.close(); // Close the duplicate tab
+            window.close(); // Automatically close the duplicate tab
         }
     };
 
@@ -258,8 +257,7 @@
     const tabKey = "mystery_game_tab";
 
     if (localStorage.getItem(tabKey)) {
-        alert("You already have an active session!");
-        window.close();
+        window.close(); // Automatically close if a session is already active
     } else {
         localStorage.setItem(tabKey, "active");
     }
