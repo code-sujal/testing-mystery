@@ -198,6 +198,7 @@
     const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
     const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
 
+    // Function to simulate the loader process with changing messages
     function showLoader(message) {
         document.getElementById('loaderMessage').innerText = message;
         document.getElementById('loaderScreen').style.display = 'flex';
@@ -213,6 +214,7 @@
 
         if (name && password) {
             if (password === correctPassword) {
+                // Simulating loader steps with signal wave animations
                 showLoader("Accessing Data...");
                 setTimeout(() => { showLoader("Acquiring Location..."); }, 2000);
                 setTimeout(() => { showLoader("Verifying Identity..."); }, 4000);
@@ -227,45 +229,45 @@
                     localStorage.setItem('username', name);
                     localStorage.setItem('startTime', Date.now());
                     hideLoader();
-                    window.location.href = 'gameinfo.html';  
+                    window.location.href = 'gameinfo.html';  // Redirect after the loader
                 }, 18000);
             } else {
                 alert('Incorrect password. Please try again.');
-                window.close(); // 🚨 Close the tab if password is wrong
             }
         } else {
             alert('Please enter both your name and password.');
         }
     }
 
-    // 🚀 BLOCK MULTIPLE TABS EVEN IF URL IS PASTED 🚀
-    const tabKey = "mystery_game_active_tab";
+    // 🚀 TAB DUPLICATION PREVENTION SYSTEM 🚀
+    const channel = new BroadcastChannel("mystery_game_channel");
 
-    function blockFormInputs() {
-        alert("Game is already running in another tab! This tab will now close.");
-        document.getElementById('nameInput').disabled = true;
-        document.getElementById('passwordInput').disabled = true;
-        document.getElementById('submitBtn').disabled = true;
-        
-        setTimeout(() => {
-            window.close(); // 🚨 Auto-close the new tab
-        }, 2000);
-    }
+    // Check if another tab is already open
+    channel.postMessage("check");
 
-    function checkDuplicateTab() {
-        if (localStorage.getItem(tabKey)) {
-            blockFormInputs();
-        } else {
-            localStorage.setItem(tabKey, "active");
+    channel.onmessage = (event) => {
+        if (event.data === "check") {
+            channel.postMessage("already_open");
+        } else if (event.data === "already_open") {
+            alert("Game is already running in another tab! Close other tabs to continue.");
+            window.close(); // Close the duplicate tab
         }
+    };
+
+    // Store tab status in localStorage (fallback method)
+    const tabKey = "mystery_game_tab";
+
+    if (localStorage.getItem(tabKey)) {
+        alert("You already have an active session!");
+        window.close();
+    } else {
+        localStorage.setItem(tabKey, "active");
     }
 
-    checkDuplicateTab(); // Run on page load
-
+    // Remove the key when tab is closed
     window.addEventListener("beforeunload", () => {
         localStorage.removeItem(tabKey);
     });
-
 </script>
 
 
