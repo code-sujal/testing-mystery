@@ -188,8 +188,7 @@
         </div>
         <p id="loaderMessage">Accessing Data...</p>
     </div>
-
- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 <script>
     const correctPassword = "secret123"; // Set your desired password here
@@ -239,11 +238,10 @@
         }
     }
 
-    // Function to disable the login form
-    function blockForm() {
-        document.getElementById('nameInput').disabled = true;
-        document.getElementById('passwordInput').disabled = true;
-        document.getElementById('submitButton').disabled = true;
+    // Function to disable the login button
+    function disableLoginButton() {
+        const submitButton = document.getElementById('submitButton');
+        submitButton.disabled = true; // Disable the button
         document.getElementById('formMessage').innerText = "This session is blocked because another tab is already active. Please close this tab.";
     }
 
@@ -257,7 +255,7 @@
         if (event.data === "check") {
             channel.postMessage("already_open");
         } else if (event.data === "already_open") {
-            blockForm(); // Block the form on duplicate tabs
+            disableLoginButton(); // Disable the button on duplicate tabs
         }
     };
 
@@ -265,8 +263,8 @@
     const tabKey = "mystery_game_tab";
 
     if (localStorage.getItem(tabKey)) {
-        // Block the form if this is a duplicate tab
-        blockForm();
+        // Disable the button if this is a duplicate tab
+        disableLoginButton();
     } else {
         localStorage.setItem(tabKey, "active");
     }
@@ -276,6 +274,7 @@
         localStorage.removeItem(tabKey);
     });
 </script>
+
 
 
     </body>
