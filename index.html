@@ -194,173 +194,201 @@
 <script>
     const correctPassword = "secret123"; // Common password for all users
 
-    // Step 1: Ensure the user database is initialized properly
-    function initializeUserDatabase() {
-        let existingData = localStorage.getItem('userDatabase');
-
-        if (!existingData) {
-            console.log("Initializing user database..."); // Debugging statement
-
-            const defaultUserDatabase = {
-                "ShadowSleuth": false,
-                "CodeCracker": false,
-                "MysteryMaven": false,
-                "NightHawk": false,
-                "CipherChaser": false,
-                "HiddenProwler": false,
-                "SecretSpy": false,
-                "DarkWhisper": false,
-                "EnigmaSeeker": false,
-                "CloakDagger": false,
-                "CovertGaze": false,
-                "PhantomDetective": false,
-                "CrimsonCode": false,
-                "BlacklightHunter": false,
-                "DaggerEye": false,
-                "SilhouetteTracker": false,
-                "TruthUnveiler": false,
-                "ClandestineMind": false,
-                "VeilBreaker": false,
-                "TwilightAgent": false,
-                "FogShrouded": false,
-                "PuzzleSolver": false,
-                "DeepEnigma": false,
-                "NoirPursuer": false,
-                "LurkingShadow": false,
-                "EchoFinder": false,
-                "GrayFox": false,
-                "ObsidianEye": false,
-                "ChameleonCloak": false,
-                "RavenWatcher": false,
-                "StealthWarden": false,
-                "SilentCipher": false,
-                "UnmaskedPhantom": false,
-                "SpyglassHunter": false,
-                "ClockworkAgent": false,
-                "OmenDecoder": false,
-                "TruthTracker": false,
-                "WhisperFox": false,
-                "SmokeTracer": false,
-                "ShroudSeeker": false,
-                "KeyFinder": false,
-                "CipherSpecter": false,
-                "HiddenAce": false,
-                "RavenPuzzle": false,
-                "NoirShadow": false,
-                "DeepTracker": false,
-                "MaskedRiddle": false,
-                "UnseenHawk": false,
-                "ShadeDecoder": false,
-                "GhostKey": false
-            };
-
-            localStorage.setItem('userDatabase', JSON.stringify(defaultUserDatabase));
-        } else {
-            console.log("User database already exists.");
-        }
+// =========================[ COOKIE FUNCTIONS ]======================== //
+// Function to set a cookie with expiration
+function setCookie(name, value, hours) {
+    let expires = "";
+    if (hours) {
+        let date = new Date();
+        date.setTime(date.getTime() + (hours * 60 * 60 * 1000)); // Convert hours to milliseconds
+        expires = "; expires=" + date.toUTCString();
     }
+    document.cookie = name + "=" + value + expires + "; path=/";
+}
 
-    // Initialize the database when script loads
-    initializeUserDatabase();
-
-    // Step 2: Debugging function to check localStorage
-    function debugUserDatabase() {
-        let database = JSON.parse(localStorage.getItem('userDatabase') || "{}");
-        console.log("Current User Database:", database);
+// Function to get a cookie by name
+function getCookie(name) {
+    let nameEQ = name + "=";
+    let cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+        let c = cookies[i].trim();
+        if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
     }
+    return null;
+}
 
-    debugUserDatabase(); // Check stored usernames
+// =========================[ LOCAL STORAGE FUNCTIONS ]======================== //
+// Initialize user database (only once)
+function initializeUserDatabase() {
+    let existingData = localStorage.getItem('userDatabase');
 
-    // Step 3: Handle login
-    function submitCredentials() {
-        const username = document.getElementById('nameInput').value.trim();
-        const password = document.getElementById('passwordInput').value;
+    if (!existingData) {
+        console.log("Initializing user database..."); // Debugging
 
-        if (!username || !password) {
-            alert("Please enter both username and password.");
-            return;
-        }
+        const defaultUserDatabase = {
+            "ShadowSleuth": false,
+            "CodeCracker": false,
+            "MysteryMaven": false,
+            "NightHawk": false,
+            "CipherChaser": false,
+            "HiddenProwler": false,
+            "SecretSpy": false,
+            "DarkWhisper": false,
+            "EnigmaSeeker": false,
+            "CloakDagger": false,
+            "CovertGaze": false,
+            "PhantomDetective": false,
+            "CrimsonCode": false,
+            "BlacklightHunter": false,
+            "DaggerEye": false,
+            "SilhouetteTracker": false,
+            "TruthUnveiler": false,
+            "ClandestineMind": false,
+            "VeilBreaker": false,
+            "TwilightAgent": false,
+            "FogShrouded": false,
+            "PuzzleSolver": false,
+            "DeepEnigma": false,
+            "NoirPursuer": false,
+            "LurkingShadow": false,
+            "EchoFinder": false,
+            "GrayFox": false,
+            "ObsidianEye": false,
+            "ChameleonCloak": false,
+            "RavenWatcher": false,
+            "StealthWarden": false,
+            "SilentCipher": false,
+            "UnmaskedPhantom": false,
+            "SpyglassHunter": false,
+            "ClockworkAgent": false,
+            "OmenDecoder": false,
+            "TruthTracker": false,
+            "WhisperFox": false,
+            "SmokeTracer": false,
+            "ShroudSeeker": false,
+            "KeyFinder": false,
+            "CipherSpecter": false,
+            "HiddenAce": false,
+            "RavenPuzzle": false,
+            "NoirShadow": false,
+            "DeepTracker": false,
+            "MaskedRiddle": false,
+            "UnseenHawk": false,
+            "ShadeDecoder": false,
+            "GhostKey": false
+        };
 
-        // Retrieve user database
-        let database = JSON.parse(localStorage.getItem('userDatabase') || "{}");
-        console.log("Checking username:", username);
-
-        if (!(username in database)) {
-            alert("Invalid username. Please check your credentials.");
-            return;
-        }
-
-        if (database[username]) {
-            alert(`Username "${username}" has already been used. You are eliminated!`);
-            window.close(); // Close tab if user is already logged in
-            return;
-        }
-
-        // Check password
-        if (password === correctPassword) {
-            // Mark user as logged in
-            database[username] = true;
-            localStorage.setItem('userDatabase', JSON.stringify(database));
-
-            // Store session info
-            sessionStorage.setItem('currentUsername', username);
-
-            // Simulate loading sequence
-            showLoader("Accessing Data...");
-            setTimeout(() => showLoader("Acquiring Location..."), 2000);
-            setTimeout(() => showLoader("Verifying Identity..."), 4000);
-            setTimeout(() => showLoader("Checking Case Files..."), 6000);
-            setTimeout(() => showLoader("Receiving Mission Details..."), 8000);
-            setTimeout(() => showLoader("Activating VPN..."), 10000);
-            setTimeout(() => showLoader("Initializing Radar Setup..."), 12000);
-            setTimeout(() => showLoader("Almost There...."), 14000);
-            setTimeout(() => showLoader("Almost There...."), 16000);
-
-            setTimeout(() => {
-                hideLoader();
-                alert(`Welcome, ${username}!`);
-                window.location.href = 'gameinfo.html'; // Redirect
-            }, 18000);
-        } else {
-            alert("Incorrect password. Please try again.");
-        }
-    }
-
-    // Step 4: Prevent duplicate tabs for the same session
-    const channel = new BroadcastChannel("mystery_game_channel");
-
-    channel.postMessage("check");
-
-    channel.onmessage = (event) => {
-        if (event.data === "check") {
-            channel.postMessage("already_open");
-        } else if (event.data === "already_open") {
-            alert("Another tab with the game is already open!");
-            window.close();
-        }
-    };
-
-    // Ensure only one tab is active using sessionStorage
-    if (sessionStorage.getItem("mystery_game_tab")) {
-        alert("Another tab is already running the game.");
-        window.close();
+        localStorage.setItem('userDatabase', JSON.stringify(defaultUserDatabase));
     } else {
-        sessionStorage.setItem("mystery_game_tab", "active");
+        console.log("User database already exists.");
+    }
+}
+
+// Initialize database on script load
+initializeUserDatabase();
+
+// =========================[ LOGIN SYSTEM ]======================== //
+function submitCredentials() {
+    const username = document.getElementById('nameInput').value.trim();
+    const password = document.getElementById('passwordInput').value;
+
+    if (!username || !password) {
+        alert("Please enter both username and password.");
+        return;
     }
 
-    window.addEventListener("beforeunload", () => {
-        sessionStorage.removeItem("mystery_game_tab");
-    });
+    // Retrieve user database
+    let database = JSON.parse(localStorage.getItem('userDatabase') || "{}");
+    console.log("Checking username:", username);
 
-    // Loader visualization functions
-    function showLoader(message) {
-        document.getElementById('loaderMessage').innerText = message;
-        document.getElementById('loaderScreen').style.display = 'flex';
+    if (!(username in database)) {
+        alert("Invalid username. Please check your credentials.");
+        return;
     }
 
-    function hideLoader() {
-        document.getElementById('loaderScreen').style.display = 'none';
+    // Check if the user already logged in (via Cookie)
+    if (getCookie(username)) {
+        alert(`Username "${username}" has already been used. You are eliminated!`);
+        window.close(); // Close tab if user is already logged in
+        return;
     }
+
+    // Check if the user already logged in (via LocalStorage)
+    if (database[username]) {
+        alert(`Username "${username}" has already been used. You are eliminated!`);
+        window.close(); // Close tab if user is already logged in
+        return;
+    }
+
+    // Check password
+    if (password === correctPassword) {
+        // Mark user as logged in in both cookies and localStorage
+        database[username] = true;
+        localStorage.setItem('userDatabase', JSON.stringify(database));
+
+        // Set cookie for 3 hours
+        setCookie(username, "logged_in", 3);
+
+        // Store session info
+        sessionStorage.setItem('currentUsername', username);
+
+        // Simulate loading sequence
+        showLoader("Accessing Data...");
+        setTimeout(() => showLoader("Acquiring Location..."), 2000);
+        setTimeout(() => showLoader("Verifying Identity..."), 4000);
+        setTimeout(() => showLoader("Checking Case Files..."), 6000);
+        setTimeout(() => showLoader("Receiving Mission Details..."), 8000);
+        setTimeout(() => showLoader("Activating VPN..."), 10000);
+        setTimeout(() => showLoader("Initializing Radar Setup..."), 12000);
+        setTimeout(() => showLoader("Almost There...."), 14000);
+        setTimeout(() => showLoader("Almost There...."), 16000);
+
+        setTimeout(() => {
+            hideLoader();
+            alert(`Welcome, ${username}!`);
+            window.location.href = 'gameinfo.html'; // Redirect
+        }, 18000);
+    } else {
+        alert("Incorrect password. Please try again.");
+    }
+}
+
+// =========================[ PREVENT MULTIPLE TABS ]======================== //
+const channel = new BroadcastChannel("mystery_game_channel");
+
+channel.postMessage("check");
+
+channel.onmessage = (event) => {
+    if (event.data === "check") {
+        channel.postMessage("already_open");
+    } else if (event.data === "already_open") {
+        alert("Another tab with the game is already open!");
+        window.close();
+    }
+};
+
+// Ensure only one tab is active using sessionStorage
+if (sessionStorage.getItem("mystery_game_tab")) {
+    alert("Another tab is already running the game.");
+    window.close();
+} else {
+    sessionStorage.setItem("mystery_game_tab", "active");
+}
+
+window.addEventListener("beforeunload", () => {
+    sessionStorage.removeItem("mystery_game_tab");
+});
+
+// =========================[ LOADER FUNCTIONS ]======================== //
+function showLoader(message) {
+    document.getElementById('loaderMessage').innerText = message;
+    document.getElementById('loaderScreen').style.display = 'flex';
+}
+
+function hideLoader() {
+    document.getElementById('loaderScreen').style.display = 'none';
+}
+
 </script>
 
 
