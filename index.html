@@ -194,50 +194,95 @@
 <script>
     const correctPassword = "secret123"; // Same password for all users
 
-    // Initialize usernames in localStorage if not already set
-    const usernames = [
-        "ShadowSleuth", "CodeCracker", "MysteryMaven", "NightHawk", "CipherChaser",
-        "HiddenProwler", "SecretSpy", "DarkWhisper", "EnigmaSeeker", "CloakDagger",
-        "CovertGaze", "PhantomDetective", "CrimsonCode", "BlacklightHunter", "DaggerEye",
-        "SilhouetteTracker", "TruthUnveiler", "ClandestineMind", "VeilBreaker", "TwilightAgent",
-        "FogShrouded", "PuzzleSolver", "DeepEnigma", "NoirPursuer", "LurkingShadow",
-        "EchoFinder", "GrayFox", "ObsidianEye", "ChameleonCloak", "RavenWatcher",
-        "StealthWarden", "SilentCipher", "UnmaskedPhantom", "SpyglassHunter", "ClockworkAgent",
-        "OmenDecoder", "TruthTracker", "WhisperFox", "SmokeTracer", "ShroudSeeker",
-        "KeyFinder", "CipherSpecter", "HiddenAce", "RavenPuzzle", "NoirShadow",
-        "DeepTracker", "MaskedRiddle", "UnseenHawk", "ShadeDecoder", "GhostKey"
-    ];
+    // Initialize usernames in localStorage only if not already present
+    function initializeUserDatabase() {
+        const defaultUserDatabase = {
+            "ShadowSleuth": false,
+            "CodeCracker": false,
+            "MysteryMaven": false,
+            "NightHawk": false,
+            "CipherChaser": false,
+            "HiddenProwler": false,
+            "SecretSpy": false,
+            "DarkWhisper": false,
+            "EnigmaSeeker": false,
+            "CloakDagger": false,
+            "CovertGaze": false,
+            "PhantomDetective": false,
+            "CrimsonCode": false,
+            "BlacklightHunter": false,
+            "DaggerEye": false,
+            "SilhouetteTracker": false,
+            "TruthUnveiler": false,
+            "ClandestineMind": false,
+            "VeilBreaker": false,
+            "TwilightAgent": false,
+            "FogShrouded": false,
+            "PuzzleSolver": false,
+            "DeepEnigma": false,
+            "NoirPursuer": false,
+            "LurkingShadow": false,
+            "EchoFinder": false,
+            "GrayFox": false,
+            "ObsidianEye": false,
+            "ChameleonCloak": false,
+            "RavenWatcher": false,
+            "StealthWarden": false,
+            "SilentCipher": false,
+            "UnmaskedPhantom": false,
+            "SpyglassHunter": false,
+            "ClockworkAgent": false,
+            "OmenDecoder": false,
+            "TruthTracker": false,
+            "WhisperFox": false,
+            "SmokeTracer": false,
+            "ShroudSeeker": false,
+            "KeyFinder": false,
+            "CipherSpecter": false,
+            "HiddenAce": false,
+            "RavenPuzzle": false,
+            "NoirShadow": false,
+            "DeepTracker": false,
+            "MaskedRiddle": false,
+            "UnseenHawk": false,
+            "ShadeDecoder": false,
+            "GhostKey": false
+        };
 
-    // Initialize all usernames as not logged in (false)
-    usernames.forEach(username => {
-        if (!localStorage.getItem(username)) {
-            localStorage.setItem(username, "false");
+        if (!localStorage.getItem('userDatabase')) {
+            localStorage.setItem('userDatabase', JSON.stringify(defaultUserDatabase));
         }
-    });
+    }
+
+    // Call the initialization function when the script loads
+    initializeUserDatabase();
 
     function submitCredentials() {
-        const username = document.getElementById('nameInput').value.trim(); // Trim extra spaces
+        const username = document.getElementById('nameInput').value.trim(); // Trim spaces
         const password = document.getElementById('passwordInput').value;
 
-        if (username && password) {
-            const userStatus = localStorage.getItem(username); // Check username in localStorage
+        // Retrieve and parse the database from localStorage
+        const database = JSON.parse(localStorage.getItem('userDatabase'));
 
-            if (userStatus === null) {
-                // Username doesn't exist
+        if (username && password) {
+            // Check if the username exists in the database
+            if (!database.hasOwnProperty(username)) {
                 alert("Invalid username. Please check your credentials.");
                 return;
             }
 
-            if (userStatus === "true") {
-                // User already logged in
+            // Check if the username is already logged in
+            if (database[username]) {
                 alert(`Username "${username}" has already been used. You are eliminated!`);
                 window.close(); // Close the tab
                 return;
             }
 
+            // Validate password
             if (password === correctPassword) {
-                // Mark user as logged in
-                localStorage.setItem(username, "true");
+                // Mark the username as logged in
+                database[username] = true;
+                localStorage.setItem('userDatabase', JSON.stringify(database));
 
                 // Simulate loader steps
                 showLoader("Accessing Data...");
@@ -301,6 +346,7 @@
         localStorage.removeItem(tabKey);
     });
 </script>
+
 
 
 
