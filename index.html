@@ -194,101 +194,30 @@
 <script>
     const correctPassword = "secret123"; // Common password for all users
 
-// =========================[ COOKIE FUNCTIONS ]======================== //
-// Function to set a cookie with expiration
-function setCookie(name, value, hours) {
-    let expires = "";
-    if (hours) {
-        let date = new Date();
-        date.setTime(date.getTime() + (hours * 60 * 60 * 1000)); // Convert hours to milliseconds
-        expires = "; expires=" + date.toUTCString();
-    }
-    document.cookie = name + "=" + value + expires + "; path=/";
+// =========================[ HASHING FUNCTION ]======================== //
+// Function to generate a SHA-256 hash of the username
+async function hashUsername(username) {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(username);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+    return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
-// Function to get a cookie by name
-function getCookie(name) {
-    let nameEQ = name + "=";
-    let cookies = document.cookie.split(';');
-    for (let i = 0; i < cookies.length; i++) {
-        let c = cookies[i].trim();
-        if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
-    }
-    return null;
+// =========================[ HASHSESSION FUNCTIONS ]======================== //
+// Function to set a session variable
+async function setHashSession(username) {
+    const hashedUsername = await hashUsername(username);
+    sessionStorage.setItem(hashedUsername, "logged_in");
 }
 
-// =========================[ LOCAL STORAGE FUNCTIONS ]======================== //
-// Initialize user database (only once)
-function initializeUserDatabase() {
-    let existingData = localStorage.getItem('userDatabase');
-
-    if (!existingData) {
-        console.log("Initializing user database..."); // Debugging
-
-        const defaultUserDatabase = {
-            "ShadowSleuth": false,
-            "CodeCracker": false,
-            "MysteryMaven": false,
-            "NightHawk": false,
-            "CipherChaser": false,
-            "HiddenProwler": false,
-            "SecretSpy": false,
-            "DarkWhisper": false,
-            "EnigmaSeeker": false,
-            "CloakDagger": false,
-            "CovertGaze": false,
-            "PhantomDetective": false,
-            "CrimsonCode": false,
-            "BlacklightHunter": false,
-            "DaggerEye": false,
-            "SilhouetteTracker": false,
-            "TruthUnveiler": false,
-            "ClandestineMind": false,
-            "VeilBreaker": false,
-            "TwilightAgent": false,
-            "FogShrouded": false,
-            "PuzzleSolver": false,
-            "DeepEnigma": false,
-            "NoirPursuer": false,
-            "LurkingShadow": false,
-            "EchoFinder": false,
-            "GrayFox": false,
-            "ObsidianEye": false,
-            "ChameleonCloak": false,
-            "RavenWatcher": false,
-            "StealthWarden": false,
-            "SilentCipher": false,
-            "UnmaskedPhantom": false,
-            "SpyglassHunter": false,
-            "ClockworkAgent": false,
-            "OmenDecoder": false,
-            "TruthTracker": false,
-            "WhisperFox": false,
-            "SmokeTracer": false,
-            "ShroudSeeker": false,
-            "KeyFinder": false,
-            "CipherSpecter": false,
-            "HiddenAce": false,
-            "RavenPuzzle": false,
-            "NoirShadow": false,
-            "DeepTracker": false,
-            "MaskedRiddle": false,
-            "UnseenHawk": false,
-            "ShadeDecoder": false,
-            "GhostKey": false
-        };
-
-        localStorage.setItem('userDatabase', JSON.stringify(defaultUserDatabase));
-    } else {
-        console.log("User database already exists.");
-    }
+// Function to check if a session exists
+async function isHashSessionActive(username) {
+    const hashedUsername = await hashUsername(username);
+    return sessionStorage.getItem(hashedUsername) !== null;
 }
-
-// Initialize database on script load
-initializeUserDatabase();
 
 // =========================[ LOGIN SYSTEM ]======================== //
-function submitCredentials() {
+async function submitCredentials() {
     const username = document.getElementById('nameInput').value.trim();
     const password = document.getElementById('passwordInput').value;
 
@@ -297,24 +226,10 @@ function submitCredentials() {
         return;
     }
 
-    // Retrieve user database
-    let database = JSON.parse(localStorage.getItem('userDatabase') || "{}");
     console.log("Checking username:", username);
 
-    if (!(username in database)) {
-        alert("Invalid username. Please check your credentials.");
-        return;
-    }
-
-    // Check if the user already logged in (via Cookie)
-    if (getCookie(username)) {
-        alert(`Username "${username}" has already been used. You are eliminated!`);
-        window.close(); // Close tab if user is already logged in
-        return;
-    }
-
-    // Check if the user already logged in (via LocalStorage)
-    if (database[username]) {
+    // Check if the user already logged in (via HashSession)
+    if (await isHashSessionActive(username)) {
         alert(`Username "${username}" has already been used. You are eliminated!`);
         window.close(); // Close tab if user is already logged in
         return;
@@ -322,12 +237,8 @@ function submitCredentials() {
 
     // Check password
     if (password === correctPassword) {
-        // Mark user as logged in in both cookies and localStorage
-        database[username] = true;
-        localStorage.setItem('userDatabase', JSON.stringify(database));
-
-        // Set cookie for 3 hours
-        setCookie(username, "logged_in", 3);
+        // Mark user as logged in in HashSession
+        await setHashSession(username);
 
         // Store session info
         sessionStorage.setItem('currentUsername', username);
@@ -389,15 +300,8 @@ function hideLoader() {
     document.getElementById('loaderScreen').style.display = 'none';
 }
 
-
-    // Clean up on tab close by deleting relevant cookies
-    window.addEventListener("beforeunload", () => {
-        const currentUsername = sessionStorage.getItem("currentUsername");
-        if (currentUsername) {
-            deleteCookie(currentUsername);
-        }
-    });
 </script>
+
 
 
 
