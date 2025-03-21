@@ -194,63 +194,101 @@
 <script>
     const correctPassword = "secret123"; // Same password for all users
 
-    // Function to get a cookie value
-    function getCookie(name) {
-        const cookieString = document.cookie.split("; ").find(row => row.startsWith(name + "="));
-        return cookieString ? cookieString.split("=")[1] : null;
+    // Step 1: Initialize the user database in localStorage if not already present
+    function initializeUserDatabase() {
+        const defaultUserDatabase = {
+            "ShadowSleuth": false,
+            "CodeCracker": false,
+            "MysteryMaven": false,
+            "NightHawk": false,
+            "CipherChaser": false,
+            "HiddenProwler": false,
+            "SecretSpy": false,
+            "DarkWhisper": false,
+            "EnigmaSeeker": false,
+            "CloakDagger": false,
+            "CovertGaze": false,
+            "PhantomDetective": false,
+            "CrimsonCode": false,
+            "BlacklightHunter": false,
+            "DaggerEye": false,
+            "SilhouetteTracker": false,
+            "TruthUnveiler": false,
+            "ClandestineMind": false,
+            "VeilBreaker": false,
+            "TwilightAgent": false,
+            "FogShrouded": false,
+            "PuzzleSolver": false,
+            "DeepEnigma": false,
+            "NoirPursuer": false,
+            "LurkingShadow": false,
+            "EchoFinder": false,
+            "GrayFox": false,
+            "ObsidianEye": false,
+            "ChameleonCloak": false,
+            "RavenWatcher": false,
+            "StealthWarden": false,
+            "SilentCipher": false,
+            "UnmaskedPhantom": false,
+            "SpyglassHunter": false,
+            "ClockworkAgent": false,
+            "OmenDecoder": false,
+            "TruthTracker": false,
+            "WhisperFox": false,
+            "SmokeTracer": false,
+            "ShroudSeeker": false,
+            "KeyFinder": false,
+            "CipherSpecter": false,
+            "HiddenAce": false,
+            "RavenPuzzle": false,
+            "NoirShadow": false,
+            "DeepTracker": false,
+            "MaskedRiddle": false,
+            "UnseenHawk": false,
+            "ShadeDecoder": false,
+            "GhostKey": false
+        };
+
+        if (!localStorage.getItem('userDatabase')) {
+            localStorage.setItem('userDatabase', JSON.stringify(defaultUserDatabase));
+        }
     }
 
-    // Function to set a cookie
-    function setCookie(name, value, days) {
-        const expirationDate = new Date();
-        expirationDate.setTime(expirationDate.getTime() + (days * 24 * 60 * 60 * 1000));
-        document.cookie = `${name}=${value}; expires=${expirationDate.toUTCString()}; path=/`;
-    }
+    // Call the initialization function
+    initializeUserDatabase();
 
-    // Function to delete a cookie
-    function deleteCookie(name) {
-        document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
-    }
-
-    // Initialize username database (hardcoded for simplicity)
-    const usernames = [
-        "ShadowSleuth", "CodeCracker", "MysteryMaven", "NightHawk", "CipherChaser",
-        "HiddenProwler", "SecretSpy", "DarkWhisper", "EnigmaSeeker", "CloakDagger",
-        "CovertGaze", "PhantomDetective", "CrimsonCode", "BlacklightHunter", "DaggerEye",
-        "SilhouetteTracker", "TruthUnveiler", "ClandestineMind", "VeilBreaker", "TwilightAgent",
-        "FogShrouded", "PuzzleSolver", "DeepEnigma", "NoirPursuer", "LurkingShadow",
-        "EchoFinder", "GrayFox", "ObsidianEye", "ChameleonCloak", "RavenWatcher",
-        "StealthWarden", "SilentCipher", "UnmaskedPhantom", "SpyglassHunter", "ClockworkAgent",
-        "OmenDecoder", "TruthTracker", "WhisperFox", "SmokeTracer", "ShroudSeeker",
-        "KeyFinder", "CipherSpecter", "HiddenAce", "RavenPuzzle", "NoirShadow",
-        "DeepTracker", "MaskedRiddle", "UnseenHawk", "ShadeDecoder", "GhostKey"
-    ];
-
+    // Step 2: Function to handle login submission
     function submitCredentials() {
-        const username = document.getElementById('nameInput').value.trim(); // Trim spaces
+        const username = document.getElementById('nameInput').value.trim(); // Remove spaces
         const password = document.getElementById('passwordInput').value;
 
+        // Load the database from localStorage
+        const database = JSON.parse(localStorage.getItem('userDatabase'));
+
         if (username && password) {
-            // Check if the username is valid
-            if (!usernames.includes(username)) {
+            // Check if the username exists
+            if (!database.hasOwnProperty(username)) {
                 alert("Invalid username. Please check your credentials.");
                 return;
             }
 
-            // Check if the user is already logged in using cookies
-            const userCookie = getCookie(username);
-            if (userCookie === "logged_in") {
+            // Check if the username is already logged in
+            if (database[username]) {
                 alert(`Username "${username}" has already been used. You are eliminated!`);
                 window.close(); // Close the tab
                 return;
             }
 
-            // Validate password
+            // Validate the password
             if (password === correctPassword) {
-                // Mark the user as logged in by setting a cookie
-                setCookie(username, "logged_in", 7); // Cookie valid for 7 days
+                // Mark username as logged in in localStorage
+                database[username] = true;
+                localStorage.setItem('userDatabase', JSON.stringify(database));
 
-                // Simulate loader steps (unchanged from original code)
+                // Use sessionStorage to track current session
+                sessionStorage.setItem('currentUsername', username);
+
+                // Simulate the loader process (unchanged from original code)
                 showLoader("Accessing Data...");
                 setTimeout(() => { showLoader("Acquiring Location..."); }, 2000);
                 setTimeout(() => { showLoader("Verifying Identity..."); }, 4000);
@@ -264,7 +302,7 @@
                 setTimeout(() => {
                     hideLoader();
                     alert(`Welcome, ${username}!`);
-                    window.location.href = 'gameinfo.html'; // Redirect to the game page
+                    window.location.href = 'gameinfo.html'; // Redirect to game page
                 }, 18000);
             } else {
                 alert("Incorrect password. Please try again.");
@@ -273,6 +311,33 @@
             alert("Please enter both your username and password.");
         }
     }
+
+    // Step 3: Prevent duplicate tabs for the same session
+    const channel = new BroadcastChannel("mystery_game_channel");
+
+    channel.postMessage("check");
+
+    channel.onmessage = (event) => {
+        if (event.data === "check") {
+            channel.postMessage("already_open");
+        } else if (event.data === "already_open") {
+            alert("Another tab with the game is already open!");
+            window.close();
+        }
+    };
+
+    // Store active tab in localStorage for fallback
+    const tabKey = "mystery_game_tab";
+
+    if (localStorage.getItem(tabKey)) {
+        window.close();
+    } else {
+        localStorage.setItem(tabKey, "active");
+    }
+
+    window.addEventListener("beforeunload", () => {
+        localStorage.removeItem(tabKey);
+    });
 
     // Functions for loader visualization
     function showLoader(message) {
@@ -283,15 +348,8 @@
     function hideLoader() {
         document.getElementById('loaderScreen').style.display = 'none';
     }
-
-    // Clean up on tab close by deleting relevant cookies
-    window.addEventListener("beforeunload", () => {
-        const currentUsername = sessionStorage.getItem("currentUsername");
-        if (currentUsername) {
-            deleteCookie(currentUsername);
-        }
-    });
 </script>
+
 
 
 
