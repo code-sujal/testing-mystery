@@ -193,39 +193,43 @@
 
 <script>
     const correctPassword = "secret123"; // Set your desired password here
+    const sessionKey = "mystery_game_active";
+    const storageKey = "mystery_game_main_tab";
+    const channel = new BroadcastChannel("mystery_game_channel");
 
     // =========================[ DUPLICATE TAB PREVENTION ]======================== //
 
-    // Session Lock Prevention
     function preventDuplicateTabs() {
-        const sessionId = "mystery_game_active";
-        
-        if (sessionStorage.getItem(sessionId)) {
-            alert("Another tab is already running the game.");
-            window.close(); // Close the duplicate tab
-        } else {
-            sessionStorage.setItem(sessionId, "active");
+        const existingTab = localStorage.getItem(storageKey);
+
+        if (existingTab) {
+            // Another tab is already open, close this one
+            alert("Another tab is already open! Closing this tab.");
+            window.close();
+            return;
         }
 
-        // Remove session on tab close
+        // Set this tab as the main one
+        localStorage.setItem(storageKey, "true");
+
+        // Detect if another tab tries to open
+        channel.postMessage("check");
+
+        channel.onmessage = (event) => {
+            if (event.data === "check") {
+                // Notify the new tab that an active tab exists
+                channel.postMessage("already_open");
+            } else if (event.data === "already_open") {
+                alert("Another tab is already open! Closing this tab.");
+                window.close();
+            }
+        };
+
+        // Remove session info on tab close
         window.addEventListener("beforeunload", () => {
-            sessionStorage.removeItem(sessionId);
+            localStorage.removeItem(storageKey);
         });
     }
-
-    // Cross-Tab Communication
-    const channel = new BroadcastChannel("mystery_game_channel");
-
-    channel.postMessage("check");
-
-    channel.onmessage = (event) => {
-        if (event.data === "check") {
-            channel.postMessage("already_open");
-        } else if (event.data === "already_open") {
-            alert("Another tab is already open! Closing this tab.");
-            window.close(); // Close new tab
-        }
-    };
 
     preventDuplicateTabs();
 
