@@ -207,6 +207,47 @@
         document.getElementById('loaderScreen').style.display = 'none';
     }
 
+    // Utility functions for managing session cookies
+    function setSessionCookie(name, value, minutes) {
+        const date = new Date();
+        date.setTime(date.getTime() + minutes * 60 * 1000);
+        document.cookie = `${name}=${value}; expires=${date.toUTCString()}; path=/`;
+    }
+
+    function getSessionCookie(name) {
+        const cookieString = document.cookie.split("; ").find(row => row.startsWith(`${name}=`));
+        return cookieString ? cookieString.split("=")[1] : null;
+    }
+
+    function deleteSessionCookie(name) {
+        document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
+    }
+
+    // Function to handle session lock
+    function handleSessionLock() {
+        const sessionId = "unique-session-id"; // A static key for session lock
+        const activeSession = getSessionCookie(sessionId);
+
+        if (activeSession) {
+            // Session already active, block access
+            document.body.innerHTML = `
+                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; color: red; font-weight: bold; text-align: center;">
+                    <p>This session is blocked because another tab is already active. Please close other tabs to continue using the website.</p>
+                </div>`;
+        } else {
+            // No active session, set the session lock
+            setSessionCookie(sessionId, "active", 30); // Session valid for 30 minutes
+        }
+
+        // Clean up session lock on tab close
+        window.addEventListener("beforeunload", () => {
+            deleteSessionCookie(sessionId);
+        });
+    }
+
+    // Call the session lock handler on page load
+    handleSessionLock();
+
     function submitCredentials() {
         const name = document.getElementById('nameInput').value;
         const password = document.getElementById('passwordInput').value;
@@ -237,42 +278,6 @@
             alert('Please enter both your name and password.');
         }
     }
-
-    // 🚀 TAB DUPLICATION PREVENTION SYSTEM 🚀
-    const channel = new BroadcastChannel("mystery_game_channel");
-
-    // Check if another tab is already open
-    channel.postMessage("check");
-
-    channel.onmessage = (event) => {
-        if (event.data === "check") {
-            channel.postMessage("already_open");
-        } else if (event.data === "already_open") {
-            blockAccess(); // Block the form and access on duplicate tabs
-        }
-    };
-
-    // Block access to the form on duplicate tabs
-    function blockAccess() {
-        document.body.innerHTML = `
-            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; color: red; font-weight: bold; text-align: center;">
-                <p>This session is blocked because another tab is already active. Please close this tab to continue using the website.</p>
-            </div>`;
-    }
-
-    // Store tab status in localStorage (fallback method)
-    const tabKey = "mystery_game_tab";
-
-    if (localStorage.getItem(tabKey)) {
-        blockAccess(); // Block access if this is a duplicate tab
-    } else {
-        localStorage.setItem(tabKey, "active");
-    }
-
-    // Remove the key when tab is closed
-    window.addEventListener("beforeunload", () => {
-        localStorage.removeItem(tabKey);
-    });
 </script>
 
 
