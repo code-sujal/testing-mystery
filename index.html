@@ -192,9 +192,18 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 <script>
-    const correctPassword = "secret123"; // Set your desired password here
+    const correctPassword = "secret123"; // Same password for all users
+    
+    // Example database of usernames and their status (stored in localStorage for simplicity)
+    const userDatabase = JSON.parse(localStorage.getItem('userDatabase')) || {
+        "player1": false, // false means not logged in
+        "player2": false,
+        "player3": false
+    };
+    
+    localStorage.setItem('userDatabase', JSON.stringify(userDatabase));
 
-    // Initialize Bootstrap popover
+    // Function to initialize Bootstrap popover
     const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
     const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
 
@@ -209,12 +218,30 @@
     }
 
     function submitCredentials() {
-        const name = document.getElementById('nameInput').value;
+        const username = document.getElementById('nameInput').value;
         const password = document.getElementById('passwordInput').value;
 
-        if (name && password) {
+        const database = JSON.parse(localStorage.getItem('userDatabase'));
+
+        if (username && password) {
+            if (database[username] === undefined) {
+                alert("Invalid username. Please check your credentials.");
+                return;
+            }
+
+            if (database[username]) {
+                // User already logged in
+                alert(`Username "${username}" has already been used. You are eliminated!`);
+                window.close(); // Eliminate and close the tab
+                return;
+            }
+
             if (password === correctPassword) {
-                // Simulating loader steps with signal wave animations
+                // Mark the username as used
+                database[username] = true;
+                localStorage.setItem('userDatabase', JSON.stringify(database));
+
+                // Simulate loader steps
                 showLoader("Accessing Data...");
                 setTimeout(() => { showLoader("Acquiring Location..."); }, 2000);
                 setTimeout(() => { showLoader("Verifying Identity..."); }, 4000);
@@ -226,16 +253,16 @@
                 setTimeout(() => { showLoader("Almost There...."); }, 16000);
 
                 setTimeout(() => {
-                    localStorage.setItem('username', name);
-                    localStorage.setItem('startTime', Date.now());
                     hideLoader();
-                    window.location.href = 'gameinfo.html';  // Redirect after the loader
+                    localStorage.setItem('startTime', Date.now());
+                    alert(`Welcome, ${username}!`);
+                    window.location.href = 'gameinfo.html'; // Redirect to the game info page
                 }, 18000);
             } else {
-                alert('Incorrect password. Please try again.');
+                alert("Incorrect password. Please try again.");
             }
         } else {
-            alert('Please enter both your name and password.');
+            alert("Please enter both your username and password.");
         }
     }
 
