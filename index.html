@@ -189,85 +189,92 @@
         <p id="loaderMessage">Accessing Data...</p>
     </div>
 
- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
-    <script>
-        const correctPassword = "secret123"; // Set your desired password here
-    
-        // Initialize Bootstrap popover
-        const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
-        const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
-    
-        // Function to simulate the loader process with changing messages
-        function showLoader(message) {
-            document.getElementById('loaderMessage').innerText = message;
-            document.getElementById('loaderScreen').style.display = 'flex';
-        }
-    
-        function hideLoader() {
-            document.getElementById('loaderScreen').style.display = 'none';
-        }
-    
-        function submitCredentials() {
-            const name = document.getElementById('nameInput').value;
-            const password = document.getElementById('passwordInput').value;
-    
-            if (name && password) {
-                if (password === correctPassword) {
-                    // Simulating loader steps with signal wave animations
-                    showLoader("Accessing Data...");
-                    setTimeout(() => { showLoader("Acquiring Location..."); }, 2000);
-                    setTimeout(() => { showLoader("Verifying Identity..."); }, 4000);
-                    setTimeout(() => { showLoader("Checking Case Files..."); }, 6000);
-                    setTimeout(() => { showLoader("Receiving Mission Details..."); }, 8000);
-                    setTimeout(() => { showLoader("Activating VPN..."); }, 10000);
-                    setTimeout(() => { showLoader("Initializing Radar Setup..."); }, 12000);
-                    setTimeout(() => { showLoader("Almost There...."); }, 14000);
-                    setTimeout(() => { showLoader("Almost There...."); }, 16000);
-    
-                    setTimeout(() => {
-                        localStorage.setItem('username', name);
-                        localStorage.setItem('startTime', Date.now());
-                        hideLoader();
-                        window.location.href = 'gameinfo.html';  // Redirect after the loader
-                    }, 18000);
-                } else {
-                    alert('Incorrect password. Please try again.');
-                }
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+<script>
+    const correctPassword = "secret123"; // Set your desired password here
+
+    // Initialize Bootstrap popover
+    const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
+    const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
+
+    // Function to simulate the loader process with changing messages
+    function showLoader(message) {
+        document.getElementById('loaderMessage').innerText = message;
+        document.getElementById('loaderScreen').style.display = 'flex';
+    }
+
+    function hideLoader() {
+        document.getElementById('loaderScreen').style.display = 'none';
+    }
+
+    function submitCredentials() {
+        const name = document.getElementById('nameInput').value;
+        const password = document.getElementById('passwordInput').value;
+
+        if (name && password) {
+            if (password === correctPassword) {
+                // Simulating loader steps with signal wave animations
+                showLoader("Accessing Data...");
+                setTimeout(() => { showLoader("Acquiring Location..."); }, 2000);
+                setTimeout(() => { showLoader("Verifying Identity..."); }, 4000);
+                setTimeout(() => { showLoader("Checking Case Files..."); }, 6000);
+                setTimeout(() => { showLoader("Receiving Mission Details..."); }, 8000);
+                setTimeout(() => { showLoader("Activating VPN..."); }, 10000);
+                setTimeout(() => { showLoader("Initializing Radar Setup..."); }, 12000);
+                setTimeout(() => { showLoader("Almost There...."); }, 14000);
+                setTimeout(() => { showLoader("Almost There...."); }, 16000);
+
+                setTimeout(() => {
+                    localStorage.setItem('username', name);
+                    localStorage.setItem('startTime', Date.now());
+                    hideLoader();
+                    window.location.href = 'gameinfo.html';  // Redirect after the loader
+                }, 18000);
             } else {
-                alert('Please enter both your name and password.');
+                alert('Incorrect password. Please try again.');
             }
-        }
-    
-        // 🚀 TAB DUPLICATION PREVENTION SYSTEM 🚀
-        const channel = new BroadcastChannel("mystery_game_channel");
-    
-        // Check if another tab is already open
-        channel.postMessage("check");
-    
-        channel.onmessage = (event) => {
-            if (event.data === "check") {
-                channel.postMessage("already_open");
-            } else if (event.data === "already_open") {
-                alert("Game is already running in another tab! Close other tabs to continue.");
-                window.close(); // Close the duplicate tab
-            }
-        };
-    
-        // Store tab status in localStorage (fallback method)
-        const tabKey = "mystery_game_tab";
-    
-        if (localStorage.getItem(tabKey)) {
-            alert("You already have an active session!");
-            window.close();
         } else {
-            localStorage.setItem(tabKey, "active");
+            alert('Please enter both your name and password.');
         }
-    
-        // Remove the key when tab is closed
-        window.addEventListener("beforeunload", () => {
-            localStorage.removeItem(tabKey);
-        });
-    </script>
+    }
+
+    // 🚀 TAB DUPLICATION PREVENTION SYSTEM 🚀
+    const channel = new BroadcastChannel("mystery_game_channel");
+
+    // Check if another tab is already open
+    channel.postMessage("check");
+
+    channel.onmessage = (event) => {
+        if (event.data === "check") {
+            channel.postMessage("already_open");
+        } else if (event.data === "already_open") {
+            alert("Game is already running in another tab! Closing this tab...");
+            closeWindow(); // Close the tab automatically
+        }
+    };
+
+    // Store tab status in localStorage (fallback method)
+    const tabKey = "mystery_game_tab";
+
+    if (localStorage.getItem(tabKey)) {
+        alert("You already have an active session! Closing this tab...");
+        closeWindow();
+    } else {
+        localStorage.setItem(tabKey, "active");
+    }
+
+    // Remove the key when tab is closed
+    window.addEventListener("beforeunload", () => {
+        localStorage.removeItem(tabKey);
+    });
+
+    // Function to close the tab completely
+    function closeWindow() {
+        window.open('', '_self', '');
+        window.close();
+    }
+</script>
+
 </body>
 </html>
