@@ -192,127 +192,105 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 <script>
-    const correctPassword = "secret123"; // Same password for all users
+    const correctPassword = "secret123"; // Shared password for all players
+    const userDatabaseKey = "userDatabase"; // LocalStorage key for storing login status
+    const tabKey = "mystery_game_tab"; // Key to track active tabs
 
-    // Step 1: Initialize the user database in localStorage if not already present
+    // Step 1: Initialize the user database in localStorage if not already set
     function initializeUserDatabase() {
         const defaultUserDatabase = {
-            "ShadowSleuth": false,
-            "CodeCracker": false,
-            "MysteryMaven": false,
-            "NightHawk": false,
-            "CipherChaser": false,
-            "HiddenProwler": false,
-            "SecretSpy": false,
-            "DarkWhisper": false,
-            "EnigmaSeeker": false,
-            "CloakDagger": false,
-            "CovertGaze": false,
-            "PhantomDetective": false,
-            "CrimsonCode": false,
-            "BlacklightHunter": false,
-            "DaggerEye": false,
-            "SilhouetteTracker": false,
-            "TruthUnveiler": false,
-            "ClandestineMind": false,
-            "VeilBreaker": false,
-            "TwilightAgent": false,
-            "FogShrouded": false,
-            "PuzzleSolver": false,
-            "DeepEnigma": false,
-            "NoirPursuer": false,
-            "LurkingShadow": false,
-            "EchoFinder": false,
-            "GrayFox": false,
-            "ObsidianEye": false,
-            "ChameleonCloak": false,
-            "RavenWatcher": false,
-            "StealthWarden": false,
-            "SilentCipher": false,
-            "UnmaskedPhantom": false,
-            "SpyglassHunter": false,
-            "ClockworkAgent": false,
-            "OmenDecoder": false,
-            "TruthTracker": false,
-            "WhisperFox": false,
-            "SmokeTracer": false,
-            "ShroudSeeker": false,
-            "KeyFinder": false,
-            "CipherSpecter": false,
-            "HiddenAce": false,
-            "RavenPuzzle": false,
-            "NoirShadow": false,
-            "DeepTracker": false,
-            "MaskedRiddle": false,
-            "UnseenHawk": false,
-            "ShadeDecoder": false,
-            "GhostKey": false
+            "ShadowSleuth": false, "CodeCracker": false, "MysteryMaven": false,
+            "NightHawk": false, "CipherChaser": false, "HiddenProwler": false,
+            "SecretSpy": false, "DarkWhisper": false, "EnigmaSeeker": false,
+            "CloakDagger": false, "CovertGaze": false, "PhantomDetective": false,
+            "CrimsonCode": false, "BlacklightHunter": false, "DaggerEye": false,
+            "SilhouetteTracker": false, "TruthUnveiler": false, "ClandestineMind": false,
+            "VeilBreaker": false, "TwilightAgent": false, "FogShrouded": false,
+            "PuzzleSolver": false, "DeepEnigma": false, "NoirPursuer": false,
+            "LurkingShadow": false, "EchoFinder": false, "GrayFox": false,
+            "ObsidianEye": false, "ChameleonCloak": false, "RavenWatcher": false,
+            "StealthWarden": false, "SilentCipher": false, "UnmaskedPhantom": false,
+            "SpyglassHunter": false, "ClockworkAgent": false, "OmenDecoder": false,
+            "TruthTracker": false, "WhisperFox": false, "SmokeTracer": false,
+            "ShroudSeeker": false, "KeyFinder": false, "CipherSpecter": false,
+            "HiddenAce": false, "RavenPuzzle": false, "NoirShadow": false,
+            "DeepTracker": false, "MaskedRiddle": false, "UnseenHawk": false,
+            "ShadeDecoder": false, "GhostKey": false
         };
 
-        if (!localStorage.getItem('userDatabase')) {
-            localStorage.setItem('userDatabase', JSON.stringify(defaultUserDatabase));
+        if (!localStorage.getItem(userDatabaseKey)) {
+            localStorage.setItem(userDatabaseKey, JSON.stringify(defaultUserDatabase));
         }
     }
 
-    // Call the initialization function
-    initializeUserDatabase();
+    initializeUserDatabase(); // Call the function to set up usernames if not present
 
-    // Step 2: Function to handle login submission
+    // Step 2: Handle user login
     function submitCredentials() {
-        const username = document.getElementById('nameInput').value.trim(); // Remove spaces
+        const username = document.getElementById('nameInput').value.trim();
         const password = document.getElementById('passwordInput').value;
+        const database = JSON.parse(localStorage.getItem(userDatabaseKey));
 
-        // Load the database from localStorage
-        const database = JSON.parse(localStorage.getItem('userDatabase'));
-
-        if (username && password) {
-            // Check if the username exists
-            if (!database.hasOwnProperty(username)) {
-                alert("Invalid username. Please check your credentials.");
-                return;
-            }
-
-            // Check if the username is already logged in
-            if (database[username]) {
-                alert(`Username "${username}" has already been used. You are eliminated!`);
-                window.close(); // Close the tab
-                return;
-            }
-
-            // Validate the password
-            if (password === correctPassword) {
-                // Mark username as logged in in localStorage
-                database[username] = true;
-                localStorage.setItem('userDatabase', JSON.stringify(database));
-
-                // Use sessionStorage to track current session
-                sessionStorage.setItem('currentUsername', username);
-
-                // Simulate the loader process (unchanged from original code)
-                showLoader("Accessing Data...");
-                setTimeout(() => { showLoader("Acquiring Location..."); }, 2000);
-                setTimeout(() => { showLoader("Verifying Identity..."); }, 4000);
-                setTimeout(() => { showLoader("Checking Case Files..."); }, 6000);
-                setTimeout(() => { showLoader("Receiving Mission Details..."); }, 8000);
-                setTimeout(() => { showLoader("Activating VPN..."); }, 10000);
-                setTimeout(() => { showLoader("Initializing Radar Setup..."); }, 12000);
-                setTimeout(() => { showLoader("Almost There...."); }, 14000);
-                setTimeout(() => { showLoader("Almost There...."); }, 16000);
-
-                setTimeout(() => {
-                    hideLoader();
-                    alert(`Welcome, ${username}!`);
-                    window.location.href = 'gameinfo.html'; // Redirect to game page
-                }, 18000);
-            } else {
-                alert("Incorrect password. Please try again.");
-            }
-        } else {
+        if (!username || !password) {
             alert("Please enter both your username and password.");
+            return;
+        }
+
+        if (!database.hasOwnProperty(username)) {
+            alert("Invalid username. Please check your credentials.");
+            return;
+        }
+
+        if (database[username]) {
+            alert(`Username "${username}" has already been used. You are eliminated!`);
+            setTimeout(() => window.close(), 2000);
+            return;
+        }
+
+        if (password === correctPassword) {
+            database[username] = true;
+            localStorage.setItem(userDatabaseKey, JSON.stringify(database));
+
+            sessionStorage.setItem('currentUsername', username); // Track user session
+
+            // Simulate login loading animation
+            showLoader("Accessing Data...");
+            setTimeout(() => { showLoader("Acquiring Location..."); }, 2000);
+            setTimeout(() => { showLoader("Verifying Identity..."); }, 4000);
+            setTimeout(() => { showLoader("Checking Case Files..."); }, 6000);
+            setTimeout(() => { showLoader("Receiving Mission Details..."); }, 8000);
+            setTimeout(() => { showLoader("Activating VPN..."); }, 10000);
+            setTimeout(() => { showLoader("Initializing Radar Setup..."); }, 12000);
+            setTimeout(() => { showLoader("Almost There...."); }, 14000);
+            setTimeout(() => { showLoader("Almost There...."); }, 16000);
+
+            setTimeout(() => {
+                hideLoader();
+                alert(`Welcome, ${username}!`);
+                window.location.href = 'gameinfo.html'; // Redirect to game
+            }, 18000);
+        } else {
+            alert("Incorrect password. Please try again.");
         }
     }
 
-    // Step 3: Prevent duplicate tabs for the same session
+    // Step 3: Prevent duplicate tabs (Even if the link is pasted)
+    function preventDuplicateTabs() {
+        if (localStorage.getItem(tabKey)) {
+            alert("Another tab with the game is already open! This tab will now close.");
+            setTimeout(() => window.close(), 2000);
+        } else {
+            localStorage.setItem(tabKey, "active");
+        }
+
+        window.addEventListener("beforeunload", () => {
+            localStorage.removeItem(tabKey);
+        });
+    }
+
+    preventDuplicateTabs(); // Call function on page load
+
+    // Step 4: Ensure only one session is active across all tabs
     const channel = new BroadcastChannel("mystery_game_channel");
 
     channel.postMessage("check");
@@ -321,25 +299,12 @@
         if (event.data === "check") {
             channel.postMessage("already_open");
         } else if (event.data === "already_open") {
-            alert("Another tab with the game is already open!");
-            window.close();
+            alert("Another tab with the game is already open! This tab will now close.");
+            setTimeout(() => window.close(), 2000);
         }
     };
 
-    // Store active tab in localStorage for fallback
-    const tabKey = "mystery_game_tab";
-
-    if (localStorage.getItem(tabKey)) {
-        window.close();
-    } else {
-        localStorage.setItem(tabKey, "active");
-    }
-
-    window.addEventListener("beforeunload", () => {
-        localStorage.removeItem(tabKey);
-    });
-
-    // Functions for loader visualization
+    // Step 5: Loader animations
     function showLoader(message) {
         document.getElementById('loaderMessage').innerText = message;
         document.getElementById('loaderScreen').style.display = 'flex';
@@ -349,6 +314,7 @@
         document.getElementById('loaderScreen').style.display = 'none';
     }
 </script>
+
 
 
 
