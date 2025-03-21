@@ -298,6 +298,12 @@ document.addEventListener("DOMContentLoaded", () => {
         const loaderScreen = document.getElementById('loaderScreen');
         if (loaderScreen) loaderScreen.style.display = 'none';
     }
+
+    // =========================[ HINT BUTTON FUNCTION ]======================== //
+    document.getElementById('hintBtn').addEventListener('click', () => {
+        alert("Hint: The password might be something secretive 😉");
+    });
+
 });
 </script>
 
