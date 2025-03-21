@@ -195,8 +195,9 @@
     const correctPassword = "secret123"; // Same password for all users
     
     // Example database of usernames and their status (stored in localStorage for simplicity)
-    const userDatabase = JSON.parse(localStorage.getItem('userDatabase')) || {
-       "ShadowSleuth": false,
+   // Mystery-themed usernames for the game
+const userDatabase = {
+    "ShadowSleuth": false,
     "CodeCracker": false,
     "MysteryMaven": false,
     "NightHawk": false,
@@ -246,9 +247,10 @@
     "UnseenHawk": false,
     "ShadeDecoder": false,
     "GhostKey": false
-    };
-    
-    localStorage.setItem('userDatabase', JSON.stringify(userDatabase));
+};
+
+// Store it in localStorage
+localStorage.setItem('userDatabase', JSON.stringify(userDatabase));
 
     // Function to initialize Bootstrap popover
     const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
