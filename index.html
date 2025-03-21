@@ -191,115 +191,114 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
 <script>
+document.addEventListener("DOMContentLoaded", () => {
     const correctPassword = "secret123"; // Common password for all users
 
-// =========================[ HASHING FUNCTION ]======================== //
-// Function to generate a SHA-256 hash of the username
-async function hashUsername(username) {
-    const encoder = new TextEncoder();
-    const data = encoder.encode(username);
-    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-    return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
-}
-
-// =========================[ HASHSESSION FUNCTIONS ]======================== //
-// Function to set a session variable
-async function setHashSession(username) {
-    const hashedUsername = await hashUsername(username);
-    sessionStorage.setItem(hashedUsername, "logged_in");
-}
-
-// Function to check if a session exists
-async function isHashSessionActive(username) {
-    const hashedUsername = await hashUsername(username);
-    return sessionStorage.getItem(hashedUsername) !== null;
-}
-
-// =========================[ LOGIN SYSTEM ]======================== //
-async function submitCredentials() {
-    const username = document.getElementById('nameInput').value.trim();
-    const password = document.getElementById('passwordInput').value;
-
-    if (!username || !password) {
-        alert("Please enter both username and password.");
-        return;
+    // =========================[ HASHING FUNCTION ]======================== //
+    async function hashUsername(username) {
+        const encoder = new TextEncoder();
+        const data = encoder.encode(username);
+        const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+        return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
     }
 
-    console.log("Checking username:", username);
-
-    // Check if the user already logged in (via HashSession)
-    if (await isHashSessionActive(username)) {
-        alert(`Username "${username}" has already been used. You are eliminated!`);
-        window.close(); // Close tab if user is already logged in
-        return;
+    // =========================[ HASHSESSION FUNCTIONS ]======================== //
+    async function setHashSession(username) {
+        const hashedUsername = await hashUsername(username);
+        sessionStorage.setItem(hashedUsername, "logged_in");
     }
 
-    // Check password
-    if (password === correctPassword) {
-        // Mark user as logged in in HashSession
-        await setHashSession(username);
-
-        // Store session info
-        sessionStorage.setItem('currentUsername', username);
-
-        // Simulate loading sequence
-        showLoader("Accessing Data...");
-        setTimeout(() => showLoader("Acquiring Location..."), 2000);
-        setTimeout(() => showLoader("Verifying Identity..."), 4000);
-        setTimeout(() => showLoader("Checking Case Files..."), 6000);
-        setTimeout(() => showLoader("Receiving Mission Details..."), 8000);
-        setTimeout(() => showLoader("Activating VPN..."), 10000);
-        setTimeout(() => showLoader("Initializing Radar Setup..."), 12000);
-        setTimeout(() => showLoader("Almost There...."), 14000);
-        setTimeout(() => showLoader("Almost There...."), 16000);
-
-        setTimeout(() => {
-            hideLoader();
-            alert(`Welcome, ${username}!`);
-            window.location.href = 'gameinfo.html'; // Redirect
-        }, 18000);
-    } else {
-        alert("Incorrect password. Please try again.");
+    async function isHashSessionActive(username) {
+        const hashedUsername = await hashUsername(username);
+        return sessionStorage.getItem(hashedUsername) !== null;
     }
-}
 
-// =========================[ PREVENT MULTIPLE TABS ]======================== //
-const channel = new BroadcastChannel("mystery_game_channel");
+    // =========================[ LOGIN SYSTEM ]======================== //
+    document.getElementById('loginBtn').addEventListener('click', async () => {
+        const username = document.getElementById('nameInput').value.trim();
+        const password = document.getElementById('passwordInput').value;
 
-channel.postMessage("check");
+        if (!username || !password) {
+            alert("Please enter both username and password.");
+            return;
+        }
 
-channel.onmessage = (event) => {
-    if (event.data === "check") {
-        channel.postMessage("already_open");
-    } else if (event.data === "already_open") {
-        alert("Another tab with the game is already open!");
+        console.log("Checking username:", username);
+
+        if (await isHashSessionActive(username)) {
+            alert(`Username "${username}" has already been used. You are eliminated!`);
+            window.close();
+            return;
+        }
+
+        if (password === correctPassword) {
+            await setHashSession(username);
+            sessionStorage.setItem('currentUsername', username);
+
+            // Simulate loading sequence
+            showLoader("Accessing Data...");
+            setTimeout(() => showLoader("Acquiring Location..."), 2000);
+            setTimeout(() => showLoader("Verifying Identity..."), 4000);
+            setTimeout(() => showLoader("Checking Case Files..."), 6000);
+            setTimeout(() => showLoader("Receiving Mission Details..."), 8000);
+            setTimeout(() => showLoader("Activating VPN..."), 10000);
+            setTimeout(() => showLoader("Initializing Radar Setup..."), 12000);
+            setTimeout(() => showLoader("Almost There...."), 14000);
+            setTimeout(() => showLoader("Almost There...."), 16000);
+
+            setTimeout(() => {
+                hideLoader();
+                alert(`Welcome, ${username}!`);
+                window.location.href = 'gameinfo.html'; // Redirect
+            }, 18000);
+        } else {
+            alert("Incorrect password. Please try again.");
+        }
+    });
+
+    // =========================[ PREVENT MULTIPLE TABS ]======================== //
+    const channel = new BroadcastChannel("mystery_game_channel");
+
+    channel.postMessage("check");
+
+    channel.onmessage = (event) => {
+        if (event.data === "check") {
+            channel.postMessage("already_open");
+        } else if (event.data === "already_open") {
+            alert("Another tab with the game is already open!");
+            window.close();
+        }
+    };
+
+    if (sessionStorage.getItem("mystery_game_tab")) {
+        alert("Another tab is already running the game.");
         window.close();
+    } else {
+        sessionStorage.setItem("mystery_game_tab", "active");
     }
-};
 
-// Ensure only one tab is active using sessionStorage
-if (sessionStorage.getItem("mystery_game_tab")) {
-    alert("Another tab is already running the game.");
-    window.close();
-} else {
-    sessionStorage.setItem("mystery_game_tab", "active");
-}
+    window.addEventListener("beforeunload", () => {
+        sessionStorage.removeItem("mystery_game_tab");
+    });
 
-window.addEventListener("beforeunload", () => {
-    sessionStorage.removeItem("mystery_game_tab");
+    // =========================[ LOADER FUNCTIONS ]======================== //
+    function showLoader(message) {
+        const loaderMessage = document.getElementById('loaderMessage');
+        const loaderScreen = document.getElementById('loaderScreen');
+
+        if (loaderMessage && loaderScreen) {
+            loaderMessage.innerText = message;
+            loaderScreen.style.display = 'flex';
+        }
+    }
+
+    function hideLoader() {
+        const loaderScreen = document.getElementById('loaderScreen');
+        if (loaderScreen) loaderScreen.style.display = 'none';
+    }
 });
-
-// =========================[ LOADER FUNCTIONS ]======================== //
-function showLoader(message) {
-    document.getElementById('loaderMessage').innerText = message;
-    document.getElementById('loaderScreen').style.display = 'flex';
-}
-
-function hideLoader() {
-    document.getElementById('loaderScreen').style.display = 'none';
-}
-
 </script>
 
 
