@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTP Validation</title>
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js"></script>
+
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f5f5f5;
+            font-family: Arial, sans-serif;
+        }
+
+        .card {
+            width: 360px;
+            padding: 20px;
+            text-align: center;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .card input {
+            width: 90%;
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .card button {
+            width: 95%;
+            padding: 10px;
+            border: none;
+            background-color: #111;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .card button:hover {
+            background-color: #444;
+        }
+    </style>
+</head>
+<body>
+    <div id="otp-container">
+        <h1>OTP Validation</h1>
+        <!-- Phone number -->
+        <input type="text" id="phone-number" placeholder="Enter your phone number">
+        <button id="send-otp">Send OTP</button>
+        
+        <!-- OTP Input -->
+        <br>
+        <input type="text" id="otp-code" placeholder="Enter OTP">
+        <button id="validate-otp">Validate OTP</button>
+        
+        <!-- Display message -->
+        <p id="message"></p>
+      </div>
+      
+    <script>
+        // Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyBJQsE1VeR1SDrz1ft_z4ys5QjEFz3UCUQ",
+  authDomain: "otp-validation-system.firebaseapp.com",
+  projectId: "otp-validation-system",
+  storageBucket: "otp-validation-system.firebasestorage.app",
+  messagingSenderId: "907306006739",
+  appId: "1:907306006739:web:d8c8d789b227aa4be53c26"
+};
+
+// Initialize Firebase
+const app = firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+
+
+const sendOTPButton = document.getElementById("send-otp");
+const message = document.getElementById("message");
+
+sendOTPButton.addEventListener("click", () => {
+  const phoneNumber = document.getElementById("phone-number").value;
+
+  // Firebase RecaptchaVerifier (required for phone auth)
+  const appVerifier = new firebase.auth.RecaptchaVerifier("otp-container", {
+    size: "invisible",
+  });
+
+  // Send OTP
+  auth.signInWithPhoneNumber(phoneNumber, appVerifier)
+    .then((confirmationResult) => {
+      // Save confirmation result to validate OTP later
+      window.confirmationResult = confirmationResult;
+      message.style.color = "green";
+      message.textContent = "OTP sent successfully!";
+    })
+    .catch((error) => {
+      console.error(error);
+      message.style.color = "red";
+      message.textContent = "Failed to send OTP. Please try again.";
+    });
+});
+
+
+const validateOTPButton = document.getElementById("validate-otp");
+
+validateOTPButton.addEventListener("click", () => {
+  const otpCode = document.getElementById("otp-code").value;
+
+  // Validate OTP
+  window.confirmationResult.confirm(otpCode)
+    .then((result) => {
+      const user = result.user; // User is signed in
+      message.style.color = "green";
+      message.textContent = "OTP validated successfully!";
+      console.log("User signed in:", user);
+    })
+    .catch((error) => {
+      console.error(error);
+      message.style.color = "red";
+      message.textContent = "Invalid OTP. Please try again.";
+    });
+});
+
+
+    </script>
+
+</body>
+</html>
