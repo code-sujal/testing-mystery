@@ -228,11 +228,12 @@
                 <p>Email</p>
             </div>
             <div class="icon" onclick="openFolder('Chat')">
-                <img src="chat.png" alt="Chat">
+                <a href="chat.html" target="_blank"><img src="chat.png" alt="Chat"></a>
                 <p>Chat</p>
             </div>
             <div class="icon" onclick="openFolder('Case Files')">
-                <img src="https://cdn-icons-png.flaticon.com/512/3767/3767084.png" alt="Case Files">
+                <a href="files.html">                <img src="https://cdn-icons-png.flaticon.com/512/3767/3767084.png" alt="Case Files">
+                </a>
                 <p>Files</p>
             </div>
             <div class="icon" onclick="openFolder('Evidence')">
@@ -298,27 +299,7 @@
     </div>
 
     <!-- Puzzle Modal -->
-    <div class="modal fade" id="puzzleModal" tabindex="-1" aria-labelledby="puzzleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="puzzleModalLabel">Solve the Puzzle</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p style="color: black;"><strong>Riddle:</strong> I speak without a mouth and hear without ears. I have no body, but I come alive with wind. What am I?</p>
-                    <input type="text" id="puzzleAnswer" class="form-control" placeholder="Enter your answer here">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="checkPuzzle()">Submit</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
+   
     <!-- Bootstrap JS and dependencies -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>

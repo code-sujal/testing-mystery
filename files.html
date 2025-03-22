@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>This PC - File Manager</title>
+  <link rel="stylesheet" href="files.css">
+  <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="file-manager">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <ul class="sidebar-nav">
+        <li class="nav-item" data-path="This PC" title="This PC">
+          <span class="icon">💻</span>
+        </li>
+        <li class="nav-item" data-path="C:" title="Local Disk (C:)">
+          <span class="icon">💿</span>
+        </li>
+        <li class="nav-item" data-path="D:" title="Data (D:)">
+          <span class="icon">💿</span>
+        </li>
+        <li class="nav-item" data-path="E:" title="Media (E:)">
+          <span class="icon">💿</span>
+        </li>
+      </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="content">
+      <div class="header">
+        <div class="breadcrumb" id="breadcrumb">
+          <span>This PC</span>
+        </div>
+      </div>
+      <div class="file-list" id="file-list">
+        <!-- Files and folders will be populated here -->
+      </div>
+      <div class="context-menu" id="context-menu">
+        <ul>
+          <li>Open</li>
+          <li>Delete</li>
+          <li>Properties</li>
+        </ul>
+      </div>
+    </main>
+  </div>
+  <script src="files.js"></script>
+</body>
+</html>

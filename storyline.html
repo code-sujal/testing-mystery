@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cinematic Storytelling</title>
+  
+<style>
+    /* Global Styling */
+/* Global Styling */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #000; /* Cinematic black background */
+  color: #fff;
+  font-family: 'Courier New', monospace; /* Typing/Storytelling style */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Story Container */
+#story-container {
+  text-align: center;
+  width: 80%;
+  max-width: 800px;
+}
+
+/* Black Screen and Text */
+#black-screen {
+  background-color: #000;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+}
+
+#story-text {
+  font-size: 1.5rem;
+  white-space: pre-wrap;
+  opacity: 0; /* Initially hidden */
+  transition: opacity 2s ease-in-out; /* Smooth fade-in effect */
+}
+
+/* Button Styling */
+#next-button {
+  background: #fff;
+  color: #000;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+#next-button:hover {
+  background: #aaa;
+  transform: scale(1.05);
+}
+
+
+</style>
+<body>
+    <div id="story-container">
+      <div id="black-screen">
+        <p id="story-text"></p>
+      </div>
+      <button id="next-button">Next</button>
+    </div>
+    <script src="script.js"></script>
+  </body>
+<script>
+    // Chapters Data
+// Chapters Data
+// Chapters Data
+// Chapters Data
+// Chapters Data
+// Chapters Data
+const chapters = [
+  "In a world ravaged by chaos, only one hero stands between light and darkness...",
+  "The hero ventures into the uncharted lands, facing beasts beyond imagination...",
+  "With the final battle on the horizon, courage will decide the fate of humanity.",
+  "The End."
+];
+
+// Variables for Story Control
+let currentChapter = 0;
+
+// Elements
+const storyText = document.getElementById("story-text");
+const nextButton = document.getElementById("next-button");
+
+// Function to Load Chapter
+function loadChapter(index) {
+  // Reset opacity immediately for fade-in effect
+  storyText.style.opacity = "0";
+  nextButton.disabled = true; // Disable the button during transition
+
+  // Set a small delay to allow opacity reset to take effect
+  setTimeout(() => {
+    // Set new text and trigger fade-in effect
+    storyText.textContent = chapters[index];
+    storyText.style.opacity = "1";
+
+    // Re-enable the button after fade-in is complete
+    setTimeout(() => {
+      nextButton.disabled = false;
+    }, 2000); // Matches the fade-in duration of 2 seconds
+  }, 100); // Short delay for opacity reset
+}
+
+// Proceed to Next Chapter
+nextButton.addEventListener("click", () => {
+  currentChapter++;
+  if (currentChapter < chapters.length) {
+    loadChapter(currentChapter);
+  } else {
+    // Display "The End" text and then redirect
+    storyText.textContent = "The End.";
+    storyText.style.opacity = "1"; // Ensure "The End" fades in properly
+    nextButton.style.display = "none"; // Hide button after the last chapter
+
+    // Redirect to another HTML file after a short delay
+    setTimeout(() => {
+      window.location.href = "welcome.html"; // Replace with your target HTML file name
+    }, 3000); // Redirect after 3 seconds
+  }
+});
+
+// Load Initial Chapter
+loadChapter(currentChapter);
+
+</script>
+</html>

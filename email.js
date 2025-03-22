@@ -9,11 +9,11 @@ const emailFolders = {
             subject: "Case Assignment – Samuel Reid’s Death",
             body: "Detective Mercer,\n\n" +
     "You’ve been assigned to investigate the sudden death of Samuel Reid, LuminaTech’s lead scientist. The preliminary autopsy report suggests possible foul play, but LuminaTech is pushing to close the case as an accident.\n\n" +
-    "Reid was last seen working on Project Eclipse, a classified renewable energy initiative. You’ll need to tread carefully—LuminaTech has powerful backers. I’m attaching the case report from the night of his death.\n\n" +
+    "Reid was last seen in his lab,all other details are there in the case report I've attatched. You’ll need to tread carefully—LuminaTech has powerful backers. I’m attaching the case report from the night of his death.\n\n" +
     "Keep me updated.\n\n" +
     "– Captain Harrison",
             attachments: ["📁 case_report.pdf"],
-            dateTime: "March 15, 2025 | 10:32 AM"
+            dateTime: "March 18, 2029 | 9:32 AM"
         },
         {
             id: 2,
@@ -24,23 +24,7 @@ const emailFolders = {
             body: `
 Detective Mercer,
 
-Attached is the official autopsy report for Samuel Reid. Preliminary findings confirm no external injuries, but forensic analysis suggests an irregular cardiac event.
-
-Key Findings:
-
-Primary Cause of Death: Cardiac arrest due to abnormal biochip stimulation
-
-Biochip Activity Log: Unauthorized external access detected hours before death
-
-Toxicology Report: No traces of conventional toxins or drugs
-
-Additional Notes: Suspicious fluctuations in neural impulse regulation, indicating possible forced override
-
-
-This suggests a potential cybernetic interference rather than a natural failure. Let me know if further analysis is required.
-
-Dr. Evelyn Carter
-Forensic Pathologist, Metro Medical Institute
+Attached is the official autopsy report for Samuel Reid. Preliminary findings confirm no external injuries, but forensic analysis suggests an irregular toxin levels in his blood.Although further investigation highly recommended in this case, as it seems very sensitive.I've attatched the autopsy report, Reach me anytime for help!
 `,
             attachments: ["📁 autopsy_report.pdf"],
             dateTime: "March 15, 2025 | 11:47 AM"

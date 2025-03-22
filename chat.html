@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SleuthSpeak</title>
+  <link rel="stylesheet" href="chat.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h1>SleuthSpeak</h1>
+      </div>
+      <div class="contact-list" id="contact-list">
+        <div class="contact active" data-id="cyrus">
+          <img src="ceo.jpg" alt="Cyrus" class="contact-avatar">
+          <span>Cyrus (CEO)</span>
+          <span class="status-dot online"></span>
+        </div>
+        <div class="contact" data-id="shadow">
+          <img src="https://via.placeholder.com/40" alt="Shadow" class="contact-avatar">
+          <span>Shadow</span>
+          <span class="status-dot online"></span>
+        </div>
+        <div class="contact" data-id="byte">
+          <img src="https://via.placeholder.com/40" alt="Byte" class="contact-avatar">
+          <span>Byte</span>
+          <span class="status-dot online"></span>
+        </div>
+        <div class="contact" data-id="evelyn">
+          <img src="https://via.placeholder.com/40" alt="Evelyn" class="contact-avatar">
+          <span>Dr. Evelyn</span>
+          <span class="status-dot online"></span>
+        </div>
+        <div class="contact" data-id="reid">
+          <img src="https://via.placeholder.com/40" alt="Reid" class="contact-avatar">
+          <span>Reid (Deceased)</span>
+          <span class="status-dot offline"></span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Chat Area -->
+    <main class="chat-container">
+      <header class="chat-header" id="chat-header">
+        <h2>Cyrus (CEO)</h2>
+        <button class="reset-button" id="reset-button" title="Reset Chat">⟳</button>
+      </header>
+      <div class="chat-messages" id="chat-messages"></div>
+      <div class="option-container" id="option-container">
+        <button class="chat-option" id="chat-option">Ask about the biochip</button>
+      </div>
+    </main>
+  </div>
+  <script src="chat.js"></script>
+</body>
+</html>
