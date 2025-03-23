@@ -1,51 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>This PC - File Manager</title>
-  <link rel="stylesheet" href="files.css">
-  <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detective Files App</title>
+    <link rel="stylesheet" href="files.css">
+    <link rel="icon" href="files.png">
+    <!-- Windows 11 uses Segoe UI; we'll use it via a fallback -->
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+    </style>
 </head>
 <body>
-  <div class="file-manager">
-    <!-- Sidebar -->
-    <aside class="sidebar">
-      <ul class="sidebar-nav">
-        <li class="nav-item" data-path="This PC" title="This PC">
-          <span class="icon">💻</span>
-        </li>
-        <li class="nav-item" data-path="C:" title="Local Disk (C:)">
-          <span class="icon">💿</span>
-        </li>
-        <li class="nav-item" data-path="D:" title="Data (D:)">
-          <span class="icon">💿</span>
-        </li>
-        <li class="nav-item" data-path="E:" title="Media (E:)">
-          <span class="icon">💿</span>
-        </li>
-      </ul>
-    </aside>
-
-    <!-- Main Content -->
-    <main class="content">
-      <div class="header">
-        <div class="breadcrumb" id="breadcrumb">
-          <span>This PC</span>
+    <!-- 📁 Files Application Container -->
+    <div class="files-app">
+        <!-- 🧭 Top Command Bar -->
+        <div class="command-bar">
+            <div class="nav-controls">
+                <button id="back-btn" disabled title="Back">
+                    <img src="https://cdn-icons-png.flaticon.com/512/271/271220.png" alt="Back">
+                </button>
+                <button id="forward-btn" disabled title="Forward">
+                    <img src="https://cdn-icons-png.flaticon.com/512/271/271228.png" alt="Forward">
+                </button>
+            </div>
+            <div class="breadcrumb">
+                <img src="https://img.icons8.com/?size=192&id=Jw9nt2gzEivq&format=png" alt="Folder Icon" class="breadcrumb-icon">
+                <span id="breadcrumb-path">Documents</span>
+            </div>
+            <div class="search-container">
+                <input type="text" id="search" placeholder="Search files...">
+            </div>
+            <div class="view-toggle">
+                <button id="grid-view-btn" class="active" title="Grid View">
+                    <img src="https://cdn-icons-png.flaticon.com/512/7160/7160906.png" alt="Grid View">
+                </button>
+                <button id="list-view-btn" title="List View">
+                    <img src="https://cdn-icons-png.flaticon.com/512/992/992695.png" alt="List View">
+                </button>
+            </div>
         </div>
-      </div>
-      <div class="file-list" id="file-list">
-        <!-- Files and folders will be populated here -->
-      </div>
-      <div class="context-menu" id="context-menu">
-        <ul>
-          <li>Open</li>
-          <li>Delete</li>
-          <li>Properties</li>
-        </ul>
-      </div>
-    </main>
-  </div>
-  <script src="files.js"></script>
+
+        <!-- 📌 Sidebar -->
+        <div class="sidebar">
+            <ul id="folders">
+                <li class="folder active" data-folder="documents">
+                    <img src="docs.png" alt="Documents">
+                    <span>Notes</span>
+                </li>
+                <li class="folder" data-folder="images">
+                    <img src="https://img.icons8.com/fluent/512/photos.png" alt="Images">
+                    <span>Images</span>
+                </li>
+                <li class="folder" data-folder="case-files">
+                    <img src="https://cdn-icons-png.flaticon.com/512/6818/6818810.png" alt="Case Files">
+                    <span>Case Files</span>
+                </li>
+                <li class="folder" data-folder="downloads">
+                    <img src="https://preview.redd.it/t4f6ysfremu11.png?auto=webp&s=ebe0e0b8b69b4d1d6d387e56569a484d6490b95f" alt="Downloads">
+                    <span>Downloads</span>
+                </li>
+                <li class="folder" data-folder="downloads">
+                    <img src="png-transparent-recycle-bin-logo-trash-recycling-bin-file-deletion-computer-file-recycle-bin-glass-recycling-waste-containment-thumbnail-removebg-preview.png" alt="Downloads">
+                    <span>Recycle Bin</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- 📄 Main Content -->
+        <div class="main-content">
+            <div id="file-list" class="grid-view"></div>
+        </div>
+
+        <!-- 📜 File Preview Modal -->
+        <div id="file-modal" class="file-modal">
+            <div class="modal-content">
+                <button id="close-modal-btn">
+                    <img src="https://cdn-icons-png.flaticon.com/512/9068/9068678.png" alt="Close">
+                </button>
+                <div class="file-header">
+                    <h3 id="file-name"></h3>
+                    <p id="file-meta"></p>
+                </div>
+                <div id="file-content"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="files.js"></script>
 </body>
 </html>

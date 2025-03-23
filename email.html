@@ -8,16 +8,8 @@
     <link rel="icon" href="email.png">
 </head>
 <body>
-
     <!-- 📩 Email Application Container -->
     <div class="email-app">
-
-        <!-- 📌 Profile Logo and User Name -->
-        <div class="profile-info">
-            <img src="alx.png" alt="Profile Image" id="profile-image">
-            <span id="user-name"></span>
-        </div>
-
         <!-- 📌 Minimal Sidebar -->
         <div class="sidebar">
             <h2>Mailbox</h2>
@@ -42,10 +34,27 @@
 
         <!-- 📨 Main Email Section -->
         <div class="main-content">
-            <!-- 🔍 Search Bar -->
+            <!-- 🔍 Search Bar and Profile Icon -->
             <div class="search-container">
                 <input type="text" id="search" placeholder="Search emails...">
                 <div id="search-suggestions" class="suggestions"></div>
+                <!-- Profile Icon -->
+                <div class="profile-icon" id="profile-icon">
+                    <img src="https://static.vecteezy.com/system/resources/previews/035/342/944/non_2x/ai-generated-woman-in-a-business-suit-free-photo.jpg" alt="Profile">
+                </div>
+                <!-- Profile Dropdown -->
+                <div class="profile-dropdown" id="profile-dropdown">
+                    <div class="profile-header">
+                        <img src="https://static.vecteezy.com/system/resources/previews/035/342/944/non_2x/ai-generated-woman-in-a-business-suit-free-photo.jpg" alt="Profile Picture" class="profile-picture">
+                        <h3>Detective Alice Harper</h3>
+                    </div>
+                    <p><strong>Email:</strong> alice.detective@citypd.com</p>
+                    <p><strong>Role:</strong> Detective</p>
+                    <p><strong>Department:</strong> City Police Department</p>
+                    <p><strong>Badge Number:</strong> 4729</p>
+                    <p><strong>Experience: 5+ years</strong></p>
+                    <p><strong>Star level : ⭐⭐⭐⭐</strong> </p>
+                </div>
             </div>
 
             <!-- 📂 Email Lists -->
@@ -80,7 +89,6 @@
             <!-- 📎 Attachments -->
             <div id="email-attachments" class="attachments"></div>
         </div>
-        
     </div>
 
     <script src="email.js"></script>
