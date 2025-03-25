@@ -8,8 +8,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-image: url(https://wallpapercave.com/wp/wp4293569.png);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Windows 10 font */
+            background-image: url('https://wallpapercave.com/wp/wp4293569.png'); /* Keep the cityscape */
             background-size: cover;
             background-position: center;
             margin: 0;
@@ -18,78 +18,128 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            color: white;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Blur effect on background */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3); /* Dark overlay for contrast */
+            backdrop-filter: blur(5px); /* Blur effect like Windows 10 */
+            z-index: 0;
         }
 
         .login-container {
-            background-color: rgba(0, 0, 0, 0.7); 
+            background: rgba(255, 255, 255, 0.1); /* Semi-transparent white */
+            backdrop-filter: blur(10px); /* Additional blur for the card */
             padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
             text-align: center;
-            width: 350px;
+            width: 400px;
+            z-index: 1;
+            border: 1px solid rgba(255, 255, 255, 0.2); /* Subtle border */
         }
 
         .login-container h1 {
-            margin: 0;
+            margin: 0 0 5px;
             font-size: 24px;
-            font-weight: 600;
-            color: #FFD700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+            font-weight: 400;
+            color: #fff;
         }
 
-        .login-container p {
-            margin-top: 10px;
+        .login-container .welcome-message {
+            margin-bottom: 25px;
             font-size: 16px;
-            color: #B0B0B0;
+            color: #ddd;
         }
 
         .login-container input {
-            padding: 12px;
-            font-size: 16px;
+            padding: 12px 15px;
+            font-size: 14px;
             border: none;
-            margin: 15px 0;
-            border-radius: 8px;
+            margin: 10px 0;
+            border-radius: 5px;
             width: 100%;
-            background-color: #2c2c2c;
-            color: white;
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #333;
             box-sizing: border-box;
-        }
-
-        .login-container input::placeholder {
-            color: #999;
-        }
-
-        .login-container button {
-            padding: 12px 25px;
-            font-size: 16px;
-            border: none;
-            border-radius: 8px;
-            background-color: #0078d4;
-            color: white;
-            cursor: pointer;
-            width: 100%;
             transition: background-color 0.3s ease;
         }
 
+        .login-container input:focus {
+            outline: none;
+            background-color: #fff;
+        }
+
+        .login-container input::placeholder {
+            color: #666;
+        }
+
+        .login-container button {
+            padding: 12px;
+            font-size: 14px;
+            border: none;
+            border-radius: 5px;
+            background-color: #0078d7; /* Windows 10 blue */
+            color: #fff;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease;
+            font-weight: 500;
+        }
+
         .login-container button:hover {
-            background-color: #005a9e;
+            background-color: #005ea2;
         }
 
         .login-container button:active {
-            background-color: #003f6a;
+            background-color: #004a83;
         }
 
-        /* Hint button style */
+        /* Hint Button */
         .hint-btn {
-            font-size: 14px;
-            text-decoration: underline;
+            font-size: 13px;
+            text-decoration: none;
             background: none;
             border: none;
             padding: 0;
-            color: #FFD700;
+            color: #fff;
             cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .hint-btn:hover {
+            color: #ddd;
+        }
+
+        /* Date and Time (Windows 10 style) */
+        .datetime {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            text-align: right;
+            color: #fff;
+            font-size: 14px;
+            z-index: 1;
+        }
+
+        /* Network Icon (Windows 10 style) */
+        .network-icon {
+            position: absolute;
+            bottom: 20px;
+            right: 80px;
+            width: 20px;
+            height: 20px;
+            background: url('https://cdn-icons-png.flaticon.com/512/159/159604.png') no-repeat center;
+            background-size: contain;
+            z-index: 1;
         }
 
         /* Loader Screen Styling */
@@ -99,7 +149,8 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.5); /* Dark overlay */
+            backdrop-filter: blur(5px);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -109,67 +160,324 @@
             text-align: center;
         }
 
-        /* Signal Wave Animation */
-        .signal-container {
+        /* Animation Containers */
+        .animation-container {
             position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 150px;
-        }
-
-        .signal-wave {
-            position: absolute;
             width: 100px;
             height: 100px;
+            margin-bottom: 30px;
+            display: none;
+        }
+
+        /* Animation 1: Spinning Lines (Initializing System...) */
+        .anim-1 .line {
+            position: absolute;
+            width: 40px;
+            height: 4px;
+            background: #ccc; /* Light gray */
+            top: 50%;
+            left: 50%;
+            transform-origin: left;
+            animation: spin-line 1.5s infinite linear;
+        }
+
+        .anim-1 .line:nth-child(1) { transform: rotate(0deg); animation-delay: 0s; }
+        .anim-1 .line:nth-child(2) { transform: rotate(90deg); animation-delay: 0.2s; }
+        .anim-1 .line:nth-child(3) { transform: rotate(180deg); animation-delay: 0.4s; }
+        .anim-1 .line:nth-child(4) { transform: rotate(270deg); animation-delay: 0.6s; }
+
+        @keyframes spin-line {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Animation 2: Pulsing Nodes (Verifying Credentials...) */
+        .anim-2 .node {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: #fff; /* White */
             border-radius: 50%;
-            border: 2px solid #35ee07;
-            opacity: 0;
-            animation: wave-animation 2s ease-in-out infinite;
+            animation: pulse-node 1.5s infinite;
         }
 
-        .signal-wave:nth-child(1) {
-            animation-delay: 0s;
-        }
-        .signal-wave:nth-child(2) {
-            animation-delay: 0.4s;
-        }
-        .signal-wave:nth-child(3) {
-            animation-delay: 0.8s;
-        }
-        .signal-wave:nth-child(4) {
-            animation-delay: 1.2s;
+        .anim-2 .node:nth-child(1) { top: 20px; left: 20px; animation-delay: 0s; }
+        .anim-2 .node:nth-child(2) { top: 20px; left: 65px; animation-delay: 0.3s; }
+        .anim-2 .node:nth-child(3) { top: 65px; left: 20px; animation-delay: 0.6s; }
+        .anim-2 .node:nth-child(4) { top: 65px; left: 65px; animation-delay: 0.9s; }
+
+        @keyframes pulse-node {
+            0% { transform: scale(0.5); opacity: 0.5; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(0.5); opacity: 0.5; }
         }
 
-        @keyframes wave-animation {
-            0% {
-                opacity: 0.5;
-                transform: scale(0.5);
-            }
-            50% {
-                opacity: 1;
-                transform: scale(1.5);
-            }
-            100% {
-                opacity: 0.5;
-                transform: scale(2);
-            }
+        /* Animation 3: Rotating Cross (Accessing Database...) */
+        .anim-3 .cross {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
 
-        /* Loader Text */
-        .loader-container p {
-            margin-top: 20px;
-            color: white;
-            font-size: 18px;
-            font-weight: 500;
+        .anim-3 .cross::before,
+        .anim-3 .cross::after {
+            content: '';
+            position: absolute;
+            background: #ccc; /* Light gray */
         }
+
+        .anim-3 .cross::before {
+            width: 60px;
+            height: 4px;
+            top: 28px;
+            left: 0;
+        }
+
+        .anim-3 .cross::after {
+            width: 4px;
+            height: 60px;
+            top: 0;
+            left: 28px;
+        }
+
+        .anim-3 .cross {
+            animation: rotate-cross 2s infinite linear;
+        }
+
+        @keyframes rotate-cross {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        /* Animation 4: Fading Squares (Loading Case Files...) */
+        .anim-4 .square {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #fff; /* White */
+            animation: fade-square 1.5s infinite;
+        }
+
+        .anim-4 .square:nth-child(1) { top: 10px; left: 10px; animation-delay: 0s; }
+        .anim-4 .square:nth-child(2) { top: 10px; left: 40px; animation-delay: 0.2s; }
+        .anim-4 .square:nth-child(3) { top: 10px; left: 70px; animation-delay: 0.4s; }
+        .anim-4 .square:nth-child(4) { top: 40px; left: 10px; animation-delay: 0.6s; }
+        .anim-4 .square:nth-child(5) { top: 40px; left: 40px; animation-delay: 0.8s; }
+        .anim-4 .square:nth-child(6) { top: 40px; left: 70px; animation-delay: 1s; }
+        .anim-4 .square:nth-child(7) { top: 70px; left: 10px; animation-delay: 1.2s; }
+        .anim-4 .square:nth-child(8) { top: 70px; left: 40px; animation-delay: 1.4s; }
+        .anim-4 .square:nth-child(9) { top: 70px; left: 70px; animation-delay: 1.6s; }
+
+        @keyframes fade-square {
+            0% { opacity: 0.3; }
+            50% { opacity: 1; }
+            100% { opacity: 0.3; }
+        }
+
+        /* Animation 5: Spinning Octagon (Syncing Data...) */
+        .anim-5 .octagon {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #ccc; /* Light gray */
+            clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+            animation: spin-octagon 2s infinite linear;
+        }
+
+        @keyframes spin-octagon {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        /* Animation 6: Wave Lines (Establishing Connection...) */
+        .anim-6 .wave-line {
+            position: absolute;
+            width: 80px;
+            height: 2px;
+            background: #fff; /* White */
+            top: 50%;
+            left: 10px;
+            animation: wave-line 1.5s infinite;
+        }
+
+        .anim-6 .wave-line:nth-child(1) { animation-delay: 0s; }
+        .anim-6 .wave-line:nth-child(2) { animation-delay: 0.3s; top: 40px; }
+        .anim-6 .wave-line:nth-child(3) { animation-delay: 0.6s; top: 60px; }
+
+        @keyframes wave-line {
+            0% { transform: translateY(0); opacity: 0.5; }
+            50% { transform: translateY(-10px); opacity: 1; }
+            100% { transform: translateY(0); opacity: 0.5; }
+        }
+
+        /* Animation 7: Rotating Triad (Preparing Desktop...) */
+        .anim-7 .triad {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #ccc; /* Light gray */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(0deg);
+            animation: rotate-triad 2s infinite linear;
+        }
+
+        .anim-7 .triad:nth-child(1) { transform: translate(-50%, -50%) rotate(0deg) translate(30px); }
+        .anim-7 .triad:nth-child(2) { transform: translate(-50%, -50%) rotate(120deg) translate(30px); }
+        .anim-7 .triad:nth-child(3) { transform: translate(-50%, -50%) rotate(240deg) translate(30px); }
+
+        @keyframes rotate-triad {
+            0% { transform: translate(-50%, -50%) rotate(0deg) translate(30px); }
+            100% { transform: translate(-50%, -50%) rotate(360deg) translate(30px); }
+        }
+
+        /* Animation 8: Pulsing Circle (Finalizing Access...) */
+        .anim-8 .circle {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 2px solid #fff; /* White */
+            border-radius: 50%;
+            animation: pulse-circle 1.5s infinite;
+        }
+
+        @keyframes pulse-circle {
+            0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.5; }
+            50% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.5; }
+        }
+
+        /* Animation 9: Glowing Lock Unlock (Access Granted.) */
+        .anim-9 .lock {
+            position: absolute;
+            width: 40px;
+            height: 50px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .anim-9 .lock-body {
+            position: absolute;
+            width: 40px;
+            height: 30px;
+            bottom: 0;
+            border: 3px solid #4CAF50; /* Green for success */
+            border-radius: 5px;
+            animation: glow-lock 1s infinite;
+        }
+
+        .anim-9 .lock-shackle {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 3px solid #4CAF50;
+            border-bottom: none;
+            border-radius: 10px 10px 0 0;
+            animation: unlock-shackle 1s forwards;
+        }
+
+        @keyframes glow-lock {
+            0% { box-shadow: 0 0 5px #4CAF50; }
+            50% { box-shadow: 0 0 15px #4CAF50; }
+            100% { box-shadow: 0 0 5px #4CAF50; }
+        }
+
+        @keyframes unlock-shackle {
+            0% { transform: translateX(-50%) rotate(0deg); }
+            50% { transform: translateX(-50%) rotate(-45deg); }
+            100% { transform: translateX(-50%) rotate(-45deg); }
+        }
+
+        /* Access Code Effect for Loader Text */
+        .loader-message {
+            color: #fff;
+            font-size: 16px;
+            font-weight: 400;
+            position: relative;
+            display: inline-block;
+        }
+
+        .loader-message::before {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            color: #ccc; /* Light gray */
+            overflow: hidden;
+            white-space: nowrap;
+            animation: code-reveal 1s infinite;
+        }
+
+        @keyframes code-reveal {
+            0% { width: 0; }
+            50% { width: 100%; }
+            100% { width: 0; }
+        }
+
+        .loader-message::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            color: #fff;
+            overflow: hidden;
+            white-space: nowrap;
+            animation: code-reveal-delay 1s infinite;
+        }
+
+        @keyframes code-reveal-delay {
+            0% { width: 0; }
+            50% { width: 0; }
+            100% { width: 100%; }
+        }
+
+        /* Watermark */
         .watermark {
             position: absolute;
-            bottom: 10px;
-            right: 10px;
+            bottom: 15px;
+            left: 15px;
             font-size: 12px;
-            color: #646464;
-            font-family: Arial, sans-serif;
+            color: #ddd;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            z-index: 1;
+        }
+
+        /* Block Overlay for Duplicate Tabs */
+        #blockOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 400;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            padding: 20px;
         }
     </style>
 </head>
@@ -177,151 +485,198 @@
     <!-- Login Form -->
     <div class="login-container">
         <h1>Investigation Department</h1>
-        <p>Enter your name and password to proceed</p>
+        <p class="welcome-message">Welcome</p>
         <input type="text" id="nameInput" placeholder="Your Name">
         <input type="password" id="passwordInput" placeholder="Password">
-        <button onclick="submitCredentials()">Login</button>
+        <button id="loginButton" onclick="submitCredentials()">Sign In</button>
         
         <!-- Hint Button with Popover -->
-        <button type="button" class="hint-btn mt-3" data-bs-toggle="popover" data-bs-content="Hint: The password is 'secret123'." data-bs-placement="top" title="Hint: The password is 'secret123'">Hint</button>
+        <button id="hintButton" type="button" class="hint-btn mt-3" data-bs-toggle="popover" data-bs-content="Hint: The password is 'secret123'." data-bs-placement="top" title="Hint: The password is 'secret123'">Need a Hint?</button>
     </div>
 
     <!-- Loader Screen -->
     <div class="loader-container" id="loaderScreen">
-        <div class="signal-container">
-            <div class="signal-wave"></div>
-            <div class="signal-wave"></div>
-            <div class="signal-wave"></div>
-            <div class="signal-wave"></div>
+        <div class="animation-container anim-1" id="anim-1">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
         </div>
-        <p id="loaderMessage">Accessing Data...</p>
+        <div class="animation-container anim-2" id="anim-2">
+            <div class="node"></div>
+            <div class="node"></div>
+            <div class="node"></div>
+            <div class="node"></div>
+        </div>
+        <div class="animation-container anim-3" id="anim-3">
+            <div class="cross"></div>
+        </div>
+        <div class="animation-container anim-4" id="anim-4">
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+        </div>
+        <div class="animation-container anim-5" id="anim-5">
+            <div class="octagon"></div>
+        </div>
+        <div class="animation-container anim-6" id="anim-6">
+            <div class="wave-line"></div>
+            <div class="wave-line"></div>
+            <div class="wave-line"></div>
+        </div>
+        <div class="animation-container anim-7" id="anim-7">
+            <div class="triad"></div>
+            <div class="triad"></div>
+            <div class="triad"></div>
+        </div>
+        <div class="animation-container anim-8" id="anim-8">
+            <div class="circle"></div>
+        </div>
+        <div class="animation-container anim-9" id="anim-9">
+            <div class="lock">
+                <div class="lock-body"></div>
+                <div class="lock-shackle"></div>
+            </div>
+        </div>
+        <p class="loader-message" id="loaderMessage" data-text="Initializing System...">Initializing System...</p>
     </div>
-</div>
-<!-- Watermark -->
-<div class="watermark">Website designed specially for IEEE EMBS's event</div>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 
-<script>
-    const correctPassword = "secret123"; // Set your desired password here
-    const sessionKey = "mystery_game_active";
+    <!-- Date and Time -->
+    <div class="datetime" id="datetime"></div>
 
-    function blockScreen() {
-        // Show alert to user
-        alert("Login is not allowed in duplicate tabs. Please close other tabs.");
+    <!-- Network Icon -->
+    <div class="network-icon"></div>
 
-        // Create a full-screen overlay
-        const overlay = document.createElement("div");
-        overlay.id = "blockOverlay";
-        overlay.style.position = "fixed";
-        overlay.style.top = "0";
-        overlay.style.left = "0";
-        overlay.style.width = "100%";
-        overlay.style.height = "100vh";
-        overlay.style.background = "rgba(0, 0, 0, 0.9)"; // Dark transparent overlay
-        overlay.style.zIndex = "9999";
-        overlay.style.display = "flex";
-        overlay.style.alignItems = "center";
-        overlay.style.justifyContent = "center";
-        overlay.style.color = "white";
-        overlay.style.fontSize = "20px";
-        overlay.style.fontWeight = "bold";
-        overlay.innerHTML = "Another session is already active. Close other tabs to continue.";
+    <!-- Watermark -->
+    <div class="watermark">Designed exclusively for <b> 404:Murder Not Found</b></div>
 
-        document.body.appendChild(overlay);
-    }
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 
-    function disableForm() {
-        document.getElementById("nameInput").disabled = true;
-        document.getElementById("passwordInput").disabled = true;
-        document.getElementById("loginButton").disabled = true;
-        document.getElementById("hintButton").disabled = true; // If you have a hint button
-        document.getElementById("formMessage").innerText = "Another session is already active.";
-        blockScreen(); // Block the entire screen
-    }
+    <script>
+        // Initialize Bootstrap Popovers
+        const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
+        const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
 
-    function enableForm() {
-        document.getElementById("nameInput").disabled = false;
-        document.getElementById("passwordInput").disabled = false;
-        document.getElementById("loginButton").disabled = false;
-        document.getElementById("hintButton").disabled = false;
-        document.getElementById("formMessage").innerText = "";
+        // Display Date and Time (Windows 10 style)
+        function updateDateTime() {
+            const now = new Date();
+            const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            const date = now.toLocaleDateString([], { weekday: 'long', month: 'long', day: 'numeric' });
+            document.getElementById('datetime').innerHTML = `${time}<br>${date}`;
+        }
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
 
-        // Remove the overlay if it exists
-        const overlay = document.getElementById("blockOverlay");
-        if (overlay) overlay.remove();
-    }
+        const correctPassword = "secret123";
+        const sessionKey = "mystery_game_active";
 
-    function handleDuplicateTabs() {
-        if (sessionStorage.getItem(sessionKey)) {
-            disableForm(); // If another tab is already open, disable form inputs and block screen
-        } else {
-            sessionStorage.setItem(sessionKey, "active"); // Mark this tab as active
-            enableForm();
+        function blockScreen() {
+            alert("Login is not allowed in duplicate tabs. Please close other tabs.");
+            const overlay = document.createElement("div");
+            overlay.id = "blockOverlay";
+            overlay.innerHTML = "Another session is already active. Close other tabs to continue.";
+            document.body.appendChild(overlay);
         }
 
-        // Listen for changes in sessionStorage (when a new tab opens)
-        window.addEventListener("storage", (event) => {
-            if (event.key === sessionKey) {
-                if (event.newValue) {
-                    disableForm(); // If a new tab opens, disable form in the duplicate tab
-                } else {
-                    enableForm(); // If an active tab closes, re-enable the form in another tab
-                }
-            }
-        });
+        function disableForm() {
+            document.getElementById("nameInput").disabled = true;
+            document.getElementById("passwordInput").disabled = true;
+            document.getElementById("loginButton").disabled = true;
+            document.getElementById("hintButton").disabled = true;
+            blockScreen();
+        }
 
-        // Remove session key on tab close
-        window.addEventListener("beforeunload", () => {
-            sessionStorage.removeItem(sessionKey);
-        });
-    }
+        function enableForm() {
+            document.getElementById("nameInput").disabled = false;
+            document.getElementById("passwordInput").disabled = false;
+            document.getElementById("loginButton").disabled = false;
+            document.getElementById("hintButton").disabled = false;
+            const overlay = document.getElementById("blockOverlay");
+            if (overlay) overlay.remove();
+        }
 
-    handleDuplicateTabs();
-
-    function showLoader(message) {
-        document.getElementById('loaderMessage').innerText = message;
-        document.getElementById('loaderScreen').style.display = 'flex';
-    }
-
-    function hideLoader() {
-        document.getElementById('loaderScreen').style.display = 'none';
-    }
-
-    function submitCredentials() {
-        const name = document.getElementById('nameInput').value.trim();
-        const password = document.getElementById('passwordInput').value;
-
-        if (name && password) {
-            if (password === correctPassword) {
-                showLoader("Accessing Data...");
-                setTimeout(() => { showLoader("Acquiring Location..."); }, 2000);
-                setTimeout(() => { showLoader("Verifying Identity..."); }, 4000);
-                setTimeout(() => { showLoader("Checking Case Files..."); }, 6000);
-                setTimeout(() => { showLoader("Receiving Mission Details..."); }, 8000);
-                setTimeout(() => { showLoader("Activating VPN..."); }, 10000);
-                setTimeout(() => { showLoader("Syncing your chats..."); }, 12000);
-                setTimeout(() => { showLoader("Almost There...."); }, 14000);
-                setTimeout(() => { showLoader("Almost There...."); }, 16000);
-
-                setTimeout(() => {
-                    localStorage.setItem('username', name);
-                    localStorage.setItem('startTime', Date.now());
-                    hideLoader();
-                    window.location.href = 'gameinfo.html';
-                }, 18000);
+        function handleDuplicateTabs() {
+            if (sessionStorage.getItem(sessionKey)) {
+                disableForm();
             } else {
-                alert('Incorrect password. Please try again.');
+                sessionStorage.setItem(sessionKey, "active");
+                enableForm();
             }
-        } else {
-            alert('Please enter both your name and password.');
+
+            window.addEventListener("storage", (event) => {
+                if (event.key === sessionKey) {
+                    if (event.newValue) {
+                        disableForm();
+                    } else {
+                        enableForm();
+                    }
+                }
+            });
+
+            window.addEventListener("beforeunload", () => {
+                sessionStorage.removeItem(sessionKey);
+            });
         }
-    }
-</script>
 
+        handleDuplicateTabs();
 
+        function showLoader(message, animNumber) {
+            const loaderMessage = document.getElementById('loaderMessage');
+            loaderMessage.setAttribute('data-text', message);
+            loaderMessage.innerText = message;
 
+            // Hide all animations
+            for (let i = 1; i <= 9; i++) {
+                document.getElementById(`anim-${i}`).style.display = 'none';
+            }
 
+            // Show the current animation
+            document.getElementById(`anim-${animNumber}`).style.display = 'block';
 
-    </body>
-    </html>
+            document.getElementById('loaderScreen').style.display = 'flex';
+        }
+
+        function hideLoader() {
+            document.getElementById('loaderScreen').style.display = 'none';
+        }
+
+        function submitCredentials() {
+            const name = document.getElementById('nameInput').value.trim();
+            const password = document.getElementById('passwordInput').value;
+
+            if (name && password) {
+                if (password === correctPassword) {
+                    showLoader("Initializing System...", 1);
+                    setTimeout(() => { showLoader("Verifying Credentials...", 2); }, 2000);
+                    setTimeout(() => { showLoader("Accessing Database...", 3); }, 4000);
+                    setTimeout(() => { showLoader("Loading Case Files...", 4); }, 6000);
+                    setTimeout(() => { showLoader("Syncing Data...", 5); }, 8000);
+                    setTimeout(() => { showLoader("Establishing Connection...", 6); }, 10000);
+                    setTimeout(() => { showLoader("Preparing Desktop...", 7); }, 12000);
+                    setTimeout(() => { showLoader("Finalizing Access...", 8); }, 14000);
+                    setTimeout(() => { showLoader("Access Granted.", 9); }, 16000);
+
+                    setTimeout(() => {
+                        localStorage.setItem('username', name);
+                        localStorage.setItem('startTime', Date.now());
+                        hideLoader();
+                        window.location.href = 'volunteer.html';
+                    }, 18000);
+                } else {
+                    alert('Incorrect password. Please try again.');
+                }
+            } else {
+                alert('Please enter both your name and password.');
+            }
+        }
+    </script>
+</body>
+</html>

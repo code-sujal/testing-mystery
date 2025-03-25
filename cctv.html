@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CCTV Monitoring System</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;600&display=swap">
+    <link rel="stylesheet" href="cctv.css">
+</head>
+<body>
+    <!-- Toolbar -->
+    <div class="toolbar">
+        <div class="toolbar-left">
+            <button class="back-btn" onclick="goBack()">⬅</button>
+            <button class="toolbar-btn">File</button>
+            <button class="toolbar-btn">View</button>
+            <button class="toolbar-btn" id="layout-toggle">Grid Layout</button>
+            <button class="toolbar-btn">Recordings</button>
+            <button class="toolbar-btn">Export</button>
+            <button class="toolbar-btn">Help</button>
+        </div>
+        <div class="toolbar-right">
+            <input type="text" placeholder="Search Cameras..." class="search-bar">
+            <button class="toolbar-btn theme-toggle" id="theme-toggle">🌙 Dark</button>
+        </div>
+    </div>
+
+    <main class="main">
+        <div class="dashboard-container">
+            <!-- Main Camera Feed -->
+            <section class="dashboard" id="dashboard">
+                <div class="main-feed">
+                    <div class="feed-screen">
+                        <video autoplay muted loop class="feed-video" id="main-video">
+                            <source src="motion-detection-computer-room-door-1920x1080.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="feed-overlay">
+                            <div class="overlay-left">
+                                <span id="main-feed-label">CAM 7.1/ws</span>
+                                <span class="status-indicator online">Online</span>
+                            </div>
+                            <div class="overlay-right">
+                                <span id="main-feed-time">00:42</span>
+                                <span class="recording-indicator">REC</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional Camera Feeds -->
+                <div class="extra-feeds" id="extra-feeds">
+                    <div class="feed" onclick="switchFeed('CAM 7.1/ws', 'https://www.w3schools.com/html/mov_bbb.mp4')">
+                        <div class="feed-screen">
+                            <video autoplay muted loop class="feed-video">
+                                <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                            <div class="feed-overlay">
+                                <div class="overlay-left">
+                                    <span>CAM 7.1/ws</span>
+                                    <span class="status-indicator online">Online</span>
+                                </div>
+                                <div class="overlay-right">
+                                    <span>00:42</span>
+                                    <span class="recording-indicator">REC</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="feed" onclick="switchFeed('CAM 8.1/ws', 'https://www.w3schools.com/html/mov_bbb.mp4')">
+                        <div class="feed-screen">
+                            <video autoplay muted loop class="feed-video">
+                                <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                            <div class="feed-overlay">
+                                <div class="overlay-left">
+                                    <span>CAM 8.1/ws</span>
+                                    <span class="status-indicator online">Online</span>
+                                </div>
+                                <div class="overlay-right">
+                                    <span>00:42</span>
+                                    <span class="recording-indicator">REC</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="feed" onclick="switchFeed('CAM 9.1/ws', 'https://www.w3schools.com/html/mov_bbb.mp4')">
+                        <div class="feed-screen">
+                            <video autoplay muted loop class="feed-video">
+                                <source src="videoplayback.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                            <div class="feed-overlay">
+                                <div class="overlay-left">
+                                    <span>CAM 9.1/ws</span>
+                                    <span class="status-indicator offline">Offline</span>
+                                </div>
+                                <div class="overlay-right">
+                                    <span>00:42</span>
+                                    <span class="recording-indicator">REC</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Settings and Alerts Panel -->
+            <aside class="settings-panel">
+                <div class="tabs">
+                    <button class="tab-btn active" onclick="showTab('settings-tab')">System</button>
+                    <button class="tab-btn" onclick="showTab('alerts-tab')">Alerts</button>
+                    <button class="tab-btn" onclick="showTab('status-tab')">Status</button>
+                </div>
+                <div id="settings-tab" class="tab-content active">
+                    <h2>System Settings</h2>
+                    <div class="settings-section">
+                        <h3>General</h3>
+                        <p>Input Latency: <span id="latency">100ms</span></p>
+                        <p>Memory: <span id="memory">2048mb</span></p>
+                        <p>Units: Metric</p>
+                        <p>Network: <span id="network">Active</span></p>
+                    </div>
+                    <div class="settings-section">
+                        <h3>Project</h3>
+                        <p>Workspace: SE-5008</p>
+                        <p>Security: 256-bit encryption</p>
+                        <p>Firewall: Enabled</p>
+                        <p>AdSec: Enabled</p>
+                    </div>
+                    <div class="settings-section">
+                        <h3>IP Status</h3>
+                        <p>Time: <span id="time"></span></p>
+                        <p>Date: <span id="date"></span></p>
+                        <p>Time Format: 24hr</p>
+                    </div>
+                </div>
+                <div id="alerts-tab" class="tab-content">
+                    <h2>Live Alerts</h2>
+                    <ul id="alerts-list" class="alerts-list">
+                        <!-- Alerts will be dynamically added here -->
+                    </ul>
+                </div>
+                <div id="status-tab" class="tab-content">
+                    <h2>Camera Status</h2>
+                    <ul class="status-list">
+                        <li><span>CAM 7.1/ws:</span> <span class="status-indicator online">Online</span></li>
+                        <li><span>CAM 8.1/ws:</span> <span class="status-indicator online">Online</span></li>
+                        <li><span>CAM 9.1/ws:</span> <span class="status-indicator offline">Offline</span></li>
+                    </ul>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- Footer with Playback Controls -->
+    <footer class="footer">
+        <div class="playback-controls">
+            <button class="control-btn">◄◄</button>
+            <button class="control-btn">▶</button>
+            <button class="control-btn">►►</button>
+            <span>24Mbps</span>
+            <span>1080p</span>
+            <span>10201</span>
+        </div>
+    </footer>
+
+    <script src="cctv.js"></script>
+</body>
+</html>

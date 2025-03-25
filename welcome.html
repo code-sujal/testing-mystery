@@ -1,389 +1,470 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome - Police Department</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-image: url(bg.jpg); /* Add your image URL here */
-            background-size: cover; /* Makes the background cover the entire page */
-            background-position: center; /* Centers the background image */
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            color: white;
-        }
-        header {
-            background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent header background */
-            padding: 10px;
-            text-align: center;
-            border-radius: 0 0 15px 15px;
-        }
-        header h1 {
-            margin: 0;
-        }
-        .desktop {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            position: relative;
-            border-radius: 15px;
-            margin: 20px;
-        }
-        .icons {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: flex-start;
-            align-items: flex-start;
-            width: 100%;
-        }
-        .icon {
-            width: 100px;
-            text-align: center;
-            margin: 10px;
-            cursor: pointer;
-            border-radius: 10px;
-            transition: transform 0.3s;
-        }
-        .icon img {
-            width: 50px;
-            height: 50px;
-            border-radius: 10px;
-        }
-        .icon:hover {
-            transform: scale(1.05);
-        }
-        .taskbar {
-            background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent taskbar background */
-            padding: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: relative;
-            border-radius: 15px 15px 0 0;
-        }
-        .taskbar p {
-            margin: 0;
-        }
-        .start-menu {
-            background-color: rgba(30, 30, 30, 0.9);
-            color: white;
-            position: absolute;
-            bottom: 60px;
-            left: 10px;
-            width: 250px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            display: none;
-            flex-direction: column;
-            padding: 10px;
-            border-radius: 10px;
-            backdrop-filter: blur(10px);
-        }
-        .start-menu button {
-            background-color: #333;
-            color: white;
-            border: none;
-            padding: 10px;
-            text-align: left;
-            width: 100%;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            display: flex;
-            align-items: center;
-            border-radius: 5px;
-            margin: 5px 0;
-        }
-        .start-menu button img {
-            margin-right: 10px;
-            width: 20px;
-            height: 20px;
-        }
-        .start-menu button:hover {
-            background-color: #555;
-        }
-        .start-btn {
-            cursor: pointer;
-            background: none;
-            border: none;
-            padding: 0;
-        }
-        .start-btn img {
-            width: 30px;
-            height: 30px;
-        }
-        .taskbar-icons {
-            display: flex;
-            gap: 10px;
-        }
-        .taskbar-icons .icon {
-            width: 30px;
-            height: 30px;
-            border-radius: 5px;
-            transition: transform 0.3s;
-        }
-        .taskbar-icons .icon img {
-            width: 100%;
-            height: 100%;
-        }
-        .taskbar-icons .icon:hover {
-            transform: scale(1.1);
-        }
-        #timer {
-            font-size: 1.5em;
-            color: red;
-        }
-        .greeting {
-            position: absolute;
-            top: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            text-align: center;
-            background-color: rgba(0, 0, 0, 0.5);
-            padding: 10px;
-            border-radius: 10px;
-            backdrop-filter: blur(10px);
-        }
-        .chapter-objectives {
-    position: absolute;
-    top: 35px;
-    right: 80px; /* Adjusted the right value to shift it more towards the left */
-    width: 200px;
-    background-color: rgba(0, 0, 0, 0.7);
-    padding: 10px;
-    border-radius: 10px;
-    backdrop-filter: blur(10px);
-    color: white;
-}
-        .chapter-objectives h3 {
-            margin: 0 0 10px 0;
-        }
-        .chapter-objectives ul {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-        }
-        .chapter-objectives li {
-            margin: 5px 0;
-        }
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Welcome - Police Department</title>
+        <!-- Bootstrap CSS -->
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Google Fonts (Roboto) -->
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+        <style>
+            body {
+                font-family: 'Roboto', sans-serif;
+                background: linear-gradient(135deg, #1a2526 0%, #2c3e50 100%); /* Dark gradient for a high-tech feel */
+                background-size: cover;
+                background-position: center;
+                margin: 0;
+                padding: 0;
+                height: 100vh;
+                display: flex;
+                flex-direction: column;
+                color: #fff;
+                overflow: hidden;
+            }
 
-        #emailWindow {
-            position: absolute;
-            width: 400px;
-            height: 300px;
-            background-color: #fff;
-            border: 1px solid #000;
-            z-index: 100;
-            display: none; /* Initially hidden */
-        }
-        #emailHeader {
-            background-color: #2196F3;
-            color: #fff;
-            padding: 10px;
-            cursor: move;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        #emailContent {
-            padding: 10px;
-            height: calc(100% - 40px);
-            overflow-y: auto;
-        }
-        .minimize-btn {
-            background: none;
-            border: none;
-            color: #fff;
-            cursor: pointer;
-        }
-    </style>
-</head>
-<body>
-    <div id="emailWindow">
-        <div id="emailHeader">
-            <span>Email Application</span>
-            <button class="minimize-btn" onclick="toggleMinimize()">_</button>
-        </div>
-        <div id="emailContent">
-            <!-- Email application content goes here -->
-            <p>Welcome to your email inbox.</p>
-        </div>
-    </div>
-    <div class="desktop">
-        <div class="greeting">
-            <h2 id="greeting">Welcome, Vigilante</h2>
-            <p class="popup">WARNING: Unauthorized access detected. System will shut down in <span id="timer">60:00</span>. Proceed with caution.</p>
-        </div>
-        <div class="icons">
-            <div class="icon" onclick="openFolder('Email')">
-                <a href="email.html" target="_blank"><img src="email.png" alt="This PC"></a>
-                <p>Email</p>
-            </div>
-            <div class="icon" onclick="openFolder('Chat')">
-                <a href="chat.html" target="_blank"><img src="chat.png" alt="Chat"></a>
-                <p>Chat</p>
-            </div>
-            <div class="icon" onclick="openFolder('Case Files')">
-                <a href="files.html">                <img src="https://cdn-icons-png.flaticon.com/512/3767/3767084.png" alt="Case Files">
-                </a>
-                <p>Files</p>
-            </div>
-            <div class="icon" onclick="openFolder('Evidence')">
-                <img src="browser.png" alt="Evidence">
-                <p>Browser</p>
-            </div>
-            <div class="icon" onclick="openPuzzle()">
-                <img src="png-transparent-recycle-bin-logo-trash-recycling-bin-file-deletion-computer-file-recycle-bin-glass-recycling-waste-containment-thumbnail-removebg-preview.png" alt="Suspects">
-                <p>Recycle Bin</p>
-            </div>
-            <div class="icon" onclick="openPuzzle()">
-                <img src="https://cdn-icons-png.flaticon.com/512/9241/9241732.png" alt="Suspects">
-                <p>CCTV</p>
-            </div>
-        </div>
-    </div>
-    <div class="taskbar">
-        <button class="start-btn" onclick="toggleStartMenu()">
-            <img src="https://mailmeteor.com/logos/assets/PNG/Microsoft_Logo_512px.png" alt="Start">
-        </button>
-        <div class="taskbar-icons">
-            <div class="icon" onclick="openApp('Radar')">
-                <img src="radar.png" alt="Radar">
-            </div>
-            <div class="icon" onclick="openApp('Track Phone')">
-                <img src="track.png" alt="Track Phone">
-            </div>
-            <div class="icon" onclick="openApp('Investigation Files')">
-                <img src="https://cdn-icons-png.flaticon.com/512/3767/3767084.png" alt="Investigation Files">
-            </div>
-        </div>
-        <div class="start-menu" id="startMenu">
-            <button onclick="openFolder('Settings')">
-                <img src="https://files.softicons.com/download/toolbar-icons/stainless-applications-icons-by-iconleak/ico/9.ico" alt="Settings">
-                Settings
-            </button>
-            <button onclick="openFolder('Documents')">
-                <img src="https://cdn-icons-png.flaticon.com/512/3767/3767084.png" alt="Documents">
-                Documents
-            </button>
-            <button onclick="openFolder('Pictures')">
-                <img src="picture.png" alt="Pictures">
-                Pictures
-            </button>
-            <button onclick="openFolder('Satellite Connectivity')">
-                <img src="https://cdn-icons-png.flaticon.com/512/1042/1042820.png" alt="Satellite Connectivity">
-                Satellite Connectivity
-            </button>
-            <button onclick="openFolder('Vehicle Tracking')">
-                <img src="https://cdn-icons-png.flaticon.com/512/3466/3466202.png" alt="Vehicle Tracking">
-                Vehicle Tracking
-            </button>
-        </div>
-        <p id="timeDisplay"></p>
-    </div>
+            header {
+                background: rgba(255, 255, 255, 0.1); /* Frosted glass effect */
+                backdrop-filter: blur(10px);
+                padding: 15px;
+                text-align: center;
+                border-radius: 0 0 15px 15px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            }
 
-    <!-- Chapter Objectives Section -->
-    <div class="chapter-objectives">
-        <h3>Chapter 1 Objectives:</h3>
-        <ul>
-            <a href="https://docs.google.com/document/d/1eqrg52hw2Gznl6m036fLGDfI8iLA2IF85XakTLfKmcY/edit?usp=sharing" target="_blank">Click to view chapter 1 objectives</a>
-        </ul>
-    </div>
+            header h1 {
+                margin: 0;
+                font-size: 24px;
+                font-weight: 500;
+                color: #fff;
+            }
 
-    <!-- Puzzle Modal -->
-   
-    <!-- Bootstrap JS and dependencies -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const name = localStorage.getItem('username');
-            const startTime = localStorage.getItem('startTime');
-            const timeLimit = 60 * 60 * 1000; // 1 hour in milliseconds
+            .desktop {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                padding: 20px;
+                position: relative;
+            }
 
-            if (name) {
-                document.getElementById('greeting').textContent = `Welcome, ${name}`;
-            } else {
-                const username = prompt("Enter your username:");
-                if (username) {
-                    localStorage.setItem('username', username);
-                    localStorage.setItem('startTime', Date.now());
-                    document.getElementById('greeting').textContent = `Welcome, ${username}`;
+            .icons {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+                gap: 20px;
+                width: 100%;
+                max-width: 800px;
+                padding: 20px;
+            }
+
+            .icon {
+                text-align: center;
+                cursor: pointer;
+                padding: 10px;
+                border-radius: 10px;
+                transition: transform 0.3s ease, background 0.3s ease;
+            }
+
+            .icon img {
+                width: 50px;
+                height: 50px;
+                border-radius: 8px;
+                filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.2));
+            }
+
+            .icon p {
+                margin: 5px 0 0;
+                font-size: 14px;
+                color: #fff;
+                text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+            }
+
+            .icon:hover {
+                transform: scale(1.1);
+                background: rgba(255, 255, 255, 0.1);
+            }
+
+            .taskbar {
+                background: rgba(255, 255, 255, 0.1); /* Frosted glass effect */
+                backdrop-filter: blur(10px);
+                padding: 10px 20px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                border-radius: 15px 15px 0 0;
+                box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+            }
+
+            .taskbar p {
+                margin: 0;
+                font-size: 14px;
+                color: #fff;
+            }
+
+            .start-menu {
+                background: rgba(30, 30, 30, 0.95);
+                backdrop-filter: blur(10px);
+                color: #fff;
+                position: absolute;
+                bottom: 60px;
+                left: 20px;
+                width: 250px;
+                box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+                display: none;
+                flex-direction: column;
+                padding: 10px;
+                border-radius: 10px;
+                animation: slide-up 0.3s ease;
+            }
+
+            @keyframes slide-up {
+                from { transform: translateY(20px); opacity: 0; }
+                to { transform: translateY(0); opacity: 1; }
+            }
+
+            .start-menu button {
+                background: none;
+                color: #fff;
+                border: none;
+                padding: 10px;
+                text-align: left;
+                width: 100%;
+                cursor: pointer;
+                transition: background 0.3s ease;
+                display: flex;
+                align-items: center;
+                border-radius: 5px;
+                margin: 5px 0;
+                font-size: 14px;
+            }
+
+            .start-menu button img {
+                margin-right: 10px;
+                width: 20px;
+                height: 20px;
+                filter: brightness(0) invert(1);
+            }
+
+            .start-menu button:hover {
+                background: rgba(255, 255, 255, 0.1);
+            }
+
+            .start-btn {
+                cursor: pointer;
+                background: none;
+                border: none;
+                padding: 0;
+            }
+
+            .start-btn img {
+                width: 30px;
+                height: 30px;
+                filter: brightness(0) invert(1);
+                transition: transform 0.3s ease;
+            }
+
+            .start-btn:hover img {
+                transform: scale(1.1);
+            }
+
+            .taskbar-icons {
+                display: flex;
+                gap: 15px;
+            }
+
+            .taskbar-icons .icon {
+                width: 30px;
+                height: 30px;
+                border-radius: 5px;
+                transition: transform 0.3s ease;
+            }
+
+            .taskbar-icons .icon img {
+                width: 100%;
+                height: 100%;
+                filter: brightness(0) invert(1);
+            }
+
+            .taskbar-icons .icon:hover {
+                transform: scale(1.1);
+            }
+
+            #timer {
+                font-size: 1.2em;
+                color: #ff5555; /* Softer red for the timer */
+                font-weight: 500;
+            }
+
+            .greeting {
+                position: absolute;
+                top: 80px;
+                left: 50%;
+                transform: translateX(-50%);
+                text-align: center;
+                background: rgba(255, 255, 255, 0.1);
+                backdrop-filter: blur(10px);
+                padding: 15px 25px;
+                border-radius: 10px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            }
+
+            .greeting h2 {
+                margin: 0 0 10px;
+                font-size: 22px;
+                font-weight: 500;
+            }
+
+            .greeting .popup {
+                margin: 0;
+                font-size: 14px;
+                color: #ddd;
+            }
+
+            #emailWindow {
+                position: absolute;
+                width: 400px;
+                height: 300px;
+                background: #fff;
+                border: 1px solid #ccc;
+                z-index: 100;
+                display: none;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+                border-radius: 8px;
+            }
+
+            #emailHeader {
+                background: #4A90E2; /* Soft teal for the header */
+                color: #fff;
+                padding: 10px;
+                cursor: move;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                border-radius: 8px 8px 0 0;
+            }
+
+            #emailHeader span {
+                font-size: 16px;
+                font-weight: 500;
+            }
+
+            #emailContent {
+                padding: 15px;
+                height: calc(100% - 40px);
+                overflow-y: auto;
+                color: #333;
+                font-size: 14px;
+            }
+
+            .minimize-btn {
+                background: none;
+                border: none;
+                color: #fff;
+                cursor: pointer;
+                font-size: 16px;
+                transition: color 0.3s ease;
+            }
+
+            .minimize-btn:hover {
+                color: #ddd;
+            }
+
+            /* Responsive Design */
+            @media (max-width: 768px) {
+                .icons {
+                    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+                    gap: 15px;
+                }
+
+                .icon img {
+                    width: 40px;
+                    height: 40px;
+                }
+
+                .icon p {
+                    font-size: 12px;
+                }
+
+                .greeting {
+                    top: 60px;
+                    padding: 10px 15px;
+                }
+
+                .greeting h2 {
+                    font-size: 18px;
+                }
+
+                .greeting .popup {
+                    font-size: 12px;
+                }
+
+                .start-menu {
+                    width: 200px;
+                    left: 10px;
+                }
+
+                .taskbar {
+                    padding: 8px 15px;
                 }
             }
+        </style>
+    </head>
+    <body>
+        <div id="emailWindow">
+            <div id="emailHeader">
+                <span>Email Application</span>
+                <button class="minimize-btn" onclick="toggleMinimize()">_</button>
+            </div>
+            <div id="emailContent">
+                <p>Welcome to your email inbox.</p>
+            </div>
+        </div>
 
-            function updateTimer() {
-                const elapsedTime = Date.now() - parseInt(localStorage.getItem('startTime'), 10);
-                const remainingTime = Math.max(timeLimit - elapsedTime, 0);
-                const minutes = Math.floor(remainingTime / 60000);
-                const seconds = Math.floor((remainingTime % 60000) / 1000);
-                document.getElementById('timer').textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        <header>
+            <h1>Police Department - Investigation Dashboard</h1>
+        </header>
 
-                if (remainingTime <= 0) {
-                    alert("Session expired. Please log in again.");
-                    localStorage.removeItem('username');
-                    localStorage.removeItem('startTime');
-                    location.reload();
-                }
-            }
+        <div class="desktop">
+            <div class="greeting">
+                <h2 id="greeting">Welcome, Vigilante</h2>
+                <p class="popup">WARNING: Unauthorized access detected. System will shut down in <span id="timer">60:00</span>. Proceed with caution.</p>
+            </div>
+            <div class="icons">
+                <div class="icon" onclick="openFolder('Email')">
+                    <a href="email.html" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="Email"></a>
+                    <p>Email</p>
+                </div>
+                <div class="icon" onclick="openFolder('Chat')">
+                    <a href="chat.html" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/124/124034.png" alt="Chat"></a>
+                    <p>Chat</p>
+                </div>
+                <div class="icon" onclick="openFolder('Case Files')">
+                    <a href="files.html"><img src="https://cdn-icons-png.flaticon.com/512/3767/3767084.png" alt="Case Files"></a>
+                    <p>Files</p>
+                </div>
+                <div class="icon" onclick="openFolder('Evidence')">
+                    <img src="https://cdn-icons-png.flaticon.com/512/104/104831.png" alt="Evidence">
+                    <p>Browser</p>
+                </div>
+                <div class="icon" onclick="openPuzzle()">
+                    <img src="https://cdn-icons-png.flaticon.com/512/138/138533.png" alt="Recycle Bin">
+                    <p>Recycle Bin</p>
+                </div>
+                <div class="icon" onclick="openPuzzle()">
+                    <a href="cctv.html"><img src="https://cdn-icons-png.flaticon.com/512/9241/9241732.png" alt="CCTV"></a>
+                    <p>CCTV</p>
+                </div>
+            </div>
+        </div>
 
-            setInterval(updateTimer, 1000);
+        <div class="taskbar">
+            <button class="start-btn" onclick="toggleStartMenu()">
+                <img src="https://mailmeteor.com/logos/assets/PNG/Microsoft_Logo_512px.png" alt="Start">
+            </button>
+            <div class="taskbar-icons">
+                <div class="icon" onclick="openApp('Radar')">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1087/1087100.png" alt="Radar">
+                </div>
+                <div class="icon" onclick="openApp('Track Phone')">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png" alt="Track Phone">
+                </div>
+                <div class="icon" onclick="openApp('Investigation Files')">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3767/3767084.png" alt="Investigation Files">
+                </div>
+            </div>
+            <div class="start-menu" id="startMenu">
+                <button onclick="openFolder('Settings')">
+                    <img src="https://cdn-icons-png.flaticon.com/512/126/126472.png" alt="Settings">
+                    Settings
+                </button>
+                <button onclick="openFolder('Documents')">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3767/3767084.png" alt="Documents">
+                    Documents
+                </button>
+                <button onclick="openFolder('Pictures')">
+                    <img src="https://cdn-icons-png.flaticon.com/512/104/104680.png" alt="Pictures">
+                    Pictures
+                </button>
+                <button onclick="openFolder('Satellite Connectivity')">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1042/1042820.png" alt="Satellite Connectivity">
+                    Satellite Connectivity
+                </button>
+                <button onclick="openFolder('Vehicle Tracking')">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3466/3466202.png" alt="Vehicle Tracking">
+                    Vehicle Tracking
+                </button>
+            </div>
+            <p id="timeDisplay"></p>
+        </div>
 
-            function updateTimeDisplay() {
-                const now = new Date();
-                document.getElementById('timeDisplay').textContent = now.toLocaleTimeString();
-            }
-            setInterval(updateTimeDisplay, 1000);
+        <!-- Bootstrap JS and dependencies -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const name = localStorage.getItem('username');
+                const startTime = localStorage.getItem('startTime');
+                const timeLimit = 60 * 60 * 1000; // 1 hour in milliseconds
 
-            window.toggleStartMenu = function() {
-                const startMenu = document.getElementById('startMenu');
-                startMenu.style.display = startMenu.style.display === 'flex' ? 'none' : 'flex';
-            };
-
-            window.openFolder = function(folderName) {
-                
-            };
-
-            window.openApp = function(appName) {
-                alert(`Launching ${appName}`);
-            };
-
-            window.openPuzzle = function() {
-                $('#puzzleModal').modal('show');
-            };
-
-            window.checkPuzzle = function() {
-                const answer = document.getElementById('puzzleAnswer').value.toLowerCase();
-                if (answer === "echo") {
-                    // Show loading page
-                    document.body.innerHTML += `
-                        <div id="loadingPage" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); color: white; display: flex; justify-content: center; align-items: center; z-index: 9999;">
-                            <div class="loading-content">
-                                <h2>Accessing Suspects...</h2>
-                                <div class="spinner-border text-light" role="status"></div>
-                            </div>
-                        </div>
-                    `;
-
-                    // After 3 seconds, open the folder
-                    setTimeout(function() {
-                        openFolder('Suspects');
-                        document.getElementById('loadingPage').remove();  // Remove the loading screen
-                    }, 3000);
+                if (name) {
+                    document.getElementById('greeting').textContent = `Welcome, ${name}`;
                 } else {
-                    alert("Incorrect answer. Try again.");
+                    const username = prompt("Enter your username:");
+                    if (username) {
+                        localStorage.setItem('username', username);
+                        localStorage.setItem('startTime', Date.now());
+                        document.getElementById('greeting').textContent = `Welcome, ${username}`;
+                    }
                 }
-            };
-        });
-    </script>
-</body>
-</html>
+
+                function updateTimer() {
+                    const elapsedTime = Date.now() - parseInt(localStorage.getItem('startTime'), 10);
+                    const remainingTime = Math.max(timeLimit - elapsedTime, 0);
+                    const minutes = Math.floor(remainingTime / 60000);
+                    const seconds = Math.floor((remainingTime % 60000) / 1000);
+                    document.getElementById('timer').textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+
+                    if (remainingTime <= 0) {
+                        alert("Session expired. Please log in again.");
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('startTime');
+                        location.reload();
+                    }
+                }
+
+                setInterval(updateTimer, 1000);
+
+                function updateTimeDisplay() {
+                    const now = new Date();
+                    document.getElementById('timeDisplay').textContent = now.toLocaleTimeString();
+                }
+                setInterval(updateTimeDisplay, 1000);
+
+                window.toggleStartMenu = function() {
+                    const startMenu = document.getElementById('startMenu');
+                    startMenu.style.display = startMenu.style.display === 'flex' ? 'none' : 'flex';
+                };
+
+                window.openFolder = function(folderName) {
+                    // Placeholder for folder opening logic
+                };
+
+                window.openApp = function(appName) {
+                    alert(`Launching ${appName}`);
+                };
+
+                window.openPuzzle = function() {
+                    // Since the puzzle modal was removed, this can be updated to directly open the folder
+                    openFolder('Suspects');
+                };
+
+                window.toggleMinimize = function() {
+                    const emailWindow = document.getElementById('emailWindow');
+                    emailWindow.style.display = emailWindow.style.display === 'none' ? 'block' : 'none';
+                };
+            });
+        </script>
+    </body>
+    </html>

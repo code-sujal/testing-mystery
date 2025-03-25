@@ -4,9 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OTP Validation</title>
-    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js"></script>
-
     <style>
         body {
             display: flex;
@@ -18,119 +15,325 @@
             font-family: Arial, sans-serif;
         }
 
-        .card {
-            width: 360px;
-            padding: 20px;
-            text-align: center;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .card input {
-            width: 90%;
-            margin: 10px 0;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        .card button {
-            width: 95%;
-            padding: 10px;
-            border: none;
-            background-color: #111;
+        .form-container {
+            width: 400px;
+            background: linear-gradient(#212121, #212121) padding-box,
+                        linear-gradient(145deg, transparent 35%,#e81cff, #40c9ff) border-box;
+            border: 2px solid transparent;
+            padding: 32px 24px;
+            font-size: 14px;
+            font-family: inherit;
             color: white;
-            border-radius: 5px;
-            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            box-sizing: border-box;
+            border-radius: 16px;
         }
 
-        .card button:hover {
-            background-color: #444;
+        .form-container button:active {
+            scale: 0.95;
+        }
+
+        .form-container .form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-container .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .form-container .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #717171;
+            font-weight: 600;
+            font-size: 12px;
+        }
+
+        .form-container .form-group input {
+            width: 90%;
+            padding: 12px 16px;
+            border-radius: 8px;
+            color: #fff;
+            font-family: inherit;
+            background-color: transparent;
+            border: 1px solid #414141;
+        }
+
+        .form-container .form-group textarea {
+            width: 90%;
+            padding: 12px 16px;
+            border-radius: 8px;
+            resize: none;
+            color: #fff;
+            height: 96px;
+            border: 1px solid #414141;
+            background-color: transparent;
+            font-family: inherit;
+        }
+
+        .form-container .form-group input::placeholder {
+            opacity: 0.5;
+        }
+
+        .form-container .form-group input:focus {
+            outline: none;
+            border-color: #e81cff;
+        }
+
+        .form-container .form-group textarea:focus {
+            outline: none;
+            border-color: #e81cff;
+        }
+
+        .form-container .form-submit-btn {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            align-self: flex-start;
+            font-family: inherit;
+            color: #000000;
+            font-weight: 600;
+            width: 40%;
+            background: #e9e7e7;
+            border: 1px solid #414141;
+            padding: 12px 16px;
+            font-size: inherit;
+            gap: 8px;
+            margin-top: 8px;
+            cursor: pointer;
+            border-radius: 6px;
+            position: relative;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .form-container .form-submit-btn:hover {
+            background-color: #acacac;
+            border-color: #acacac;
+        }
+
+        .form-container .form-submit-btn:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+        }
+
+        .form-submit-btn .spinner {
+            display: none;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #000;
+            border-top: 2px solid transparent;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .form-submit-btn.loading .spinner {
+            display: block;
+        }
+
+        .form-submit-btn.loading span {
+            visibility: hidden;
+        }
+
+        @keyframes spin {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        #message {
+            color: white;
+            margin-top: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        h1 {
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .warning-text {
+            font-size: 15px;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         }
     </style>
 </head>
 <body>
-    <div id="otp-container">
-        <h1>OTP Validation</h1>
-        <!-- Phone number -->
-        <input type="text" id="phone-number" placeholder="Enter your phone number">
-        <button id="send-otp">Send OTP</button>
-        
-        <!-- OTP Input -->
-        <br>
-        <input type="text" id="otp-code" placeholder="Enter OTP">
-        <button id="validate-otp">Validate OTP</button>
-        
-        <!-- Display message -->
-        <p id="message"></p>
-      </div>
-      
+    <div style="width: 100%; height: 100vh; display: flex; align-items: center; justify-content: center; background: url('https://media3.giphy.com/media/11UhXwm8Ipd9C/giphy.webp?cid=ecf05e47cf14qpisjmueby3s31by8ra6deqktssp8kllok50&ep=v1_gifs_search&rid=giphy.webp&ct=g');">
+        <div style="height: 100vh; display: flex; align-items: center; justify-content: center;">
+            <div class="container">  
+                <h1 style="color:#212121;background-color: #fff; padding: 3px;">OTP Validation</h1>
+                
+                <div id="login-form" class="form-container">
+                    <form class="form" id="otp-form">
+                        <div class="form-group">
+                            <label for="otp-input">Request OTP</label>
+                            <input type="text" id="otp-input" name="otp" required placeholder="Enter your OTP code">
+                            <p class="warning-text">Request OTP from the volunteer nearby!</p>
+                        </div>
+                        <center><button class="form-submit-btn" type="submit">
+                            <span>Validate</span>
+                            <div class="spinner"></div>
+                        </button></center>
+                    </form>
+                    <div id="message"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyBJQsE1VeR1SDrz1ft_z4ys5QjEFz3UCUQ",
-  authDomain: "otp-validation-system.firebaseapp.com",
-  projectId: "otp-validation-system",
-  storageBucket: "otp-validation-system.firebasestorage.app",
-  messagingSenderId: "907306006739",
-  appId: "1:907306006739:web:d8c8d789b227aa4be53c26"
-};
+        // Initialize list of hardcoded OTPs
+        const predefinedOtps = [
+        { otp: "123456", isUsed: false },
+    { otp: "654321", isUsed: false },
+    { otp: "987654", isUsed: false },
+    { otp: "456789", isUsed: false },
+    { otp: "112233", isUsed: false },
+    { otp: "223344", isUsed: false },
+    { otp: "334455", isUsed: false },
+    { otp: "445566", isUsed: false },
+    { otp: "556677", isUsed: false },
+    { otp: "667788", isUsed: false },
+    { otp: "778899", isUsed: false },
+    { otp: "889900", isUsed: false },
+    { otp: "998877", isUsed: false },
+    { otp: "876543", isUsed: false },
+    { otp: "765432", isUsed: false },
+    { otp: "654789", isUsed: false },
+    { otp: "543678", isUsed: false },
+    { otp: "432567", isUsed: false },
+    { otp: "321456", isUsed: false },
+    { otp: "210987", isUsed: false },
+    { otp: "109876", isUsed: false },
+    { otp: "908765", isUsed: false },
+    { otp: "807654", isUsed: false },
+    { otp: "706543", isUsed: false },
+    { otp: "605432", isUsed: false },
+    { otp: "504321", isUsed: false },
+    { otp: "403210", isUsed: false },
+    { otp: "302109", isUsed: false },
+    { otp: "201098", isUsed: false },
+    { otp: "100987", isUsed: false },
+    { otp: "999999", isUsed: false },
+    { otp: "888888", isUsed: false },
+    { otp: "777777", isUsed: false },
+    { otp: "666666", isUsed: false },
+    { otp: "555555", isUsed: false },
+    { otp: "444444", isUsed: false },
+    { otp: "333333", isUsed: false },
+    { otp: "222222", isUsed: false },
+    { otp: "111111", isUsed: false },
+    { otp: "135790", isUsed: false },
+    { otp: "246802", isUsed: false },
+    { otp: "975310", isUsed: false },
+    { otp: "864209", isUsed: false },
+    { otp: "753108", isUsed: false },
+    { otp: "642007", isUsed: false },
+    { otp: "531906", isUsed: false },
+    { otp: "420805", isUsed: false },
+    { otp: "319704", isUsed: false },
+    { otp: "208603", isUsed: false },
+    { otp: "107502", isUsed: false }        ];
 
-// Initialize Firebase
-const app = firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
+        // Check if OTPs are already stored in localStorage, otherwise initialize
+        if (!localStorage.getItem("otps")) {
+            localStorage.setItem("otps", JSON.stringify(predefinedOtps));
+        }
 
+        // OTP Form Handling
+        const otpForm = document.getElementById("otp-form");
+        const messageDiv = document.getElementById("message");
+        const submitBtn = otpForm.querySelector(".form-submit-btn");
 
-const sendOTPButton = document.getElementById("send-otp");
-const message = document.getElementById("message");
+        // Rate limiting variables
+        let failedAttempts = 0;
+        const maxAttempts = 5;
+        const lockoutDuration = 5 * 60 * 1000; // 5 minutes in milliseconds
+        let lockoutUntil = 0;
 
-sendOTPButton.addEventListener("click", () => {
-  const phoneNumber = document.getElementById("phone-number").value;
+        otpForm.addEventListener("submit", (e) => {
+            e.preventDefault();
 
-  // Firebase RecaptchaVerifier (required for phone auth)
-  const appVerifier = new firebase.auth.RecaptchaVerifier("otp-container", {
-    size: "invisible",
-  });
+            // Check if the user is locked out
+            const now = Date.now();
+            if (now < lockoutUntil) {
+                const remainingTime = Math.ceil((lockoutUntil - now) / 1000);
+                messageDiv.textContent = `Too many failed attempts. Please try again in ${remainingTime} seconds.`;
+                messageDiv.style.color = "red";
+                return;
+            }
 
-  // Send OTP
-  auth.signInWithPhoneNumber(phoneNumber, appVerifier)
-    .then((confirmationResult) => {
-      // Save confirmation result to validate OTP later
-      window.confirmationResult = confirmationResult;
-      message.style.color = "green";
-      message.textContent = "OTP sent successfully!";
-    })
-    .catch((error) => {
-      console.error(error);
-      message.style.color = "red";
-      message.textContent = "Failed to send OTP. Please try again.";
-    });
-});
+            // Show loading state
+            submitBtn.classList.add("loading");
+            submitBtn.disabled = true;
 
+            const enteredOTP = document.getElementById("otp-input").value.trim();
+            const storedOtps = JSON.parse(localStorage.getItem("otps"));
 
-const validateOTPButton = document.getElementById("validate-otp");
+            // Find the OTP in the list
+            const otpEntry = storedOtps.find(entry => entry.otp === enteredOTP);
 
-validateOTPButton.addEventListener("click", () => {
-  const otpCode = document.getElementById("otp-code").value;
+            if (!otpEntry) {
+                // OTP not found
+                failedAttempts++;
+                if (failedAttempts >= maxAttempts) {
+                    lockoutUntil = now + lockoutDuration;
+                    messageDiv.textContent = `Too many failed attempts. Please try again in ${lockoutDuration / 1000} seconds.`;
+                    messageDiv.style.color = "red";
+                    failedAttempts = 0; // Reset attempts after lockout
+                } else {
+                    messageDiv.textContent = "Invalid OTP. Please try again.";
+                    messageDiv.style.color = "red";
+                }
+                submitBtn.classList.remove("loading");
+                submitBtn.disabled = false;
+                return;
+            }
 
-  // Validate OTP
-  window.confirmationResult.confirm(otpCode)
-    .then((result) => {
-      const user = result.user; // User is signed in
-      message.style.color = "green";
-      message.textContent = "OTP validated successfully!";
-      console.log("User signed in:", user);
-    })
-    .catch((error) => {
-      console.error(error);
-      message.style.color = "red";
-      message.textContent = "Invalid OTP. Please try again.";
-    });
-});
+            // Check if OTP has already been used
+            if (otpEntry.isUsed) {
+                messageDiv.textContent = "This OTP has already been used. Multiple logins are not allowed.";
+                messageDiv.style.color = "red";
+                submitBtn.classList.remove("loading");
+                submitBtn.disabled = false;
+                return;
+            }
 
+            // Mark OTP as used
+            otpEntry.isUsed = true;
+            localStorage.setItem("otps", JSON.stringify(storedOtps));
 
+            // Reset failed attempts on successful login
+            failedAttempts = 0;
+
+            // Show success message
+            messageDiv.textContent = "OTP validated successfully! Redirecting...";
+            messageDiv.style.color = "white";
+
+            // Redirect to welcome page after a short delay
+            setTimeout(() => {
+                window.open("./welcome.html", "_blank");
+            }, 1500);
+
+            // Reset loading state
+            submitBtn.classList.remove("loading");
+            submitBtn.disabled = false;
+        });
     </script>
-
 </body>
 </html>

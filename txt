@@ -222,3 +222,219 @@ function openApp(appName) {
 .sign-up:hover {
   opacity: 0.8;
 } 
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTP Validation</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f5f5f5;
+            font-family: Arial, sans-serif;
+        }
+
+        .form-container {
+            width: 400px;
+            background: linear-gradient(#212121, #212121) padding-box,
+                        linear-gradient(145deg, transparent 35%,#e81cff, #40c9ff) border-box;
+            border: 2px solid transparent;
+            padding: 32px 24px;
+            font-size: 14px;
+            font-family: inherit;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            box-sizing: border-box;
+            border-radius: 16px;
+        }
+
+        .form-container button:active {
+            scale: 0.95;
+        }
+
+        .form-container .form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-container .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .form-container .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #717171;
+            font-weight: 600;
+            font-size: 12px;
+        }
+
+        .form-container .form-group input {
+            width: 90%;
+            padding: 12px 16px;
+            border-radius: 8px;
+            color: #fff;
+            font-family: inherit;
+            background-color: transparent;
+            border: 1px solid #414141;
+        }
+
+        .form-container .form-group textarea {
+            width: 90%;
+            padding: 12px 16px;
+            border-radius: 8px;
+            resize: none;
+            color: #fff;
+            height: 96px;
+            border: 1px solid #414141;
+            background-color: transparent;
+            font-family: inherit;
+        }
+
+        .form-container .form-group input::placeholder {
+            opacity: 0.5;
+        }
+
+        .form-container .form-group input:focus {
+            outline: none;
+            border-color: #e81cff;
+        }
+
+        .form-container .form-group textarea:focus {
+            outline: none;
+            border-color: #e81cff;
+        }
+
+        .form-container .form-submit-btn {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            align-self: flex-start;
+            font-family: inherit;
+            color: #000000;
+            font-weight: 600;
+            width: 40%;
+            background: #e9e7e7;
+            border: 1px solid #414141;
+            padding: 12px 16px;
+            font-size: inherit;
+            gap: 8px;
+            margin-top: 8px;
+            cursor: pointer;
+            border-radius: 6px;
+        }
+
+        .form-container .form-submit-btn:hover {
+            background-color: #acacac;
+            border-color: #acacac;
+        }
+
+        #message {
+            color: white;
+            margin-top: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        h1 {
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .warning-text{
+          font-size: 15px;
+          font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <div style="width: 100%; height: 100vh; display: flex; align-items: center; justify-content: center; background: url('https://media3.giphy.com/media/11UhXwm8Ipd9C/giphy.webp?cid=ecf05e47cf14qpisjmueby3s31by8ra6deqktssp8kllok50&ep=v1_gifs_search&rid=giphy.webp&ct=g');">
+        <div style="height: 100vh; display: flex; align-items: center; justify-content: center;">
+            <div class="container">  
+                <h1 style="color:#212121;background-color: #fff; padding: 3px;">OTP Validation</h1>
+                
+                <div id="login-form" class="form-container">
+                    <form class="form" id="otp-form">
+                        <div class="form-group">
+                            <label for="otp-input">Request OTP</label>
+                            <input type="text" id="otp-input" name="otp" required placeholder="Enter your OTP code">
+                            <p class="warning-text">Request OTP from the volunteer nearby!</p>
+                        </div>
+                        <center><button class="form-submit-btn" type="submit">Validate</button></center>
+                    </form>
+                    <div id="message"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize OTP and access status
+        const authObj = {
+            otp: "123454", // Fixed OTP for testing
+            accessStatus123: false
+        };
+
+        // Check if this is the first load of the page, otherwise get stored state
+        if (!localStorage.getItem("authObj")) {
+            localStorage.setItem("authObj", JSON.stringify(authObj));
+        }
+        
+        // OTP Form Handling
+        const otpForm = document.getElementById("otp-form");
+        const messageDiv = document.getElementById("message");
+
+        otpForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            
+            const enteredOTP = document.getElementById("otp-input").value;
+            const storedAuth = JSON.parse(localStorage.getItem("authObj"));
+            
+            // Check if OTP has already been used
+            if (storedAuth.accessStatus123) {
+                alert("You have already logged in with this OTP. Multiple logins are not allowed.");
+                return;
+            }
+            
+            // Validate OTP
+            if (enteredOTP === storedAuth.otp) {
+                // Set access status to true (OTP now used)
+                storedAuth.accessStatus123 = true;
+                localStorage.setItem("authObj", JSON.stringify(storedAuth));
+                
+                // Redirect to welcome page
+                window.location.href = "./welcome.html";
+                window.location.target = "_blank";
+            } else {
+                messageDiv.textContent = "Invalid OTP. Please try again.";
+                messageDiv.style.color = "red";
+            }
+        });
+    </script>
+</body>
+</html>

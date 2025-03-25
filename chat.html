@@ -16,7 +16,7 @@
         <h1>SleuthSpeak</h1>
       </div>
       <div class="contact-list" id="contact-list">
-        <div class="contact active" data-id="ryan">
+        <div class="contact" data-id="ryan">
           <img src="https://pbs.twimg.com/media/Ef04eIDWAAE6utv.jpg" alt="Ryan Gomez" class="contact-avatar">
           <span>Ryan Gomez (HR)</span>
           <span class="status-dot online"></span>
@@ -36,18 +36,21 @@
           <span>Mira D. (Lab Assistant)</span>
           <span class="status-dot online"></span>
         </div>
-        
       </div>
     </aside>
 
     <!-- Chat Area -->
     <main class="chat-container">
       <header class="chat-header" id="chat-header">
-        <h2>Ryan Gomez (HR)</h2>
-        <button class="reset-button" id="reset-button" title="Reset Chat">⟳</button>
+        <h2 id="chat-header-title">Select a Contact</h2>
+        <button class="reset-button" id="reset-button" title="Reset Chat" style="display: none;">⟳</button>
       </header>
-      <div class="chat-messages" id="chat-messages"></div>
-      <div class="option-container" id="option-container">
+      <div class="chat-placeholder" id="chat-placeholder">
+        <img src="chat.png" alt="SleuthSpeak Logo" class="placeholder-logo">
+        <p class="placeholder-text">Welcome to SleuthSpeak<br>Select a contact to start investigating.</p>
+      </div>
+      <div class="chat-messages" id="chat-messages" style="display: none;"></div>
+      <div class="option-container" id="option-container" style="display: none;">
         <button class="chat-option" id="chat-option">I’m following up on Reid’s complaints about Project Eclipse. Did he ever mention feeling threatened?</button>
       </div>
     </main>
