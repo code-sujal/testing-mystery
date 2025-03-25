@@ -82,7 +82,7 @@ const fileSystem = {
                      "Thursday:\n" +
                      "- 8:00 AM: Drop-off\n" +
                      "- 3:00 PM: Pick-up\n" +
-                     "- 4:00 PM: Art class (she’s been loving painting lately)\n\n" +
+                     "- 4:00 PM: Emily's Super-Medicine Slot\n\n" +
                      "Friday:\n" +
                      "- 8:00 AM: Drop-off\n" +
                      "- 3:00 PM: Pick-up\n" +
@@ -173,9 +173,9 @@ const fileSystem = {
         },
         {
             id: 3,
-            name: "family_christmas.jpg",
+            name: "emily's_super_ \n\nmedTime.jpg",
             type: "image",
-            content: "https://assets.grok.com/users/9439ffe2-5e7f-4a99-b0b0-86c4f1711e9b/4uixMSJg2ppfi8gc-generated_image.jpg",
+            content: "https://i.guim.co.uk/img/media/d40363fb930ce39f4e7fd962d35cc5d88bb88e87/0_199_1024_614/master/1024.jpg?width=1200&quality=85&auto=format&fit=max&s=c082ed2b81637e48b8f4799236c41485",
             meta: "Last modified: December 25, 2024 | Size: 450 KB"
         },
         

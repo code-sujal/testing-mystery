@@ -11,50 +11,83 @@ const chatPlaceholder = document.getElementById('chat-placeholder');
 let currentChatId = null;
 let conversationStep = 0;
 
-// Chat Data with Cryptic Conversations and Office Boy (Jake) as a Suspect
+// Chat Data with Story-Driven Progression
 const chatData = {
     "ryan": {
         name: "Ryan Gomez (HR)",
         status: "Online",
         conversation: [
-            { bot: "Detective Alice, it’s Ryan from HR. I’m busy, so let’s make this quick. What do you need about Reid?", userOption: "I’m looking into Reid’s last days. Did he seem off to you?" },
-            { bot: "Off? He was always a bit… intense. Kept to himself, always carrying that thing around. I don’t know, I didn’t pay much attention.", userOption: "Did you interact with him much before March 4?" },
-            { bot: "March 4? I… I was in my office, working late. I had Jake—the office boy—drop off some paperwork to him that day. That’s it!", userOption: "Paperwork? What kind? And why Jake?" },
-            { bot: "Just… routine stuff! I don’t know, Jake’s always running errands for me. Look, Reid was paranoid, okay? Kept talking about the CEO watching him.", userOption: "Did Reid ever mention Project Eclipse to you?" },
-            { bot: "Eclipse? Yeah, he rambled about it being ‘wrong.’ I told him to take it up with Dr. Rao or the CEO. I didn’t want to get involved!", userOption: null }
+            { bot: "Detective Alice, it’s Ryan from HR. I’m swamped—can we make this quick? What do you need about Reid?", userOption: "I’m investigating Reid’s last days. Did you notice anything unusual?" },
+            { bot: "Unusual? Not really… he seemed off, but I was too busy. The CEO was on my case about some missing reports—total mess.", userOption: "Where were you on March 4? Did you see Reid that day?" },
+            { bot: "March 4? I was in my office, dealing with that mess. I sent Jake to drop off some items at Reid’s desk—routine stuff, nothing special. Candice might’ve seen him—she was around.", userOption: "Did Reid mention Project Eclipse to you?" },
+            { bot: "Eclipse? Yeah, he complained about it once—said it was ‘off.’ I told him to take it up with the CEO. I didn’t care to listen—I had enough on my plate.", userOption: "Did you hear about any lab issues—like odd smells or equipment problems?" },
+            { bot: "Lab issues? I don’t go near there… Lila mentioned a weird smell, but she’s always exaggerating. Ask Dr. Rao—he’s always in the lab.", userOption: null }
         ]
     },
     "candice": {
         name: "Candice Bennett",
         status: "Online",
         conversation: [
-            { bot: "Detective Alice, it’s Candice. I don’t want to talk about Samuel. Why are you even asking me? I’ve moved on!", userOption: "You were close to Samuel once. Did he seem stressed before he died?" },
-            { bot: "Stressed? Maybe… he was always so dramatic. Kept saying he didn’t trust anyone here. I saw him coughing a lot that last week, though.", userOption: "Coughing? Did you notice anything else unusual?" },
-            { bot: "Not really… well, the lab smelled weird that day—like something metallic. And I saw Jake, the office boy, hanging around, acting all nervous.", userOption: "Jake? What was he doing there?" },
-            { bot: "I don’t know! He was near Samuel’s desk, then left quickly. I thought he was just delivering something, but… maybe not? I didn’t stick around.", userOption: "Did Samuel ever mention Project Eclipse?" },
-            { bot: "Once… said it was ‘dangerous’ and that the CEO knew more than he let on. But Samuel was always paranoid, so I didn’t take it seriously.", userOption: null }
+            { bot: "Detective Alice, it’s Candice. I don’t want to be dragged into this—Samuel’s death is too much! Why are you asking me?", userOption: "Ryan said you were around on March 4. Did you see Samuel that day?" },
+            { bot: "March 4? I… I saw him in the lab, yeah. He was pacing, muttering about Eclipse—said it was ‘dangerous.’ He didn’t trust anyone, not even Mira.", userOption: "Did he seem off in any other way? What was he doing?" },
+            { bot: "He was… breathing heavily, like he was stressed. I thought he was just upset about Eclipse. Later, I saw Jake hanging around the lab—acting all sneaky.", userOption: "Jake? What was he doing there? Did you notice anything else in the lab?" },
+            { bot: "Jake was near Reid’s desk, looking nervous—like he didn’t want to be seen. The lab… smelled strange, like something burnt. I thought it was normal for the lab, but now I’m not sure.", userOption: "A burnt smell? Did you ask anyone about it?" },
+            { bot: "No, I didn’t think much of it then. But Lila was going on about some chemical spill—maybe she knows more? I just wanted to get out of there.", userOption: null }
         ]
     },
     "anoop": {
         name: "Dr. Anoop A. Rao",
         status: "Online",
         conversation: [
-            { bot: "Detective Alice, Dr. Rao here. I don’t have time for your questions. Reid’s death isn’t my problem. What do you want?", userOption: "You and Reid didn’t get along. Did you see him on March 4?" },
-            { bot: "March 4? I was in the lab, working late. Didn’t see Reid, but… Jake, the office boy, was there. Kept lurking around, acting strange.", userOption: "Jake? What was he doing in the lab?" },
-            { bot: "No idea! He’s always running errands for HR, but he seemed… off. Maybe he was spying for someone? I don’t trust anyone around here.", userOption: "What do you know about Project Eclipse?" },
-            { bot: "Eclipse? It was… experimental. I heard whispers about some tech—something dangerous. Reid was obsessed with it, always digging too deep.", userOption: "Did you notice anything unusual in the lab that day?" },
-            { bot: "Unusual? There was some metallic residue on a table—thought it was from an experiment. And Reid was… off, kept reaching for his pocket.", userOption: null }
+            { bot: "Detective Alice, Dr. Rao here. I’m swamped with my own work—Reid’s death isn’t my problem. What do you want?", userOption: "Ryan mentioned a weird smell in the lab. Did you notice anything like that on March 4?" },
+            { bot: "A weird smell? Yeah, there was a faint burning odor—I thought it was from my experiments. Harley(new intern) was messing around with some chemicals that day, probably his fault.", userOption: "Harley? What was he doing? Did you see Reid that day?" },
+            { bot: "Harley was fumbling with some equipment—said he mixed up some chemicals by mistake. Reid was there earlier, muttering about Eclipse and some ‘threat’ from the CEO.", userOption: "A threat? What did Reid say about it? Was the smell connected to him?" },
+            { bot: "He said the CEO was hiding something about Eclipse—thought he was in danger. The smell? I don’t think so… but Reid was acting strange, kept reaching for his pocket. Ask Mira—she was with him.", userOption: "Did you see anyone else around the lab—like Jake or Ethan?" },
+            { bot: "Jake was in the lab, dropping something off at Reid’s desk—he left fast. Ethan was lurking by the entrance, as usual. I don’t trust either of them.", userOption: null }
         ]
     },
     "mira": {
         name: "Mira D. (Lab Assistant)",
         status: "Online",
         conversation: [
-            { bot: "Detective Alice, I’m Mira, Dr. Reid’s assistant. I… I don’t want trouble. Please, I don’t know anything!", userOption: "What was Dr. Reid like before his death?" },
-            { bot: "He was… nervous. Always whispering, saying he couldn’t trust anyone. He needed his meds a lot that day—kept reaching for his pocket.", userOption: "Did you see anyone suspicious around the lab?" },
-            { bot: "Suspicious? Well… Jake, the office boy, dropped something off at Reid’s desk. He looked nervous, kept glancing around. I don’t know why!", userOption: "What did Jake drop off? Did Reid say anything?" },
-            { bot: "I didn’t see what it was—just a small package. Reid didn’t say much, just… muttered something about HR not being honest. I didn’t ask!", userOption: "Did Reid mention Project Eclipse?" },
-            { bot: "Yes… he said it was ‘not what it seems.’ He was scared, kept looking over his shoulder. I think the CEO knew something, but I’m not sure!", userOption: null }
+            { bot: "Detective Alice, I’m Mira, Dr. Reid’s assistant. I… I don’t want any trouble. Please, I just want to stay out of this!", userOption: "Dr. Rao said you were with Reid on March 4. Did you notice anything unusual about him?" },
+            { bot: "Unusual? He was… on edge, kept saying Eclipse was ‘dangerous.’ He was breathing heavily right after using his inhaler—I thought he was just anxious.", userOption: "His inhaler? Did you see him use it? What else was going on?" },
+            { bot: "Yeah, he pulled it out of his pocket and used it right in front of me. The lab smelled odd that day—like something was burnt . I noticed a faint burning odor residue.", userOption: "Burning odor residue? Could that be related to the smell? Did you see anyone suspicious?" },
+            { bot: "I… I don’t know. Maybe? Harley was there, acting strange—he said he mixed up some chemicals. Jake dropped off a package for Reid—he seemed really nervous.", userOption: "A package? What did Reid say about it? Did anyone else mention the smell?" },
+            { bot: "Reid looked uneasy when he saw the package, said something about ‘not trusting anyone above.’ Candice mentioned the smell too—she thought it was a chemical spill. Maybe ask her again?", userOption: null }
+        ]
+    },
+    "lila": {
+        name: "Lila Carter",
+        status: "Online",
+        conversation: [
+            { bot: "Oh, Detective Alice! It’s Lila, the receptionist. I heard you’re investigating Reid’s death—how exciting! What do you want to know?", userOption: "Candice mentioned a chemical spill in the lab. Did you hear anything about that?" },
+            { bot: "A chemical spill? Oh, yes! I heard there was a big mess in the lab—smelled awful, like burnt chemical! I bet Harley did it—he’s always so clumsy!", userOption: "Burnt chemical? Did you see Harley in the lab? What else did you hear?" },
+            { bot: "I didn’t see him myself, but everyone’s saying he messed up some experiment. Oh, and I saw Candice crying in the break room that day—said Reid was onto something big with Eclipse!", userOption: "Candice was crying? What did she say about Reid? Did you notice anything else?" },
+            { bot: "She was a mess, said Reid was ‘asking too many questions.’ I also heard Ryan arguing with the CEO that day—big drama! Something about missing reports and Eclipse.", userOption: "Ryan and the CEO? Did you see anyone else around the lab—like Jake or Ethan?" },
+            { bot: "Jake was running around like a headless chicken—HR always keeps him busy. Ethan was near the lab entrance, watching everyone. He’s so creepy!", userOption: null }
+        ]
+    },
+    "ethan": {
+        name: "Ethan Moore (Security)",
+        status: "Online",
+        conversation: [
+            { bot: "Detective Alice, it’s Ethan, security. I don’t have time for chit-chat—what do you want? Reid’s death is above my pay grade.", userOption: "I heard you were near the lab on March 4. Did you see anything suspicious?" },
+            { bot: "Suspicious? Always. I saw Candice sneaking out of the lab—she looked upset, like she’d been crying. Wouldn’t even make eye contact.", userOption: "What about Reid? Did you see him that day?" },
+            { bot: "Reid? Yeah, he was in the lab, pacing like a caged animal. I saw him fiddling with something in his pocket—thought he was hiding something.", userOption: "Did you notice anyone else around the lab—like Jake or Harley?" },
+            { bot: "Jake was there, dropping off a package at Reid’s desk—left in a hurry. Harley was messing with some equipment, looked nervous. Some equipment was malfunctioning that day—kept glitching.", userOption: "Did you notice any unusual smells or activity in the lab?" },
+            { bot: "Smells? Yeah, there was a weird burning odor stench—thought it was a lab thing. Dr. Rao was in there too, muttering to himself—creepy, if you ask me.", userOption: null }
+        ]
+    },
+    "priya": {
+        name: "Dr. Priya Sharma (Consultant)",
+        status: "Online",
+        conversation: [
+            { bot: "Detective Alice, this is Dr. Priya Sharma, research consultant. I’m only here on contract—Reid’s death doesn’t concern me. What do you need?", userOption: "You were working on Project Eclipse. Did Reid ever mention it to you?" },
+            { bot: "Eclipse? Yes, he was… overly emotional about it. Kept saying it was ‘unethical.’ I told him to focus on the data, not conspiracy theories.", userOption: "Did you notice anything unusual in the lab on March 4?" },
+            { bot: "March 4? I was in the lab briefly—there was a faint burning odor, but I assumed it was from an experiment. Reid was there, looking agitated.", userOption: "Agitated? Did he say anything? What about others in the lab?" },
+            { bot: "He muttered something about ‘not trusting HR.’ I didn’t care to listen. Dr. Rao was there, acting all secretive—he’s always up to something.", userOption: "Did you hear any rumors or see anything else suspicious?" },
+            { bot: "Rumors? Lila was spreading nonsense about a chemical spill—ridiculous. Ethan mentioned some equipment issues, but I didn’t see anything myself. This place is a mess.", userOption: null }
         ]
     }
 };
@@ -82,16 +115,14 @@ function loadChat(chatId) {
     toggleChatElements(true);
 
     if (isDeadChat) {
-        // Load dead chat fully
         chatData[chatId].conversation.forEach(step => {
             appendMessage('bot', step.bot, false);
             if (step.userOption) appendMessage('user', step.userOption, false);
         });
         chatOption.textContent = "Chat Ended (Offline)";
         chatOption.disabled = true;
-        resetButton.style.display = 'none';
+        reset.ConcurrentModificationExceptionButton.style.display = 'none';
     } else {
-        // Load active chat with history or initial message
         conversationStep = savedHistory.step;
         if (savedHistory.messages.length > 0) {
             savedHistory.messages.forEach(msg => appendMessage(msg.type, msg.text, false));
@@ -187,7 +218,6 @@ function handleOptionClick() {
 function resetChat() {
     if (chatData[currentChatId].status === "Offline") return;
 
-    // Clear localStorage for this chat
     localStorage.removeItem(`chat_${currentChatId}`);
     conversationStep = 0;
     loadChat(currentChatId);
@@ -213,5 +243,5 @@ resetButton.addEventListener('click', resetChat);
 
 // Load initial state on page load
 document.addEventListener('DOMContentLoaded', () => {
-    toggleChatElements(false); // Show placeholder initially
+    toggleChatElements(false);
 });

@@ -1,129 +1,102 @@
-// Time and Date Updates
-// Back Button Navigation
+// DOM Elements
+const mainVideo = document.getElementById('main-video');
+const mainFeedLabel = document.getElementById('main-feed-label');
+const cameraGrid = document.getElementById('camera-grid');
+const alertsList = document.getElementById('alerts-list');
+const themeToggle = document.getElementById('theme-toggle');
+const layoutToggle = document.getElementById('layout-toggle');
+const alertSound = document.getElementById('alert-sound');
+const systemTime = document.getElementById('system-time');
+const mainFeedTime = document.getElementById('main-feed-time');
+
+// Back button functionality
 function goBack() {
-    window.location.href = "welcome.html";
+    window.history.back();
 }
 
-
-
-const timeElement = document.getElementById("time");
-const dateElement = document.getElementById("date");
-
-function updateTimeAndDate() {
+// Update time
+function updateTime() {
     const now = new Date();
-    const formattedTime = now.toLocaleTimeString("en-US", {
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-        hour12: false,
-    });
-    const formattedDate = now.toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-    });
+    const timeStr = now.toLocaleTimeString('en-US', { hour12: false });
+    systemTime.textContent = timeStr;
+    mainFeedTime.textContent = timeStr;
+}
+setInterval(updateTime, 1000);
 
-    timeElement.textContent = formattedTime;
-    dateElement.textContent = formattedDate;
+// Camera swapping
+function swapFeed(sideFeed) {
+    const mainSource = mainVideo.querySelector('source').src;
+    const mainLabel = mainFeedLabel.textContent;
+    const mainStatus = document.querySelector('.main-feed .status-indicator').className.includes('online') ? 'online' : 'offline';
 
-    // Update timestamps on feeds
-    document.querySelectorAll(".feed-overlay .overlay-right span:first-child").forEach(span => {
-        span.textContent = formattedTime;
-    });
+    const sideVideo = sideFeed.querySelector('video');
+    const sideSource = sideVideo.querySelector('source').src;
+    const sideLabel = sideFeed.querySelector('.feed-label').textContent;
+    const sideStatus = sideFeed.querySelector('.status-indicator').className.includes('online') ? 'online' : 'offline';
+
+    mainVideo.querySelector('source').src = sideSource;
+    mainVideo.load();
+    mainVideo.play();
+
+    sideVideo.querySelector('source').src = mainSource;
+    sideVideo.load();
+    sideVideo.play();
+
+    mainFeedLabel.textContent = sideLabel;
+    document.querySelector('.main-feed .status-indicator').className = `status-indicator ${sideStatus}`;
+    sideFeed.querySelector('.feed-label').textContent = mainLabel;
+    sideFeed.querySelector('.status-indicator').className = `status-indicator ${mainStatus}`;
 }
 
-setInterval(updateTimeAndDate, 1000);
-updateTimeAndDate();
-
-// System Status Updates
-function simulateStatusUpdates() {
-    const latencyElement = document.getElementById("latency");
-    const memoryElement = document.getElementById("memory");
-    const networkElement = document.getElementById("network");
-
-    setInterval(() => {
-        const latency = Math.floor(Math.random() * 200) + 50;
-        const memory = Math.floor(Math.random() * 4096);
-        const network = Math.random() < 0.95 ? "Active" : "Inactive";
-
-        latencyElement.textContent = `${latency}ms`;
-        memoryElement.textContent = `${memory}mb`;
-        networkElement.textContent = network;
-    }, 5000);
-}
-
-simulateStatusUpdates();
-
-// Theme Toggle
-const themeToggle = document.getElementById("theme-toggle");
-themeToggle.addEventListener("click", () => {
-    document.body.classList.toggle("light");
-    themeToggle.textContent = document.body.classList.contains("light") ? "☀️ Light" : "🌙 Dark";
+// Add click listeners to side feeds
+cameraGrid.querySelectorAll('.side-feed').forEach(feed => {
+    feed.addEventListener('click', () => swapFeed(feed));
 });
 
-// Layout Toggle
-const layoutToggle = document.getElementById("layout-toggle");
-layoutToggle.addEventListener("click", () => {
-    const dashboard = document.getElementById("dashboard");
-    dashboard.classList.toggle("grid-layout");
-    layoutToggle.textContent = dashboard.classList.contains("grid-layout") ? "Split Layout" : "Grid Layout";
-});
-
-// Feed Switching
-function switchFeed(cameraLabel, videoSrc) {
-    const mainVideo = document.getElementById("main-video");
-    const mainFeedLabel = document.getElementById("main-feed-label");
-    mainVideo.src = videoSrc;
-    mainFeedLabel.textContent = cameraLabel;
-}
-
-// Tab Switching
-function showTab(tabId) {
-    document.querySelectorAll(".tab-content").forEach(tab => tab.classList.remove("active"));
-    document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
-    document.getElementById(tabId).classList.add("active");
-    document.querySelector(`button[onclick="showTab('${tabId}')"]`).classList.add("active");
-}
-
-// Live Alerts
-const alertsList = document.getElementById("alerts-list");
-function addAlert(message, type) {
-    const li = document.createElement("li");
+// Alerts system
+function addAlert(message) {
+    const li = document.createElement('li');
     li.textContent = `${new Date().toLocaleTimeString()}: ${message}`;
-    li.classList.add(`alert-${type}`);
     alertsList.prepend(li);
-    if (alertsList.children.length > 10) {
-        alertsList.removeChild(alertsList.lastChild);
+    alertSound.play();
+}
+
+// Theme toggle
+themeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('neon-light');
+    themeToggle.textContent = document.body.classList.contains('neon-light') ? '🌑 Dark' : '🌙 Neon';
+});
+
+// Layout toggle (grid vs list, placeholder)
+let isGrid = true;
+layoutToggle.addEventListener('click', () => {
+    isGrid = !isGrid;
+    cameraGrid.style.gridTemplateColumns = isGrid ? 'repeat(4, 1fr)' : '1fr';
+    cameraGrid.style.gridTemplateRows = isGrid ? 'repeat(2, 1fr)' : 'auto';
+    layoutToggle.textContent = isGrid ? 'Toggle Grid' : 'Toggle List';
+});
+
+// Playback controls (basic functionality)
+const playPauseBtn = document.querySelector('.control-btn:nth-child(2)');
+playPauseBtn.addEventListener('click', () => {
+    if (mainVideo.paused) {
+        mainVideo.play();
+        playPauseBtn.textContent = '⏸';
+    } else {
+        mainVideo.pause();
+        playPauseBtn.textContent = '▶';
     }
-}
+});
 
-// Simulate Alerts
-function simulateAlerts() {
-    const alertTypes = ["critical", "warning"];
-    const messages = [
-        "Motion detected at CAM 7.1/ws",
-        "Unusual activity at CAM 8.1/ws",
-        "Network latency spike detected",
-        "Camera 9.1/ws offline"
+// Simulate alerts
+setInterval(() => {
+    const alerts = [
+        'Motion detected at LAB-ENTRANCE',
+        'VAULT-ROOM access attempted',
+        'MEETING-ZONE offline',
     ];
+    addAlert(alerts[Math.floor(Math.random() * alerts.length)]);
+}, 10000);
 
-    setInterval(() => {
-        const type = alertTypes[Math.floor(Math.random() * alertTypes.length)];
-        const message = messages[Math.floor(Math.random() * messages.length)];
-        addAlert(message, type);
-    }, 10000);
-}
-
-simulateAlerts();
-
-// Blinking Recording Indicator
-function blinkRecordingIndicator() {
-    const indicators = document.querySelectorAll(".recording-indicator");
-    setInterval(() => {
-        indicators.forEach(indicator => {
-            indicator.style.opacity = indicator.style.opacity === "0" ? "1" : "0";
-        });
-    }, 1000);
-}
-
-blinkRecordingIndicator();
+// Initial setup
+updateTime();
