@@ -12,7 +12,7 @@ const emailFolders = {
                   "We are pleased to inform you that LumaTrust has fully covered the outstanding medical bills for your daughter's treatment. If you have any further requests or need additional assistance, do not hesitate to reach out.\n\n" +
                   "We value your cooperation in this matter.\n\n" +
                   "Best,\nLuminaTrust Foundation",
-            attachments: [{name: "📁 medical_bill.pdf", url: "https://example.com/medical_bill.pdf"}],
+            attachments: [{name: "📁 medical_bill.pdf", url: "https://drive.google.com/file/d/1kU3DHiyOpCScUAdWFQR1KHvS-kcjygFR/view?usp=drivesdk"}],
             dateTime: "March 2, 2025 | 9:15 AM"
         },
         // 3. Doctor Appointment (March 3, 2025)
@@ -41,7 +41,7 @@ const emailFolders = {
                   "Reid was last seen in his lab, all other details are there in the case report I've attached. You’ll need to tread carefully—LuminaTech has powerful backers. I’m attaching the case report from the night of his death.\n\n" +
                   "Keep me updated.\n\n" +
                   "– Captain Harrison",
-            attachments: [{name: "📁 case_report.pdf", url: "https://example.com/case_report.pdf"}],
+            attachments: [{name: "📁 case_report.pdf", url: "https://docs.google.com/document/d/1LTsr9V_e5KBrJfaeT4kFixgcWPqe88orw3JnrmT7aQ4/edit?usp=sharing"}],
             dateTime: "March 5, 2025 | 9:32 AM"
         },
         // 5. Closure of Reid Case (March 6, 2025)
@@ -82,7 +82,7 @@ const emailFolders = {
             body: "Detective Mercer,\n\n" +
                   "Attached is the official autopsy report for Samuel Reid. Preliminary findings confirm no external injuries, but forensic analysis suggests irregular toxin levels in his blood.\n\n" +
                   "Although further investigation is highly recommended in this case, as it seems very sensitive. I've attached the autopsy report. Reach me anytime for help!\n\n",
-            attachments: [{name: "📁 autopsy_report.pdf", url: "https://example.com/autopsy_report.pdf"}],
+            attachments: [{name: "📁 autopsy_report.pdf", url: "https://docs.google.com/document/d/16ig4_OcK3Td6PY77CFGpa2pYz1AQKnx309bwj_8JbA8/edit?usp=sharing"}],
             dateTime: "March 15, 2025 | 11:47 AM"
         }
     ],

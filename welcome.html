@@ -544,11 +544,11 @@
         </div>
         <div class="icons">
             <div class="icon" onclick="openFolder('Email')">
-                <a href="email.html" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="Email"></a>
+                <a href="email.html"><img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="Email"></a>
                 <p>Email</p>
             </div>
             <div class="icon" onclick="openFolder('Chat')">
-                <a href="chat.html" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/124/124034.png" alt="Chat"></a>
+                <a href="chat.html" ><img src="https://cdn-icons-png.flaticon.com/512/124/124034.png" alt="Chat"></a>
                 <p>Chat</p>
             </div>
             <div class="icon" onclick="openFolder('Case Files')">
@@ -588,28 +588,27 @@
             </div>
         </div>
         <div class="start-menu" id="startMenu">
-            <button>
-                <img src="https://cdn-icons-png.flaticon.com/512/126/126472.png" alt="Settings">
-                Settings
-            </button>
+            
             <button>
                 <a href="files.html" style="text-decoration: none; color: white;">
                     <img src="https://cdn-icons-png.flaticon.com/512/3767/3767084.png" alt="Documents">
                     Files
                 </a>
             </button>
-            <button onclick="openFolder('Pictures')">
-                <img src="https://cdn-icons-png.flaticon.com/512/104/104680.png" alt="Pictures">
-                Pictures
-            </button>
-            <button onclick="openFolder('Satellite Connectivity')">
-                <img src="https://cdn-icons-png.flaticon.com/512/1042/1042820.png" alt="Satellite Connectivity">
-                Satellite Connectivity
-            </button>
-            <button onclick="openFolder('Vehicle Tracking')">
+            <a href="eval.html">
+                <button onclick="openFolder('Pictures')">
+                    <img src="https://cdn-icons-png.flaticon.com/512/104/104680.png" alt="Pictures">
+                    Headquarter Reporting
+                </button>
+            </a>
+            <a href="database.html"><button onclick="openFolder('Satellite Connectivity')">
+                <img src="https://cdn-icons-png.flaticon.com/512/4400/4400233.png" alt="Satellite Connectivity">
+                Department Database
+            </button></a>
+            <a href="https://dmv.ny.gov/registration/check-registration-status" style="color: white;text-decoration: none;"><button onclick="openFolder('Vehicle Tracking')">
                 <img src="https://cdn-icons-png.flaticon.com/512/3466/3466202.png" alt="Vehicle Tracking">
-                Vehicle Tracking
-            </button>
+                 Vehicle Registration
+             </button></a>
         </div>
         <p id="timeDisplay"></p>
     </div>

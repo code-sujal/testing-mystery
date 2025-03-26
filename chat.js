@@ -7,11 +7,12 @@ const optionContainer = document.getElementById('option-container');
 const chatOption = document.getElementById('chat-option');
 const resetButton = document.getElementById('reset-button');
 const chatPlaceholder = document.getElementById('chat-placeholder');
+const backButton = document.getElementById('back-button'); // New DOM element
 
 let currentChatId = null;
 let conversationStep = 0;
 
-// Chat Data with Story-Driven Progression
+// Chat Data with Story-Driven Progression (unchanged)
 const chatData = {
     "ryan": {
         name: "Ryan Gomez (HR)",
@@ -121,7 +122,7 @@ function loadChat(chatId) {
         });
         chatOption.textContent = "Chat Ended (Offline)";
         chatOption.disabled = true;
-        reset.ConcurrentModificationExceptionButton.style.display = 'none';
+        resetButton.style.display = 'none';
     } else {
         conversationStep = savedHistory.step;
         if (savedHistory.messages.length > 0) {
@@ -223,6 +224,11 @@ function resetChat() {
     loadChat(currentChatId);
 }
 
+// Handle back button click
+function handleBackClick() {
+    window.location.href = 'welcome.html';
+}
+
 // Contact selection
 contactList.addEventListener('click', (e) => {
     const contact = e.target.closest('.contact');
@@ -240,6 +246,7 @@ contactList.addEventListener('click', (e) => {
 // Event Listeners
 chatOption.addEventListener('click', handleOptionClick);
 resetButton.addEventListener('click', resetChat);
+backButton.addEventListener('click', handleBackClick); // New event listener
 
 // Load initial state on page load
 document.addEventListener('DOMContentLoaded', () => {

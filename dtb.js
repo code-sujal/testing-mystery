@@ -151,7 +151,7 @@ const cases = [
             name: "Unknown",
             age: "Unknown",
             images: [],
-            lastKnownLocation: "Intelligence expects it to be a office employee, No evidence collected yet",
+            lastKnownLocation: "LuminTech Labs",
             criminalRecord: "N/A"
         },
         victim: {

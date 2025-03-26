@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Headquarter Reporting</title>
+  <link rel="stylesheet" href="eval.css">
+  <link rel="icon" href="chat.png">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h1>HQ Reporting</h1>
+      </div>
+      <div class="contact-list" id="contact-list">
+        <div class="contact active" data-id="harrison">
+          <img src="police.png" alt="Captain Harrison" class="contact-avatar">
+          <span>Captain Harrison</span>
+          <span class="status-dot online"></span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Chat Area -->
+    <main class="chat-container">
+      <header class="chat-header" id="chat-header">
+        <h2 id="chat-header-title">Captain Harrison</h2>
+        <button class="reset-button" id="reset-button" title="Reset Chat" style="display: none;">⟳</button>
+      </header>
+      <div class="chat-messages" id="chat-messages"></div>
+      <div class="option-container" id="option-container" style="display: none;"></div>
+      <div id="result" style="display: none;"></div>
+    </main>
+  </div>
+  <script src="eval.js"></script>
+</body>
+</html>
