@@ -20,9 +20,8 @@ const chatData = {
         conversation: [
             { bot: "Detective Alice, it’s Ryan from HR. I’m swamped—can we make this quick? What do you need about Reid?", userOption: "I’m investigating Reid’s last days. Did you notice anything unusual?" },
             { bot: "Unusual? Not really… he seemed off, but I was too busy. The CEO was on my case about some missing reports—total mess.", userOption: "Where were you on March 4? Did you see Reid that day?" },
-            { bot: "March 4? I was in my office, dealing with that mess. I sent Jake to drop off some items at Reid’s desk—routine stuff, nothing special. Candice might’ve seen him—she was around.", userOption: "Did Reid mention Project Eclipse to you?" },
-            { bot: "Eclipse? Yeah, he complained about it once—said it was ‘off.’ I told him to take it up with the CEO. I didn’t care to listen—I had enough on my plate.", userOption: "Did you hear about any lab issues—like odd smells or equipment problems?" },
-            { bot: "Lab issues? I don’t go near there… Lila mentioned a weird smell, but she’s always exaggerating. Ask Dr. Rao—he’s always in the lab.", userOption: null }
+            { bot: "March 4? I was in my office, dealing with that mess. I sent Jake to drop off some items at Reid’s desk—routine stuff, nothing special. Candice might’ve seen him—she was around.", userOption: "How much do you know about Project Eclipse." },
+            { bot: "Eclipse? Ofcourse It was the Project Dr. Reid was incharge of, he took it away from Dr.Anoop after convincing my brother. Honestly I think something suspicious was going on with that project, and Reid was....It's over now there is nothing left about that project, I have to go now..." , userOption: null }
         ]
     },
     "candice": {
