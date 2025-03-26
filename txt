@@ -8,7 +8,7 @@
             <p>Recycle Bin</p>
         </div>
         <div class="icon" onclick="openFolder('Case Files')">
-            <img src="https://cdn-icons-png.flaticon.com/512/3767/3767084.png" alt="Case Files"> <!-- Replace with a suitable icon URL -->
+            <img src="knife.jpeg" alt="Case Files"> <!-- Replace with a suitable icon URL -->
             <p>Case Files</p>
         </div>
         <div class="icon" onclick="openFolder('Evidence')">

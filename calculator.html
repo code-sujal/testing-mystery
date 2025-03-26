@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Desktop Calculator</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;600&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="calculator.css">
+</head>
+<body>
+    <div class="calculator">
+        <div class="calculator-body">
+            <button id="back-btn" class="btn back-btn"><i class="fas fa-arrow-left"></i></button>
+            <div class="display">
+                <div class="input-line" id="input-display"></div>
+                <div class="output-line" id="output-display">0</div>
+            </div>
+            <div class="buttons">
+                <button class="btn memory" id="memory-clear">MC</button>
+                <button class="btn memory" id="memory-recall">MR</button>
+                <button class="btn memory" id="memory-add">M+</button>
+                <button class="btn memory" id="memory-subtract">M-</button>
+                <button class="btn clear" id="clear">C</button>
+                <button class="btn operator" id="divide">/</button>
+                <button class="btn operator" id="multiply">×</button>
+                <button class="btn number" id="num7">7</button>
+                <button class="btn number" id="num8">8</button>
+                <button class="btn number" id="num9">9</button>
+                <button class="btn operator" id="subtract">-</button>
+                <button class="btn number" id="num4">4</button>
+                <button class="btn number" id="num5">5</button>
+                <button class="btn number" id="num6">6</button>
+                <button class="btn operator" id="add">+</button>
+                <button class="btn number" id="num1">1</button>
+                <button class="btn number" id="num2">2</button>
+                <button class="btn number" id="num3">3</button>
+                <button class="btn number zero" id="num0">0</button>
+                <button class="btn decimal" id="decimal">.</button>
+                <button class="btn equals" id="equals">=</button>
+            </div>
+        </div>
+    </div>
+    <script src="calculator.js"></script>
+</body>
+</html>

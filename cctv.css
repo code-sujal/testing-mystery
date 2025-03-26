@@ -6,65 +6,69 @@
 
 body {
     font-family: 'Roboto Mono', monospace;
-    background: linear-gradient(135deg, #0d0d0d, #1a1a2e);
-    color: #fff;
+    background: #1a1a1a;
+    color: #e0e0e0;
     height: 100vh;
     overflow: hidden;
-    transition: background 0.5s ease;
 }
 
 .hud {
-    position: relative;
     width: 100%;
     height: 100%;
-    padding: 20px;
+    padding: 10px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 10px;
 }
 
 .toolbar {
     display: flex;
-    justify-content: space-between;
-    padding: 10px;
-    background: rgba(0, 0, 0, 0.7);
-    border-radius: 8px;
-    box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+    gap: 10px;
+    padding: 5px;
+    background: #252525;
+    border-bottom: 1px solid #333;
 }
 
-.toolbar-btn {
-    background: #00ffff;
-    color: #000;
-    border: none;
-    padding: 8px 15px;
+.toolbar-btn, .toolbar-select, .search-bar {
+    background: #333;
+    color: #e0e0e0;
+    border: 1px solid #444;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.9rem;
     cursor: pointer;
-    border-radius: 5px;
-    text-transform: uppercase;
-    font-weight: 600;
-    transition: all 0.3s ease;
+    transition: background 0.2s;
 }
 
-.toolbar-btn:hover {
-    background: #00cccc;
-    box-shadow: 0 0 10px #00ffff;
+.toolbar-btn:hover, .toolbar-select:hover, .search-bar:hover {
+    background: #3a3a3a;
+}
+
+.search-bar {
+    flex: 1;
+    outline: none;
 }
 
 .camera-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(2, 1fr);
-    gap: 15px;
+    gap: 10px;
     flex: 1;
     overflow: hidden;
 }
 
 .feed {
     position: relative;
-    border-radius: 10px;
+    border-radius: 4px;
     overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    cursor: pointer;
-    background: rgba(255, 255, 255, 0.05);
+    background: #222;
+    border: 1px solid #333;
+    transition: border-color 0.2s;
+}
+
+.feed:hover {
+    border-color: #666;
 }
 
 .main-feed {
@@ -77,11 +81,6 @@ body {
     grid-row: span 1;
 }
 
-.feed:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
-}
-
 .feed-screen {
     width: 100%;
     height: 100%;
@@ -92,7 +91,6 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: contrast(1.1);
 }
 
 .feed-overlay {
@@ -100,127 +98,103 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    padding: 10px;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), transparent);
+    padding: 5px;
+    background: rgba(0, 0, 0, 0.6);
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-.feed-label {
-    font-size: 1rem;
-    text-transform: uppercase;
-    color: #00ffff;
-    text-shadow: 0 0 5px #00ffff;
-}
-
-.status-indicator {
-    padding: 3px 8px;
-    border-radius: 3px;
     font-size: 0.8rem;
 }
 
-.status-indicator.online { background: #00ff00; color: #000; }
-.status-indicator.offline { background: #ff0000; color: #fff; }
+.feed-overlay.hidden {
+    display: none;
+}
+
+.feed-label {
+    color: #e0e0e0;
+    text-transform: uppercase;
+}
+
+.status-indicator {
+    font-size: 0.6rem;
+    padding: 2px 4px;
+}
+
+.status-indicator.online { color: #00cc00; }
+.status-indicator.offline { color: #cc0000; }
 
 .timestamp {
-    font-size: 0.9rem;
-    color: #fff;
-    text-shadow: 0 0 3px #fff;
+    color: #999;
+}
+
+.recording-indicator {
+    width: 6px;
+    height: 6px;
+    background: #ff4444;
+    border-radius: 50%;
+    animation: recordPulse 1.5s infinite;
+}
+
+@keyframes recordPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
 }
 
 .alerts-panel {
     position: absolute;
-    bottom: 80px;
-    right: 20px;
-    width: 300px;
-    background: rgba(0, 0, 0, 0.9);
-    border-radius: 8px;
-    padding: 15px;
-    box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
-    max-height: 200px;
+    bottom: 60px;
+    right: 10px;
+    width: 250px;
+    background: #252525;
+    border: 1px solid #333;
+    border-radius: 4px;
+    padding: 10px;
+    max-height: 150px;
     overflow-y: auto;
 }
 
 .alerts-panel h2 {
-    font-size: 1.2rem;
-    color: #ff0000;
-    text-shadow: 0 0 5px #ff0000;
-    margin-bottom: 10px;
+    font-size: 0.9rem;
+    color: #e0e0e0;
+    margin-bottom: 5px;
 }
 
 #alerts-list {
     list-style: none;
+    font-size: 0.8rem;
+    color: #bbb;
 }
 
 .alerts-list li {
-    font-size: 0.9rem;
-    padding: 5px;
-    background: rgba(255, 0, 0, 0.2);
-    margin-bottom: 5px;
-    border-radius: 4px;
-    animation: alertFadeIn 0.5s ease;
-}
-
-@keyframes alertFadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+    padding: 3px 0;
+    border-bottom: 1px solid #333;
 }
 
 .playback-controls {
     display: flex;
+    gap: 10px;
+    padding: 5px;
+    background: #252525;
+    border-top: 1px solid #333;
     justify-content: center;
-    gap: 15px;
-    padding: 10px;
-    background: rgba(0, 0, 0, 0.7);
-    border-radius: 8px;
-    box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
 }
 
 .control-btn {
-    background: #00ffff;
-    color: #000;
-    border: none;
-    padding: 10px;
-    border-radius: 50%;
+    background: #333;
+    color: #e0e0e0;
+    border: 1px solid #444;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.9rem;
     cursor: pointer;
-    font-size: 1.2rem;
-    transition: all 0.3s ease;
+    transition: background 0.2s;
 }
 
 .control-btn:hover {
-    background: #00cccc;
-    transform: scale(1.1);
-    box-shadow: 0 0 10px #00ffff;
+    background: #3a3a3a;
 }
 
 .system-stats {
-    font-size: 0.9rem;
-    color: #00ffff;
-    text-shadow: 0 0 5px #00ffff;
-}
-
-/* Neon Light Mode */
-body.neon-light {
-    background: linear-gradient(135deg, #f0f0f0, #d0d0e0);
-    color: #000;
-}
-
-body.neon-light .toolbar, body.neon-light .playback-controls {
-    background: rgba(255, 255, 255, 0.7);
-}
-
-body.neon-light .toolbar-btn, body.neon-light .control-btn {
-    background: #ff00ff;
-    color: #fff;
-}
-
-body.neon-light .feed-label, body.neon-light .system-stats {
-    color: #ff00ff;
-    text-shadow: 0 0 5px #ff00ff;
-}
-
-body.neon-light .alerts-panel h2 {
-    color: #ff00ff;
-    text-shadow: 0 0 5px #ff00ff;
+    font-size: 0.8rem;
+    color: #999;
 }

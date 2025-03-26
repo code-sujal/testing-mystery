@@ -8,121 +8,127 @@
     <link rel="stylesheet" href="cctv.css">
 </head>
 <body>
-    <!-- HUD Overlay -->
     <div class="hud">
         <div class="toolbar">
-            <button class="toolbar-btn" onclick="goBack()">⬅ Back</button>
-            <button class="toolbar-btn">File</button>
-            <button class="toolbar-btn">View</button>
-            <button class="toolbar-btn" id="layout-toggle">Toggle Grid</button>
-            <button class="toolbar-btn" id="theme-toggle">🌙 Neon</button>
+            <button class="toolbar-btn" onclick="goBack()">⬅</button>
+            <select id="group-select" class="toolbar-select">
+                <option value="all">All Cameras</option>
+                <option value="office">Office</option>
+                <option value="lab">Lab</option>
+            </select>
+            <input type="text" id="search-bar" class="search-bar" placeholder="Search Cameras...">
+            <button class="toolbar-btn" id="overlay-toggle">Overlay</button>
+            <button class="toolbar-btn" id="alerts-toggle">Alerts</button>
         </div>
 
-        <!-- Camera Grid -->
         <div class="camera-grid" id="camera-grid">
-            <div class="feed main-feed" data-camera="CORRIDOR-1">
+            <div class="feed main-feed" data-camera="CORRIDOR-1" data-group="office">
                 <div class="feed-screen">
                     <video autoplay muted loop class="feed-video" id="main-video">
-                        <source src="motion-detection-computer-room-door-1920x1080.mp4" type="video/mp4">
+                        <source src="WhatsApp Video 2025-03-25 at 5.57.36 PM.mp4" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
                     <div class="feed-overlay">
                         <span class="feed-label" id="main-feed-label">CORRIDOR-1</span>
-                        <span class="status-indicator online">Online</span>
+                        <span class="status-indicator online">●</span>
                         <span class="timestamp" id="main-feed-time"></span>
+                        <span class="recording-indicator"></span>
                     </div>
                 </div>
             </div>
-            <div class="feed side-feed" data-camera="OFFICE-HUB">
+            <div class="feed side-feed" data-camera="OFFICE-HUB" data-group="office">
                 <div class="feed-screen">
                     <video autoplay muted loop class="feed-video">
-                        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                        <source src="office.mp4" type="video/mp4">
                     </video>
                     <div class="feed-overlay">
                         <span class="feed-label">OFFICE-HUB</span>
-                        <span class="status-indicator online">Online</span>
+                        <span class="status-indicator online">●</span>
                         <span class="timestamp">00:42</span>
+                        <span class="recording-indicator"></span>
                     </div>
                 </div>
             </div>
-            <div class="feed side-feed" data-camera="VAULT-ROOM">
+            <div class="feed side-feed" data-camera="VAULT-ROOM" data-group="office">
                 <div class="feed-screen">
                     <video autoplay muted loop class="feed-video">
-                        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                        <source src="WhatsApp Video 2025-03-25 at 5.57.40 PM.mp4" type="video/mp4">
                     </video>
                     <div class="feed-overlay">
                         <span class="feed-label">VAULT-ROOM</span>
-                        <span class="status-indicator online">Online</span>
+                        <span class="status-indicator online">●</span>
                         <span class="timestamp">00:42</span>
+                        <span class="recording-indicator"></span>
                     </div>
                 </div>
             </div>
-            <div class="feed side-feed" data-camera="MEETING-ZONE">
+            <div class="feed side-feed" data-camera="MEETING-ZONE" data-group="office">
                 <div class="feed-screen">
                     <video autoplay muted loop class="feed-video">
                         <source src="videoplayback.mp4" type="video/mp4">
                     </video>
                     <div class="feed-overlay">
                         <span class="feed-label">MEETING-ZONE</span>
-                        <span class="status-indicator offline">Offline</span>
+                        <span class="status-indicator offline">●</span>
                         <span class="timestamp">00:42</span>
+                        <span class="recording-indicator"></span>
                     </div>
                 </div>
             </div>
-            <div class="feed side-feed" data-camera="LOBBY-ENTRANCE">
+            <div class="feed side-feed" data-camera="LOBBY-ENTRANCE" data-group="office">
                 <div class="feed-screen">
                     <video autoplay muted loop class="feed-video">
-                        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                        <source src="c2.mp4" type="video/mp4">
                     </video>
                     <div class="feed-overlay">
                         <span class="feed-label">LOBBY-ENTRANCE</span>
-                        <span class="status-indicator online">Online</span>
+                        <span class="status-indicator online">●</span>
                         <span class="timestamp">00:42</span>
+                        <span class="recording-indicator"></span>
                     </div>
                 </div>
             </div>
-            <div class="feed side-feed" data-camera="LAB-ENTRANCE">
+            <div class="feed side-feed" data-camera="LAB-ENTRANCE" data-group="lab">
                 <div class="feed-screen">
                     <video autoplay muted loop class="feed-video">
-                        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                        <source src="room.mp4" type="video/mp4">
                     </video>
                     <div class="feed-overlay">
                         <span class="feed-label">LAB-ENTRANCE</span>
-                        <span class="status-indicator online">Online</span>
+                        <span class="status-indicator online">●</span>
                         <span class="timestamp">00:42</span>
+                        <span class="recording-indicator"></span>
                     </div>
                 </div>
             </div>
-            <div class="feed side-feed" data-camera="LAB-CORRIDOR">
+            <div class="feed side-feed" data-camera="LAB-CORRIDOR" data-group="lab">
                 <div class="feed-screen">
                     <video autoplay muted loop class="feed-video">
-                        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                        <source src="vr.mp4" type="video/mp4">
                     </video>
                     <div class="feed-overlay">
                         <span class="feed-label">LAB-CORRIDOR</span>
-                        <span class="status-indicator online">Online</span>
+                        <span class="status-indicator online">●</span>
                         <span class="timestamp">00:42</span>
+                        <span class="recording-indicator"></span>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Alerts Panel -->
         <div class="alerts-panel" id="alerts-panel">
-            <h2>Live Alerts</h2>
+            <h2 id="alerts-title">Live Alerts</h2>
             <ul id="alerts-list"></ul>
         </div>
 
-        <!-- Playback Controls -->
         <div class="playback-controls">
             <button class="control-btn" title="Rewind">◄◄</button>
-            <button class="control-btn" title="Play/Pause">▶</button>
+            <button class="control-btn" id="play-pause" title="Play/Pause">▶</button>
             <button class="control-btn" title="Fast Forward">►►</button>
             <span class="system-stats">24Mbps | 1080p | <span id="system-time"></span></span>
         </div>
     </div>
 
-    <audio id="alert-sound" src="https://www.soundjay.com/buttons/beep-01a.mp3"></audio>
     <script src="cctv.js"></script>
 </body>
 </html>

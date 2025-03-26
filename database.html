@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Police Database App</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;600&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="dtb.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Police Database</h1>
+            <div class="search-container">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" id="search-bar" placeholder="Search Cases..." class="search-bar">
+            </div>
+        </header>
+
+        <div id="case-list" class="case-list"></div>
+
+        <div id="case-details" class="case-details hidden">
+            <button id="close-details" class="btn"><i class="fas fa-times"></i></button>
+            <h2 id="case-title"></h2>
+            <div class="details-content">
+                <div id="suspect-images" class="person-details"></div>
+                <div id="victim-images" class="person-details"></div>
+                <div id="case-overview" class="case-overview"></div>
+            </div>
+        </div>
+        
+    </div><div class="btn-container">
+        <button id="back-btn" class="btn back-btn"><i class="fas fa-arrow-left"></i> Back</button>
+
+    </div>
+    <script src="dtb.js"></script>
+</body>
+</html>

@@ -350,3 +350,26 @@ body {
 #file-content::-webkit-scrollbar-thumb:hover {
     background: #6366f1; /* Lighter indigo */
 }
+
+/* Add this to your existing files.css */
+
+/* Home Back Button */
+#home-back-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+    margin-right: 8px; /* Space before nav-controls */
+}
+
+#home-back-btn:hover {
+    background-color: #d0d0d0; /* Slightly darker gray */
+}
+
+#home-back-btn img {
+    width: 16px;
+    height: 16px;
+    filter: invert(20%); /* Dark gray for icon */
+}

@@ -1,0 +1,82 @@
+/* style.css */
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #ff9966, #ff5e62);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .weather-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .weather-card {
+    width: 400px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    padding: 20px;
+  }
+  
+  header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+  }
+  
+  .subtitle {
+    font-size: 1rem;
+    margin-bottom: 20px;
+    font-weight: 300;
+  }
+  
+  .weather-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .icon img {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 15px;
+  }
+  
+  .details h2 {
+    font-size: 3rem;
+    margin: 10px 0;
+  }
+  
+  footer {
+    margin-top: 20px;
+  }
+  
+  footer p {
+    font-size: 1rem;
+    font-weight: 300;
+    margin-bottom: 10px;
+  }
+  
+  footer button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: #ff5e62;
+    background-color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  footer button:hover {
+    background-color: #ff5e62;
+    color: #fff;
+  }
+  

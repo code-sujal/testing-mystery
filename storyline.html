@@ -1,242 +1,245 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>404: MURDER NOT FOUND</title>
-  
-  <style>
-    /* Global Styling */
-    body {
-      margin: 0;
-      padding: 0;
-      background-color: #000;
-      color: #fff;
-      font-family: 'Courier New', monospace;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      overflow: hidden;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404: MURDER NOT FOUND</title>
+    
+    <style>
+      /* Global Styling */
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #000;
+        color: #fff;
+        font-family: 'Courier New', monospace;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        overflow: hidden;
+      }
 
-    /* Story Container */
-    #story-container {
-      text-align: center;
-      width: 90%;
-      max-width: 700px;
-      position: relative;
-    }
+      /* Story Container */
+      #story-container {
+        text-align: center;
+        width: 90%;
+        max-width: 700px;
+        position: relative;
+      }
 
-    /* Screen and Text */
-    #black-screen {
-      background-color: #000;
-      padding: 20px;
-      position: relative;
-    }
+      /* Screen and Text */
+      #black-screen {
+        background-color: #000;
+        padding: 20px;
+        position: relative;
+      }
 
-    #story-text {
-      font-size: 1.3rem;
-      white-space: pre-wrap;
-      opacity: 0;
-      transition: opacity 1.5s ease-in-out;
-    }
+      #story-text {
+        font-size: 1.3rem;
+        white-space: pre-wrap;
+        opacity: 0;
+        transition: opacity 1.5s ease-in-out;
+      }
 
-    /* Highlight Styling */
-    .highlight {
-      color: #00ffff; /* Cyan highlights */
-    }
+      /* Highlight Styling */
+      .highlight {
+        color: #00ffff; /* Cyan highlights */
+      }
 
-    /* Text Flicker Effect */
-    @keyframes textFlicker {
-      0% { opacity: 0.9; }
-      10% { opacity: 1; }
-      20% { opacity: 0.8; }
-      30% { opacity: 1; }
-      100% { opacity: 1; }
-    }
+      /* Text Flicker Effect */
+      @keyframes textFlicker {
+        0% { opacity: 0.9; }
+        10% { opacity: 1; }
+        20% { opacity: 0.8; }
+        30% { opacity: 1; }
+        100% { opacity: 1; }
+      }
 
-    .flicker {
-      animation: textFlicker 0.5s ease-in;
-    }
+      .flicker {
+        animation: textFlicker 0.5s ease-in;
+      }
 
-    /* Tubelight Flicker Effect */
-    #tubelight {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(to bottom, rgba(255, 255, 255, 0.05), rgba(0, 0, 0, 0));
-      pointer-events: none;
-      opacity: 0;
-      animation: tubelightFlicker 3s infinite ease-in-out;
-    }
+      /* Tubelight Flicker Effect */
+      #tubelight {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 0.05), rgba(0, 0, 0, 0));
+        pointer-events: none;
+        opacity: 0;
+        animation: tubelightFlicker 3s infinite ease-in-out;
+      }
 
-    @keyframes tubelightFlicker {
-      0% { opacity: 0.1; }
-      2% { opacity: 0.05; }
-      4% { opacity: 0.2; }
-      6% { opacity: 0.05; }
-      8% { opacity: 0.15; }
-      10% { opacity: 0.05; }
-      20% { opacity: 0.1; }
-      50% { opacity: 0.05; }
-      70% { opacity: 0.15; }
-      80% { opacity: 0.05; }
-      90% { opacity: 0.1; }
-      100% { opacity: 0.05; }
-    }
+      @keyframes tubelightFlicker {
+        0% { opacity: 0.1; }
+        2% { opacity: 0.05; }
+        4% { opacity: 0.2; }
+        6% { opacity: 0.05; }
+        8% { opacity: 0.15; }
+        10% { opacity: 0.05; }
+        20% { opacity: 0.1; }
+        50% { opacity: 0.05; }
+        70% { opacity: 0.15; }
+        80% { opacity: 0.05; }
+        90% { opacity: 0.1; }
+        100% { opacity: 0.05; }
+      }
 
-    /* Scanline Effect */
-    #scanlines {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: repeating-linear-gradient(
-        to bottom,
-        transparent 0px,
-        transparent 2px,
-        rgba(255, 255, 255, 0.03) 2px,
-        rgba(255, 255, 255, 0.03) 3px
-      );
-      pointer-events: none;
-      animation: scanlineMove 10s linear infinite;
-    }
+      /* Scanline Effect */
+      #scanlines {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: repeating-linear-gradient(
+          to bottom,
+          transparent 0px,
+          transparent 2px,
+          rgba(255, 255, 255, 0.03) 2px,
+          rgba(255, 255, 255, 0.03) 3px
+        );
+        pointer-events: none;
+        animation: scanlineMove 10s linear infinite;
+      }
 
-    @keyframes scanlineMove {
-      0% { background-position: 0 0; }
-      100% { background-position: 0 100px; }
-    }
+      @keyframes scanlineMove {
+        0% { background-position: 0 0; }
+        100% { background-position: 0 100px; }
+      }
 
-    /* Button Container */
-    #button-container {
-      margin-top: 20px;
-    }
+      /* Button Container */
+      #button-container {
+        margin-top: 20px;
+      }
 
-    /* Button Styling */
-    #next-button, #prev-button, #start-over-button {
-      background: #fff;
-      color: #000;
-      border: none;
-      padding: 8px 20px;
-      font-size: 0.9rem;
-      font-weight: bold;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-      margin: 0 10px; /* Space between buttons */
-    }
+      /* Button Styling */
+      #next-button, #prev-button, #start-over-button {
+        background: #fff;
+        color: #000;
+        border: none;
+        padding: 8px 20px;
+        font-size: 0.9rem;
+        font-weight: bold;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+        margin: 0 10px; /* Space between buttons */
+      }
 
-    #next-button:hover, #prev-button:hover, #start-over-button:hover {
-      background: #ccc;
-    }
+      #next-button:hover, #prev-button:hover, #start-over-button:hover {
+        background: #ccc;
+      }
 
-    #next-button:disabled, #prev-button:disabled, #start-over-button:disabled {
-      background: #555;
-      cursor: not-allowed;
-    }
+      #next-button:disabled, #prev-button:disabled, #start-over-button:disabled {
+        background: #555;
+        cursor: not-allowed;
+      }
 
-    #prev-button.hidden, #start-over-button.hidden {
-      display: none; /* Hide when not needed */
-    }
-  </style>
+      #prev-button.hidden, #start-over-button.hidden {
+        display: none; /* Hide when not needed */
+      }
+    </style>
 </head>
 <body>
-  <div id="story-container">
-    <div id="black-screen">
-      <div id="tubelight"></div>
-      <div id="scanlines"></div>
-      <p id="story-text"></p>
+    <div id="story-container">
+      <div id="black-screen">
+        <div id="tubelight"></div>
+        <div id="scanlines"></div>
+        <p id="story-text"></p>
+      </div>
+      <div id="button-container">
+        <button id="prev-button" class="hidden">Missed something?</button>
+        <button id="next-button">Proceed</button>
+        <button id="start-over-button" class="hidden">Start Over</button>
+      </div>
     </div>
-    <div id="button-container">
-      <button id="prev-button" class="hidden">Missed something?</button>
-      <button id="next-button">Proceed</button>
-      <button id="start-over-button" class="hidden">Start Over</button>
-    </div>
-  </div>
 
-  <audio id="static-noise" loop>
-    <source src="https://www.soundjay.com/buttons/static-noise-1.mp3" type="audio/mp3">
-    <!-- Replace with a real static noise file URL or local file -->
-  </audio>
+    <audio id="static-noise" loop>
+      <source src="https://www.soundjay.com/buttons/static-noise-1.mp3" type="audio/mp3">
+      <!-- Replace with a real static noise file URL or local file -->
+    </audio>
 
-  <script>
-    // Chapters Data with Highlights
-    const chapters = [
-      "Cue the flickering screen—*<span class='highlight'>access granted</span>*. You’re <span class='highlight'>Mercer</span>, a rogue private eye who lives for the shadows. Dr. Samuel <span class='highlight'>Reid</span>’s dead, dropped in his lab March 4, 2025. Detective <span class='highlight'>Alice</span> Harper slapped “natural causes” on it and bolted the case shut faster than a getaway car. But you? You’ve jacked into her system, and her secrets are bleeding out. This city’s dirty, and you’re about to get your hands filthier.",
-      "LumaTech Corporation—biotech gods in a glass tower, peddling <span class='highlight'>Project Eclipse</span> like it’s salvation on a chip. Neural implants, miracles for the mind, blah blah. <span class='highlight'>Reid</span> was their golden boy—until he wasn’t. <span class='highlight'>Alice</span>’s files hum with rumors: he was jittery, muttering about <span class='highlight'>Project Eclipse</span>’s dark side. Now he’s cold, and her “asthma did it” story’s thinner than a junkie’s alibi. What’s she hiding?",
-      "Her grainy crime scene snaps hit like a punch: empty inhaler, bio-chip smeared red, notes scratched like a madman’s last confession. A cigar smolders—too ritzy for <span class='highlight'>Reid</span>’s paycheck. Security footage? Vanished into the ether. <span class='highlight'>Alice</span> poked around less than a rookie on a coffee run. This ain’t no accident—it’s a frame job, and you’re tearing the canvas.",
-      "<span class='highlight'>Alice</span>’s data spills the players: <span class='highlight'>Dr. Anoop Rao</span>, the rival with a chip on his shoulder; <span class='highlight'>Candice Bennett</span>, <span class='highlight'>Reid</span>’s ex, now the <span class='highlight'>CEO</span>’s shadow; <span class='highlight'>Harley Sawyer</span>, the intern with ice in his veins, eyeballing <span class='highlight'>Reid</span>’s last gasp; <span class='highlight'>Skye Reid</span>, sister with a vendetta older than sin. The <span class='highlight'>CEO</span>’s a shark circling <span class='highlight'>Project Eclipse</span>. <span class='highlight'>Alice</span> barely rattled their cages—you’re about to kick the hive.",
-      "<span class='highlight'>Reid</span>’s final log flickers up—*<span class='highlight'>“ethical violations”</span>*—<span class='highlight'>Project Eclipse</span> ain’t no healer, it’s a beast. Staff whispers in <span class='highlight'>Alice</span>’s chats scream cover-up, but she turned the other cheek. LumaTech’s suits nudged her to bury it, and she folded. From her rig, you’ve got the scent—jealousy, betrayal, or a corporate blade in the dark. Hunt the truth, <span class='highlight'>Mercer</span>, before the credits roll on you."
-    ];
+    <script>
+      // Chapters Data with Highlights
+      const chapters = [
+        " You’re <span class='highlight'>Mercer</span>, a rogue private eye who lives for the shadows. Dr. Samuel <span class='highlight'>Reid</span>’s dead, dropped in his lab March 4, 2025. Detective <span class='highlight'>Alice</span> Harper slapped “natural causes” on it and bolted the case shut faster than a getaway car. But you? You’ve jacked into her system, and her secrets are bleeding out. This city’s dirty, and you’re about to get your hands filthier.",
+        "LuminaTech Corporation—biotech gods in a glass tower, peddling <span class='highlight'>Project Eclipse</span> like it’s salvation on a chip. Neural implants, miracles for the mind, blah blah. <span class='highlight'>Reid</span> was their golden boy—until he wasn’t. <span class='highlight'>Alice</span>’s files hum with rumors: he was jittery, muttering about <span class='highlight'>Project Eclipse</span>’s dark side. Now he’s cold, and her “asthma did it” story’s thinner than a junkie’s alibi. What’s she hiding?",
+        "Her grainy crime scene snaps hit like a punch: empty inhaler, bio-chip smeared red, notes scratched like a madman’s last confession. A cigar smolders—too ritzy for <span class='highlight'>Reid</span>’s paycheck. Security footage? Vanished into the ether. <span class='highlight'>Alice</span> poked around less than a rookie on a coffee run. This ain’t no accident—it’s a frame job, and you’re tearing the canvas.",
+        "<span class='highlight'>Alice</span>’s data spills the players: <span class='highlight'>Dr. Anoop Rao</span>, the rival with a chip on his shoulder; <span class='highlight'>Candice Bennett</span>, <span class='highlight'>Reid</span>’s ex, now the <span class='highlight'>CEO</span>’s shadow; <span class='highlight'>Harley Sawyer</span>, the intern with ice in his veins, eyeballing <span class='highlight'>Reid</span>’s last gasp; <span class='highlight'>Skye Reid</span>, sister with a vendetta older than sin. The <span class='highlight'>CEO</span>’s a shark circling <span class='highlight'>Project Eclipse</span>. <span class='highlight'>Alice</span> barely rattled their cages—you’re about to kick the hive.",
+        "<span class='highlight'>Reid</span>’s final log flickers up—*<span class='highlight'>“ethical violations”</span>*—<span class='highlight'>Project Eclipse</span> ain’t no healer, it’s a beast. Staff whispers in <span class='highlight'>Alice</span>’s chats scream cover-up, but she turned the other cheek. LuminaTech’s suits nudged her to bury it, and she folded. From her rig, you’ve got the scent—jealousy, betrayal, or a corporate blade in the dark. Hunt the truth, <span class='highlight'>Mercer</span>, before the credits roll on you."
+      ];
 
-    // Final Message
-    const finalMessage = "CASE OPEN: <span class='highlight'>404 - MURDER NOT FOUND</span>";
+      // Final Message
+      const finalMessage = "CASE OPEN: <span class='highlight'>404 - MURDER NOT FOUND</span>";
 
-    // Variables for Story Control
-    let currentChapter = 0;
+      // Variables for Story Control
+      let currentChapter = 0;
 
-    // Elements
-    const storyText = document.getElementById("story-text");
-    const nextButton = document.getElementById("next-button");
-    const prevButton = document.getElementById("prev-button");
-    const startOverButton = document.getElementById("start-over-button");
-    const staticNoise = document.getElementById("static-noise");
+      // Elements
+      const storyText = document.getElementById("story-text");
+      const nextButton = document.getElementById("next-button");
+      const prevButton = document.getElementById("prev-button");
+      const startOverButton = document.getElementById("start-over-button");
+      const staticNoise = document.getElementById("static-noise");
 
-    // Function to Load Chapter
-    function loadChapter(index) {
-      storyText.style.opacity = "0";
-      storyText.classList.remove("flicker");
-      nextButton.disabled = true;
-      prevButton.disabled = true;
-      staticNoise.play();
-
-      setTimeout(() => {
-        storyText.innerHTML = index < chapters.length ? chapters[index] : finalMessage;
-        storyText.style.opacity = "1";
-        storyText.classList.add("flicker");
-
-        // Button visibility and state
-        prevButton.classList.toggle("hidden", index === 0); // Hide Previous on first chapter
-        nextButton.classList.toggle("hidden", index === chapters.length); // Hide Next on final
-        startOverButton.classList.toggle("hidden", index !== chapters.length); // Show Start Over on final
+      // Function to Load Chapter
+      function loadChapter(index) {
+        storyText.style.opacity = "0";
+        storyText.classList.remove("flicker");
+        nextButton.disabled = true;
+        prevButton.disabled = true;
+        staticNoise.play();
 
         setTimeout(() => {
-          nextButton.disabled = false;
-          prevButton.disabled = false;
-          staticNoise.pause();
-          staticNoise.currentTime = 0;
-        }, 1500);
-      }, 500);
-    }
+          storyText.innerHTML = index < chapters.length ? chapters[index] : finalMessage;
+          storyText.style.opacity = "1";
+          storyText.classList.add("flicker");
 
-    // Next Button Handler
-    nextButton.addEventListener("click", () => {
-      if (currentChapter < chapters.length) {
-        currentChapter++;
-        loadChapter(currentChapter);
+          // Button visibility and state
+          prevButton.classList.toggle("hidden", index === 0); // Hide Previous on first chapter
+          nextButton.classList.toggle("hidden", index === chapters.length); // Hide Next on final
+          startOverButton.classList.toggle("hidden", index !== chapters.length); // Show Start Over on final
+
+          setTimeout(() => {
+            nextButton.disabled = false;
+            prevButton.disabled = false;
+            staticNoise.pause();
+            staticNoise.currentTime = 0;
+          }, 1500);
+        }, 500);
       }
-    });
 
-    // Previous Button Handler
-    prevButton.addEventListener("click", () => {
-      if (currentChapter > 0) {
-        currentChapter--;
+      // Next Button Handler
+      nextButton.addEventListener("click", () => {
+        if (currentChapter < chapters.length) {
+          currentChapter++;
+          loadChapter(currentChapter);
+        } else if (currentChapter === chapters.length) {
+          // Redirect to welcome.html when "Proceed" is clicked after final message
+          window.location.href = "welcome.html";
+        }
+      });
+
+      // Previous Button Handler
+      prevButton.addEventListener("click", () => {
+        if (currentChapter > 0) {
+          currentChapter--;
+          loadChapter(currentChapter);
+        }
+      });
+
+      // Start Over Button Handler
+      startOverButton.addEventListener("click", () => {
+        currentChapter = 0;
         loadChapter(currentChapter);
-      }
-    });
+      });
 
-    // Start Over Button Handler
-    startOverButton.addEventListener("click", () => {
-      currentChapter = 0;
+      // Load Initial Chapter
       loadChapter(currentChapter);
-    });
-
-    // Load Initial Chapter
-    loadChapter(currentChapter);
-  </script>
+    </script>
 </body>
 </html>

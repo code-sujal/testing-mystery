@@ -25,7 +25,7 @@ const chatData = {
         ]
     },
     "candice": {
-        name: "Candice Bennett",
+        name: "Candice Bennett(Reid's Ex)",
         status: "Online",
         conversation: [
             { bot: "Detective Alice, it’s Candice. I don’t want to be dragged into this—Samuel’s death is too much! Why are you asking me?", userOption: "Ryan said you were around on March 4. Did you see Samuel that day?" },

@@ -1,7 +1,6 @@
 // Sample email data categorized into folders
 const emailFolders = {
     inbox: [
-        
         // 2. LumaTrust Medical Coverage (March 2, 2025)
         {
             id: 2,
@@ -12,9 +11,8 @@ const emailFolders = {
             body: "Dear Detective Alice,\n\n" +
                   "We are pleased to inform you that LumaTrust has fully covered the outstanding medical bills for your daughter's treatment. If you have any further requests or need additional assistance, do not hesitate to reach out.\n\n" +
                   "We value your cooperation in this matter.\n\n" +
-                  "\n\n" +
                   "Best,\nLuminaTrust Foundation",
-            attachments: ["📁 medical_bill.pdf"],
+            attachments: [{name: "📁 medical_bill.pdf", url: "https://example.com/medical_bill.pdf"}],
             dateTime: "March 2, 2025 | 9:15 AM"
         },
         // 3. Doctor Appointment (March 3, 2025)
@@ -28,10 +26,10 @@ const emailFolders = {
                   "I’m writing to confirm Emily’s follow-up appointment on March 10 at 2 PM. We’ll review her recent test results and discuss the next steps for her treatment.\n\n" +
                   "Please let me know if this time works for you.\n\n" +
                   "Best,\nDr. Sarah Mitchell",
-            attachments: [""],
+            attachments: [],
             dateTime: "March 3, 2025 | 8:45 AM"
         },
-        // 4. Case Assignment (March 5, 2025, adjusted from 2029)
+        // 4. Case Assignment (March 5, 2025)
         {
             id: 4,
             senderName: "Captain Harrison (RCPD)",
@@ -43,7 +41,7 @@ const emailFolders = {
                   "Reid was last seen in his lab, all other details are there in the case report I've attached. You’ll need to tread carefully—LuminaTech has powerful backers. I’m attaching the case report from the night of his death.\n\n" +
                   "Keep me updated.\n\n" +
                   "– Captain Harrison",
-            attachments: ["📁 case_report.pdf"],
+            attachments: [{name: "📁 case_report.pdf", url: "https://example.com/case_report.pdf"}],
             dateTime: "March 5, 2025 | 9:32 AM"
         },
         // 5. Closure of Reid Case (March 6, 2025)
@@ -56,9 +54,8 @@ const emailFolders = {
             body: "Detective,\n\n" +
                   "We appreciate your cooperation in handling Dr. Reid’s case efficiently. Our internal medical experts have concluded his death was due to pre-existing conditions.\n\n" +
                   "As such, we request that this case be considered closed to avoid unnecessary disruptions to ongoing company research.\n\n" +
-                  "Please confirm receipt of this message.\n\n" +
-                  "",
-            attachments: [""],
+                  "Please confirm receipt of this message.\n\n",
+            attachments: [],
             dateTime: "March 6, 2025 | 12:00 PM"
         },
         // 6. Charity Thank You (March 7, 2025)
@@ -72,7 +69,7 @@ const emailFolders = {
                   "Thank you for volunteering at our annual charity run last weekend. Your help with the registration booth was greatly appreciated.\n\n" +
                   "We raised over $5,000 for local families in need!\n\n" +
                   "Hope to see you at next year’s event,\nRachel Evans",
-            attachments: [""],
+            attachments: [],
             dateTime: "March 7, 2025 | 1:30 PM"
         },
         // 7. Autopsy Report (March 15, 2025)
@@ -84,9 +81,8 @@ const emailFolders = {
             subject: "Official Autopsy Report – Samuel Reid",
             body: "Detective Mercer,\n\n" +
                   "Attached is the official autopsy report for Samuel Reid. Preliminary findings confirm no external injuries, but forensic analysis suggests irregular toxin levels in his blood.\n\n" +
-                  "Although further investigation is highly recommended in this case, as it seems very sensitive. I've attached the autopsy report. Reach me anytime for help!\n\n" +
-                  "",
-            attachments: ["📁 autopsy_report.pdf"],
+                  "Although further investigation is highly recommended in this case, as it seems very sensitive. I've attached the autopsy report. Reach me anytime for help!\n\n",
+            attachments: [{name: "📁 autopsy_report.pdf", url: "https://example.com/autopsy_report.pdf"}],
             dateTime: "March 15, 2025 | 11:47 AM"
         }
     ],
@@ -95,16 +91,15 @@ const emailFolders = {
             id: 1,
             senderName: "To Internal Affairs (ia@citypd.com)",
             senderImage: "https://static.vecteezy.com/system/resources/thumbnails/023/810/334/small_2x/police-badge-isolated-on-white-background-free-vector.jpg",
-            senderEmail: "Detective Alice (alice.detective@citypd.com)​",
+            senderEmail: "Detective Alice (alice.detective@citypd.com)",
             subject: "Need Clarification on Reid Case",
             body: "Captain,\n\n" +
             "Something about the Dr. Reid case doesn’t sit right with me. Cause of death was ruled as a natural condition, but the evidence at the scene tells a different story.\n\n" +
             "Lab security footage from that night is missing, and employees are whispering about something bigger.\n\n" +
             "I need permission to open an independent inquiry. Please advise.\n\n" +
-            "Detective Alice Harper",            attachments: [""],
+            "Detective Alice Harper",
+            attachments: [],
             dateTime: "Sent by you on, March 7, 2025"
-
-
         },
         {
             id: 2,
@@ -116,10 +111,9 @@ const emailFolders = {
             "I’ve been reviewing some reports, and Dr. Reid made multiple complaints about Project Eclipse. You handled those concerns, right?\n\n" +
             "Did he ever mention feeling threatened?\n\n" +
             "I need to know if he had any enemies inside the company before his death.\n\n" +
-            "Detective Alice Harper",            attachments: [""],
-            dateTime: "  March 6, 2025"
-
-
+            "Detective Alice Harper",
+            attachments: [],
+            dateTime: "March 6, 2025"
         },
         {
             id: 3,
@@ -131,10 +125,9 @@ const emailFolders = {
             "I’m following up on the downtown theft case from last week. Have you had a chance to get that witness statement from Mrs. Carter yet?\n\n" +
             "She mentioned something about a blue sedan, and I think it might match the description from another report.\n\n" +
             "Let me know when you’ve got an update.\n\n" +
-            "Detective Alice Harper",            attachments: [""],
+            "Detective Alice Harper",
+            attachments: [],
             dateTime: "December 17,2024"
-
-
         },
         {
             id: 4,
@@ -146,9 +139,9 @@ const emailFolders = {
             "I wanted to confirm that I’ll be attending the parent-teacher meeting for my daughter, Emily Harper, next Wednesday. I’ve cleared my schedule for the 4 PM slot.\n\n" +
             "Please let me know if there’s anything specific you’d like to discuss about her progress.\n\n" +
             "Looking forward to speaking with you.\n\n" +
-            " Alice Harper",attachments: [""],            dateTime: "November 27,2024"
-
-
+            " Alice Harper",
+            attachments: [],
+            dateTime: "November 27,2024"
         }
     ],
     drafts: [
@@ -162,7 +155,7 @@ const emailFolders = {
                   "I wanted to check in on the vandalism case at the downtown library. Did you manage to get the security footage from the night of the incident? I think we might be able to identify the kids involved if we can get a clear shot of their faces.\n\n" +
                   "Also, I’m thinking we should interview the librarian again—she seemed nervous when we spoke last time. Let me know what you think.\n\n" +
                   "Thanks,\nAlice",
-            attachments: [""],
+            attachments: [],
             dateTime: "Draft saved on March 10, 2025 | 8:20 AM"
         },
         {
@@ -175,7 +168,7 @@ const emailFolders = {
                   "I wanted to follow up about Emily’s science fair project. She’s been working really hard on her model of the solar system, but she mentioned she might need some extra supplies for the presentation.\n\n" +
                   "Could you let me know if there’s anything specific she should bring? I can stop by the store this weekend to pick up whatever she needs.\n\n" +
                   "Thank you,\nAlice Harper",
-            attachments: [""],
+            attachments: [],
             dateTime: "Draft saved on March 9, 2025 | 6:15 PM"
         },
         {
@@ -188,12 +181,11 @@ const emailFolders = {
                   "Don’t forget to pick up your dry cleaning after work tomorrow. You’ve got that meeting with the captain on Wednesday, and your good blazer is still at the cleaners.\n\n" +
                   "Also, grab some coffee beans while you’re out—the good kind, not the cheap stuff.\n\n" +
                   "– Me",
-            attachments: [""],
+            attachments: [],
             dateTime: "Draft saved on March 8, 2025 | 9:30 PM"
         }
     ],
     spam: [
-        
         {
             id: 3,
             senderName: "GadgetFly",
@@ -208,7 +200,7 @@ const emailFolders = {
                   "Hurry, Detective Harper! These deals are so hot, they might just self-destruct. Click the link below to shop now!\n\n" +
                   "[Shop Now]\n\n" +
                   "Stay Tickled,\nThe GadgetFly Team",
-            attachments: [""],
+            attachments: [],
             dateTime: "March 14, 2025 | 2:15 PM"
         },
         {
@@ -225,7 +217,7 @@ const emailFolders = {
                   "Click below to claim your 999 free items before I overheat from excitement!\n\n" +
                   "[Claim Your Deal]\n\n" +
                   "Beep Boop Bargain,\nBargain Bonanza Bot",
-            attachments: ["📁 deal_flyer.pdf"],
+            attachments: [{name: "📁 deal_flyer.pdf", url: "https://example.com/deal_flyer.pdf"}],
             dateTime: "March 13, 2025 | 9:00 AM"
         },
         {
@@ -242,7 +234,7 @@ const emailFolders = {
                   "Don’t miss out—your lifetime supply of widgets awaits! Click below to claim your wacky deal!\n\n" +
                   "[Get Your Widgets]\n\n" +
                   "Stay Wacky,\nThe Wacky Widgets Team",
-            attachments: ["[No attachments]"],
+            attachments: [],
             dateTime: "March 12, 2025 | 11:30 AM"
         },
         {
@@ -259,7 +251,7 @@ const emailFolders = {
                   "Beam up these deals before they get sucked into a black hole! Click below to shop now!\n\n" +
                   "[Shop the Galaxy]\n\n" +
                   "Cosmically Yours,\nThe Gizmo Galore Galaxy Crew",
-            attachments: ["📁 cosmic_catalog.pdf"],
+            attachments: [{name: "📁 cosmic_catalog.pdf", url: "https://example.com/cosmic_catalog.pdf"}],
             dateTime: "March 11, 2025 | 3:45 PM"
         }
     ],
@@ -273,7 +265,7 @@ const emailFolders = {
             body: "Hi Alice,\n\n" +
                   "Just confirming our lunch meeting tomorrow at Neon Diner, 1 PM. I know things have been tense lately with the Reid situation, but I promise it’s nothing heavy—just a casual chat. I’ll bring the Project Eclipse summary you asked for, though I’d prefer if we kept that between us for now.\n\n" +
                   "Looking forward to it,\nRyan",
-            attachments: [""],
+            attachments: [],
             dateTime: "Deleted on March 6, 2025 | Originally sent on March 5, 2025 | 4:10 PM"
         },
         {
@@ -285,7 +277,7 @@ const emailFolders = {
             body: "Detective Harper,\n\n" +
                   "I know you’re working on the Reid case. You might want to check the lab’s inventory logs from February 28th. There’s a discrepancy in the chemical supplies—something that shouldn’t have been there. I can’t say more, but you’re not the only one watching.\n\n" +
                   "Be careful.\n– A Friend",
-            attachments: [""],
+            attachments: [],
             dateTime: "Deleted on March 7, 2025 | Originally sent on March 6, 2025 | 11:20 PM"
         },
         {
@@ -298,7 +290,7 @@ const emailFolders = {
                   "We wanted to express our gratitude for your discretion in handling the recent matter. As a token of our appreciation, we’ve arranged for an additional donation to the City PD’s charity fund—$10,000, as discussed. Should you need to reach out, please use the private line: 555-0134.\n\n" +
                   "We trust you’ll continue to prioritize the city’s best interests.\n\n" +
                   "Warm regards,\nLuminaTrust Foundation",
-            attachments: [""],
+            attachments: [],
             dateTime: "Deleted on March 8, 2025 | Originally sent on March 7, 2025 | 2:30 PM"
         }
     ]
@@ -331,15 +323,23 @@ function openEmail(email) {
     
     let attachmentsDiv = document.getElementById("email-attachments");
     attachmentsDiv.innerHTML = "";
-    email.attachments.forEach(file => {
-        let link = document.createElement("a");
-        link.href = "#"; // Updated to prevent broken links
-        link.textContent = file;
-        link.target = "_blank";
-        attachmentsDiv.appendChild(link);
-        attachmentsDiv.appendChild(document.createElement("br"));
-    });
+    if (email.attachments.length > 0) {
+        email.attachments.forEach(attachment => {
+            if (attachment && attachment.url) { // Check if attachment has a URL
+                let link = document.createElement("a");
+                link.href = attachment.url;
+                link.textContent = attachment.name;
+                link.target = "_blank";
+                link.rel = "noopener noreferrer"; // Security best practice
+                attachmentsDiv.appendChild(link);
+                attachmentsDiv.appendChild(document.createElement("br"));
+            }
+        });
+    } else {
+        attachmentsDiv.innerHTML = "<p>No attachments</p>";
+    }
 
+    document.getElementById("email-date-time").textContent = email.dateTime;
     document.getElementById("email-detail").classList.add("show");
 }
 
@@ -372,6 +372,11 @@ document.addEventListener("click", function(event) {
     if (!profileIcon.contains(event.target) && !profileDropdown.contains(event.target)) {
         profileDropdown.classList.remove("show");
     }
+});
+
+// Back Button Functionality
+document.getElementById("back-btn").addEventListener("click", function() {
+    window.location.href = "welcome.html";
 });
 
 // Load Inbox by default

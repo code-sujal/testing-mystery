@@ -337,3 +337,27 @@ body {
 .attachments a:hover {
     text-decoration: underline;
 }
+
+
+/* Add this to your existing email.css */
+
+/* Back Button */
+#back-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    margin-right: 10px; /* Space before search bar */
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+#back-btn:hover {
+    background-color: #252525; /* Dark gray */
+}
+
+#back-btn img {
+    width: 20px;
+    height: 20px;
+    filter: invert(80%); /* Makes icon light for dark theme */
+}

@@ -1,470 +1,803 @@
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Welcome - Police Department</title>
-        <!-- Bootstrap CSS -->
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-        <!-- Google Fonts (Roboto) -->
-        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-        <style>
-            body {
-                font-family: 'Roboto', sans-serif;
-                background: linear-gradient(135deg, #1a2526 0%, #2c3e50 100%); /* Dark gradient for a high-tech feel */
-                background-size: cover;
-                background-position: center;
-                margin: 0;
-                padding: 0;
-                height: 100vh;
-                display: flex;
-                flex-direction: column;
-                color: #fff;
-                overflow: hidden;
-            }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome - Police Department</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts (Roboto and Roboto Mono) -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* Existing styles remain unchanged until taskbar redesign */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #1a2526 0%, #2c3e50 100%);
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: #fff;
+            overflow: hidden;
+        }
 
-            header {
-                background: rgba(255, 255, 255, 0.1); /* Frosted glass effect */
-                backdrop-filter: blur(10px);
-                padding: 15px;
-                text-align: center;
-                border-radius: 0 0 15px 15px;
-                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-            }
+        header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 15px;
+            text-align: center;
+            border-radius: 0 0 15px 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
 
-            header h1 {
-                margin: 0;
-                font-size: 24px;
-                font-weight: 500;
-                color: #fff;
-            }
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 500;
+            color: #fff;
+        }
 
-            .desktop {
-                flex: 1;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                padding: 20px;
-                position: relative;
-            }
+        .desktop {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+        }
 
+        .icons {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 800px;
+            padding: 20px;
+        }
+
+        .icon {
+            text-align: center;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 10px;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        .icon img {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.2));
+        }
+
+        .icon p {
+            margin: 5px 0 0;
+            font-size: 14px;
+            color: #fff;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        .icon:hover {
+            transform: scale(1.1);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Redesigned Taskbar - Clean and Minimal */
+        .taskbar {
+            background: #2c3e50; /* Solid dark color for simplicity */
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #3a5266; /* Subtle border */
+            box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .taskbar p {
+            margin: 0;
+            font-size: 16px;
+            color: #d0d5da;
+            font-weight: 400;
+        }
+
+        .start-btn {
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 5px;
+            transition: background 0.2s ease;
+        }
+
+        .start-btn img {
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+        }
+
+        .start-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .taskbar-icons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .taskbar-icons .icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            padding: 4px;
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+
+        .taskbar-icons .icon img {
+            width: 100%;
+            height: 100%;
+            border-radius: 4px;
+            /* Removed filter to keep original colors */
+        }
+
+        .taskbar-icons .icon:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: scale(1.1);
+        }
+
+        .start-menu {
+            background: rgba(30, 30, 30, 0.95);
+            backdrop-filter: blur(10px);
+            color: #fff;
+            position: absolute;
+            bottom: 60px;
+            left: 20px;
+            width: 250px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            display: none;
+            flex-direction: column;
+            padding: 10px;
+            border-radius: 10px;
+            animation: slide-up 0.3s ease;
+        }
+
+        @keyframes slide-up {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .start-menu button {
+            background: none;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            text-align: left;
+            width: 100%;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            display: flex;
+            align-items: center;
+            border-radius: 5px;
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        .start-menu button img {
+            margin-right: 10px;
+            width: 20px;
+            height: 20px;
+            filter: brightness(0) invert(1); /* Keep this for start menu icons */
+        }
+
+        .start-menu button:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        #timer {
+            font-size: 1.2em;
+            color: #ff5555;
+            font-weight: 500;
+        }
+
+        .greeting {
+            position: absolute;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .greeting h2 {
+            margin: 0 0 10px;
+            font-size: 22px;
+            font-weight: 500;
+        }
+
+        .greeting .popup {
+            margin: 0;
+            font-size: 14px;
+            color: #ddd;
+        }
+
+        #emailWindow {
+            position: absolute;
+            width: 400px;
+            height: 300px;
+            background: #fff;
+            border: 1px solid #ccc;
+            z-index: 100;
+            display: none;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+        }
+
+        #emailHeader {
+            background: #4A90E2;
+            color: #fff;
+            padding: 10px;
+            cursor: move;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 8px 8px 0 0;
+        }
+
+        #emailHeader span {
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        #emailContent {
+            padding: 15px;
+            height: calc(100% - 40px);
+            overflow-y: auto;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .minimize-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+
+        .minimize-btn:hover {
+            color: #ddd;
+        }
+
+        /* Calculator Popup Styles */
+        #calculatorWindow {
+            position: absolute;
+            width: 360px;
+            background: linear-gradient(145deg, #2a2f33, #1e2225);
+            border: 2px solid #3a4045;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), inset 0 2px 4px rgba(255, 255, 255, 0.05);
+            z-index: 100;
+            display: none;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Roboto Mono', monospace;
+        }
+
+        #calculatorHeader {
+            background: #3a4045;
+            color: #d0d5da;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 8px 8px 0 0;
+            cursor: move;
+        }
+
+        #calculatorHeader span {
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .calculator-display {
+            background: #1e2529;
+            border: 1px solid #3a4045;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+            height: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .calculator-input-line {
+            color: #8a9299;
+            font-size: 1.2rem;
+            text-align: right;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .calculator-output-line {
+            color: #d0d5da;
+            font-size: 2rem;
+            text-align: right;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .calculator-buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+        }
+
+        .calculator-btn {
+            background: linear-gradient(145deg, #3a4045, #2a2f33);
+            border: 1px solid #4a5055;
+            border-radius: 6px;
+            color: #d0d5da;
+            font-size: 1.2rem;
+            padding: 15px;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .calculator-btn:hover {
+            background: linear-gradient(145deg, #4a5055, #3a4045);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .calculator-btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .calculator-number {
+            background: linear-gradient(145deg, #4a5055, #3a4045);
+        }
+
+        .calculator-operator {
+            background: linear-gradient(145deg, #2a4d3a, #1e3d2e);
+            border-color: #00cc00;
+            color: #fff;
+        }
+
+        .calculator-operator:hover {
+            background: linear-gradient(145deg, #3a5d4a, #2e4d3e);
+        }
+
+        .calculator-memory {
+            background: linear-gradient(145deg, #3d3a2a, #2d2d1e);
+            border-color: #cccc00;
+            font-size: 1rem;
+        }
+
+        .calculator-memory:hover {
+            background: linear-gradient(145deg, #4d4a3a, #3d3d2e);
+        }
+
+        .calculator-clear {
+            background: linear-gradient(145deg, #4d2a2a, #3d1e1e);
+            border-color: #cc0000;
+            grid-column: span 2;
+        }
+
+        .calculator-clear:hover {
+            background: linear-gradient(145deg, #5d3a3a, #4d2e2e);
+        }
+
+        .calculator-equals {
+            background: linear-gradient(145deg, #2a4d3a, #1e3d2e);
+            border-color: #00cc00;
+            grid-row: span 2;
+        }
+
+        .calculator-equals:hover {
+            background: linear-gradient(145deg, #3a5d4a, #2e4d3e);
+        }
+
+        .calculator-zero {
+            grid-column: span 2;
+        }
+
+        .calculator-decimal {
+            background: linear-gradient(145deg, #4a5055, #3a4045);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
             .icons {
-                display: grid;
-                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-                gap: 20px;
-                width: 100%;
-                max-width: 800px;
-                padding: 20px;
-            }
-
-            .icon {
-                text-align: center;
-                cursor: pointer;
-                padding: 10px;
-                border-radius: 10px;
-                transition: transform 0.3s ease, background 0.3s ease;
-            }
-
-            .icon img {
-                width: 50px;
-                height: 50px;
-                border-radius: 8px;
-                filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.2));
-            }
-
-            .icon p {
-                margin: 5px 0 0;
-                font-size: 14px;
-                color: #fff;
-                text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-            }
-
-            .icon:hover {
-                transform: scale(1.1);
-                background: rgba(255, 255, 255, 0.1);
-            }
-
-            .taskbar {
-                background: rgba(255, 255, 255, 0.1); /* Frosted glass effect */
-                backdrop-filter: blur(10px);
-                padding: 10px 20px;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                border-radius: 15px 15px 0 0;
-                box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
-            }
-
-            .taskbar p {
-                margin: 0;
-                font-size: 14px;
-                color: #fff;
-            }
-
-            .start-menu {
-                background: rgba(30, 30, 30, 0.95);
-                backdrop-filter: blur(10px);
-                color: #fff;
-                position: absolute;
-                bottom: 60px;
-                left: 20px;
-                width: 250px;
-                box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
-                display: none;
-                flex-direction: column;
-                padding: 10px;
-                border-radius: 10px;
-                animation: slide-up 0.3s ease;
-            }
-
-            @keyframes slide-up {
-                from { transform: translateY(20px); opacity: 0; }
-                to { transform: translateY(0); opacity: 1; }
-            }
-
-            .start-menu button {
-                background: none;
-                color: #fff;
-                border: none;
-                padding: 10px;
-                text-align: left;
-                width: 100%;
-                cursor: pointer;
-                transition: background 0.3s ease;
-                display: flex;
-                align-items: center;
-                border-radius: 5px;
-                margin: 5px 0;
-                font-size: 14px;
-            }
-
-            .start-menu button img {
-                margin-right: 10px;
-                width: 20px;
-                height: 20px;
-                filter: brightness(0) invert(1);
-            }
-
-            .start-menu button:hover {
-                background: rgba(255, 255, 255, 0.1);
-            }
-
-            .start-btn {
-                cursor: pointer;
-                background: none;
-                border: none;
-                padding: 0;
-            }
-
-            .start-btn img {
-                width: 30px;
-                height: 30px;
-                filter: brightness(0) invert(1);
-                transition: transform 0.3s ease;
-            }
-
-            .start-btn:hover img {
-                transform: scale(1.1);
-            }
-
-            .taskbar-icons {
-                display: flex;
+                grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
                 gap: 15px;
             }
 
-            .taskbar-icons .icon {
-                width: 30px;
-                height: 30px;
-                border-radius: 5px;
-                transition: transform 0.3s ease;
+            .icon img {
+                width: 40px;
+                height: 40px;
             }
 
-            .taskbar-icons .icon img {
-                width: 100%;
-                height: 100%;
-                filter: brightness(0) invert(1);
-            }
-
-            .taskbar-icons .icon:hover {
-                transform: scale(1.1);
-            }
-
-            #timer {
-                font-size: 1.2em;
-                color: #ff5555; /* Softer red for the timer */
-                font-weight: 500;
+            .icon p {
+                font-size: 12px;
             }
 
             .greeting {
-                position: absolute;
-                top: 80px;
-                left: 50%;
-                transform: translateX(-50%);
-                text-align: center;
-                background: rgba(255, 255, 255, 0.1);
-                backdrop-filter: blur(10px);
-                padding: 15px 25px;
-                border-radius: 10px;
-                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+                top: 60px;
+                padding: 10px 15px;
             }
 
             .greeting h2 {
-                margin: 0 0 10px;
-                font-size: 22px;
-                font-weight: 500;
+                font-size: 18px;
             }
 
             .greeting .popup {
-                margin: 0;
-                font-size: 14px;
-                color: #ddd;
+                font-size: 12px;
             }
 
-            #emailWindow {
-                position: absolute;
-                width: 400px;
-                height: 300px;
-                background: #fff;
-                border: 1px solid #ccc;
-                z-index: 100;
-                display: none;
-                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-                border-radius: 8px;
+            .start-menu {
+                width: 200px;
+                left: 10px;
+                bottom: 50px;
             }
 
-            #emailHeader {
-                background: #4A90E2; /* Soft teal for the header */
-                color: #fff;
-                padding: 10px;
-                cursor: move;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                border-radius: 8px 8px 0 0;
+            .taskbar {
+                padding: 8px 15px;
             }
 
-            #emailHeader span {
-                font-size: 16px;
-                font-weight: 500;
+            .start-btn img {
+                width: 32px;
+                height: 32px;
             }
 
-            #emailContent {
-                padding: 15px;
-                height: calc(100% - 40px);
-                overflow-y: auto;
-                color: #333;
+            .taskbar-icons .icon {
+                width: 36px;
+                height: 36px;
+            }
+
+            .taskbar p {
                 font-size: 14px;
             }
 
-            .minimize-btn {
-                background: none;
-                border: none;
-                color: #fff;
-                cursor: pointer;
-                font-size: 16px;
-                transition: color 0.3s ease;
+            #calculatorWindow {
+                width: 300px;
             }
 
-            .minimize-btn:hover {
-                color: #ddd;
+            .calculator-btn {
+                font-size: 1rem;
+                padding: 12px;
             }
+        }
+    </style>
+</head>
+<body>
+    <!-- Email Window (unchanged) -->
+    <div id="emailWindow">
+        <div id="emailHeader">
+            <span>Email Application</span>
+            <button class="minimize-btn" onclick="toggleMinimize()">_</button>
+        </div>
+        <div id="emailContent">
+            <p>Welcome to your email inbox.</p>
+        </div>
+    </div>
 
-            /* Responsive Design */
-            @media (max-width: 768px) {
-                .icons {
-                    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-                    gap: 15px;
-                }
-
-                .icon img {
-                    width: 40px;
-                    height: 40px;
-                }
-
-                .icon p {
-                    font-size: 12px;
-                }
-
-                .greeting {
-                    top: 60px;
-                    padding: 10px 15px;
-                }
-
-                .greeting h2 {
-                    font-size: 18px;
-                }
-
-                .greeting .popup {
-                    font-size: 12px;
-                }
-
-                .start-menu {
-                    width: 200px;
-                    left: 10px;
-                }
-
-                .taskbar {
-                    padding: 8px 15px;
-                }
-            }
-        </style>
-    </head>
-    <body>
-        <div id="emailWindow">
-            <div id="emailHeader">
-                <span>Email Application</span>
-                <button class="minimize-btn" onclick="toggleMinimize()">_</button>
+    <!-- Calculator Popup -->
+    <div id="calculatorWindow">
+        <div id="calculatorHeader">
+            <span>Calculator</span>
+            <button class="minimize-btn" onclick="toggleCalculatorMinimize()">_</button>
+        </div>
+        <div class="calculator-body">
+            <div class="calculator-display">
+                <div class="calculator-input-line" id="calculator-input-display"></div>
+                <div class="calculator-output-line" id="calculator-output-display">0</div>
             </div>
-            <div id="emailContent">
-                <p>Welcome to your email inbox.</p>
+            <div class="calculator-buttons">
+                <button class="calculator-btn calculator-memory" id="memory-clear">MC</button>
+                <button class="calculator-btn calculator-memory" id="memory-recall">MR</button>
+                <button class="calculator-btn calculator-memory" id="memory-add">M+</button>
+                <button class="calculator-btn calculator-memory" id="memory-subtract">M-</button>
+                <button class="calculator-btn calculator-clear" id="calculator-clear">C</button>
+                <button class="calculator-btn calculator-operator" id="calculator-divide">/</button>
+                <button class="calculator-btn calculator-operator" id="calculator-multiply">×</button>
+                <button class="calculator-btn calculator-number" id="calculator-num7">7</button>
+                <button class="calculator-btn calculator-number" id="calculator-num8">8</button>
+                <button class="calculator-btn calculator-number" id="calculator-num9">9</button>
+                <button class="calculator-btn calculator-operator" id="calculator-subtract">-</button>
+                <button class="calculator-btn calculator-number" id="calculator-num4">4</button>
+                <button class="calculator-btn calculator-number" id="calculator-num5">5</button>
+                <button class="calculator-btn calculator-number" id="calculator-num6">6</button>
+                <button class="calculator-btn calculator-operator" id="calculator-add">+</button>
+                <button class="calculator-btn calculator-number" id="calculator-num1">1</button>
+                <button class="calculator-btn calculator-number" id="calculator-num2">2</button>
+                <button class="calculator-btn calculator-number" id="calculator-num3">3</button>
+                <button class="calculator-btn calculator-number calculator-zero" id="calculator-num0">0</button>
+                <button class="calculator-btn calculator-decimal" id="calculator-decimal">.</button>
+                <button class="calculator-btn calculator-equals" id="calculator-equals">=</button>
             </div>
         </div>
+    </div>
 
-        <header>
-            <h1>Police Department - Investigation Dashboard</h1>
-        </header>
+    <header>
+        <h1>Police Department - Investigation Dashboard</h1>
+    </header>
 
-        <div class="desktop">
-            <div class="greeting">
-                <h2 id="greeting">Welcome, Vigilante</h2>
-                <p class="popup">WARNING: Unauthorized access detected. System will shut down in <span id="timer">60:00</span>. Proceed with caution.</p>
+    <div class="desktop">
+        <div class="greeting">
+            <h2 id="greeting">Welcome, Vigilante</h2>
+            <p class="popup">WARNING: Unauthorized access detected. System will shut down in <span id="timer">60:00</span>. Proceed with caution.</p>
+        </div>
+        <div class="icons">
+            <div class="icon" onclick="openFolder('Email')">
+                <a href="email.html" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="Email"></a>
+                <p>Email</p>
             </div>
-            <div class="icons">
-                <div class="icon" onclick="openFolder('Email')">
-                    <a href="email.html" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="Email"></a>
-                    <p>Email</p>
-                </div>
-                <div class="icon" onclick="openFolder('Chat')">
-                    <a href="chat.html" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/124/124034.png" alt="Chat"></a>
-                    <p>Chat</p>
-                </div>
-                <div class="icon" onclick="openFolder('Case Files')">
-                    <a href="files.html"><img src="https://cdn-icons-png.flaticon.com/512/3767/3767084.png" alt="Case Files"></a>
-                    <p>Files</p>
-                </div>
-                <div class="icon" onclick="openFolder('Evidence')">
-                    <img src="https://cdn-icons-png.flaticon.com/512/104/104831.png" alt="Evidence">
-                    <p>Browser</p>
-                </div>
-                <div class="icon" onclick="openPuzzle()">
-                    <img src="https://cdn-icons-png.flaticon.com/512/138/138533.png" alt="Recycle Bin">
-                    <p>Recycle Bin</p>
-                </div>
-                <div class="icon" onclick="openPuzzle()">
-                    <a href="cctv.html"><img src="https://cdn-icons-png.flaticon.com/512/9241/9241732.png" alt="CCTV"></a>
-                    <p>CCTV</p>
-                </div>
+            <div class="icon" onclick="openFolder('Chat')">
+                <a href="chat.html" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/124/124034.png" alt="Chat"></a>
+                <p>Chat</p>
+            </div>
+            <div class="icon" onclick="openFolder('Case Files')">
+                <a href="files.html"><img src="https://cdn-icons-png.flaticon.com/512/3767/3767084.png" alt="Case Files"></a>
+                <p>Files</p>
+            </div>
+            <div class="icon">
+                <a href="cctv.html"><img src="https://cdn-icons-png.flaticon.com/512/9241/9241732.png" alt="CCTV"></a>
+                <p>CCTV</p>
+            </div>
+            <div class="icon" onclick="openCalculator()">
+                <img src="https://cdn-icons-png.flaticon.com/512/3094/3094839.png" alt="Calculator">
+                <p>Calculator</p>
+            </div>
+            <div class="icon">
+                <a href="weather.html">
+                    <img src="https://cdn-icons-png.flaticon.com/512/7133/7133364.png" alt="Weather">
+                </a>
+                <p>Weather</p>
             </div>
         </div>
+    </div>
 
-        <div class="taskbar">
-            <button class="start-btn" onclick="toggleStartMenu()">
-                <img src="https://mailmeteor.com/logos/assets/PNG/Microsoft_Logo_512px.png" alt="Start">
+    <div class="taskbar">
+        <button class="start-btn" onclick="toggleStartMenu()">
+            <img src="https://mailmeteor.com/logos/assets/PNG/Microsoft_Logo_512px.png" alt="Start">
+        </button>
+        <div class="taskbar-icons">
+            <div class="icon">
+                <a href="email.html"><img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="Email"></a>
+            </div>
+            <div class="icon">
+                <a href="files.html"><img src="https://cdn-icons-png.flaticon.com/512/3767/3767084.png" alt="Case Files"></a>
+            </div>
+            <div class="icon">
+                <a href="database.html"><img src="https://cdn-icons-png.flaticon.com/512/4400/4400233.png" alt="Database"></a>
+            </div>
+        </div>
+        <div class="start-menu" id="startMenu">
+            <button>
+                <img src="https://cdn-icons-png.flaticon.com/512/126/126472.png" alt="Settings">
+                Settings
             </button>
-            <div class="taskbar-icons">
-                <div class="icon" onclick="openApp('Radar')">
-                    <img src="https://cdn-icons-png.flaticon.com/512/1087/1087100.png" alt="Radar">
-                </div>
-                <div class="icon" onclick="openApp('Track Phone')">
-                    <img src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png" alt="Track Phone">
-                </div>
-                <div class="icon" onclick="openApp('Investigation Files')">
-                    <img src="https://cdn-icons-png.flaticon.com/512/3767/3767084.png" alt="Investigation Files">
-                </div>
-            </div>
-            <div class="start-menu" id="startMenu">
-                <button onclick="openFolder('Settings')">
-                    <img src="https://cdn-icons-png.flaticon.com/512/126/126472.png" alt="Settings">
-                    Settings
-                </button>
-                <button onclick="openFolder('Documents')">
+            <button>
+                <a href="files.html" style="text-decoration: none; color: white;">
                     <img src="https://cdn-icons-png.flaticon.com/512/3767/3767084.png" alt="Documents">
-                    Documents
-                </button>
-                <button onclick="openFolder('Pictures')">
-                    <img src="https://cdn-icons-png.flaticon.com/512/104/104680.png" alt="Pictures">
-                    Pictures
-                </button>
-                <button onclick="openFolder('Satellite Connectivity')">
-                    <img src="https://cdn-icons-png.flaticon.com/512/1042/1042820.png" alt="Satellite Connectivity">
-                    Satellite Connectivity
-                </button>
-                <button onclick="openFolder('Vehicle Tracking')">
-                    <img src="https://cdn-icons-png.flaticon.com/512/3466/3466202.png" alt="Vehicle Tracking">
-                    Vehicle Tracking
-                </button>
-            </div>
-            <p id="timeDisplay"></p>
+                    Files
+                </a>
+            </button>
+            <button onclick="openFolder('Pictures')">
+                <img src="https://cdn-icons-png.flaticon.com/512/104/104680.png" alt="Pictures">
+                Pictures
+            </button>
+            <button onclick="openFolder('Satellite Connectivity')">
+                <img src="https://cdn-icons-png.flaticon.com/512/1042/1042820.png" alt="Satellite Connectivity">
+                Satellite Connectivity
+            </button>
+            <button onclick="openFolder('Vehicle Tracking')">
+                <img src="https://cdn-icons-png.flaticon.com/512/3466/3466202.png" alt="Vehicle Tracking">
+                Vehicle Tracking
+            </button>
         </div>
+        <p id="timeDisplay"></p>
+    </div>
 
-        <!-- Bootstrap JS and dependencies -->
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const name = localStorage.getItem('username');
-                const startTime = localStorage.getItem('startTime');
-                const timeLimit = 60 * 60 * 1000; // 1 hour in milliseconds
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const name = localStorage.getItem('username');
+            const startTime = localStorage.getItem('startTime');
+            const timeLimit = 60 * 60 * 1000; // 1 hour in milliseconds
 
-                if (name) {
-                    document.getElementById('greeting').textContent = `Welcome, ${name}`;
-                } else {
-                    const username = prompt("Enter your username:");
-                    if (username) {
-                        localStorage.setItem('username', username);
-                        localStorage.setItem('startTime', Date.now());
-                        document.getElementById('greeting').textContent = `Welcome, ${username}`;
+            if (name) {
+                document.getElementById('greeting').textContent = `Welcome, ${name}`;
+            } else {
+                const username = prompt("Enter your username:");
+                if (username) {
+                    localStorage.setItem('username', username);
+                    localStorage.setItem('startTime', Date.now());
+                    document.getElementById('greeting').textContent = `Welcome, ${username}`;
+                }
+            }
+
+            function updateTimer() {
+                const elapsedTime = Date.now() - parseInt(localStorage.getItem('startTime'), 10);
+                const remainingTime = Math.max(timeLimit - elapsedTime, 0);
+                const minutes = Math.floor(remainingTime / 60000);
+                const seconds = Math.floor((remainingTime % 60000) / 1000);
+                document.getElementById('timer').textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+
+                if (remainingTime <= 0) {
+                    alert("Session expired. Please log in again.");
+                    localStorage.removeItem('username');
+                    localStorage.removeItem('startTime');
+                    location.reload();
+                }
+            }
+
+            setInterval(updateTimer, 1000);
+
+            function updateTimeDisplay() {
+                const now = new Date();
+                document.getElementById('timeDisplay').textContent = now.toLocaleTimeString();
+            }
+            setInterval(updateTimeDisplay, 1000);
+
+            window.toggleStartMenu = function() {
+                const startMenu = document.getElementById('startMenu');
+                startMenu.style.display = startMenu.style.display === 'flex' ? 'none' : 'flex';
+            };
+
+            window.openFolder = function(folderName) {
+                // Placeholder for folder opening logic
+            };
+
+            window.openApp = function(appName) {
+                alert(`Launching ${appName}`);
+            };
+
+            window.openPuzzle = function() {
+                openFolder('Suspects');
+            };
+
+            window.toggleMinimize = function() {
+                const emailWindow = document.getElementById('emailWindow');
+                emailWindow.style.display = emailWindow.style.display === 'none' ? 'block' : 'none';
+            };
+
+            window.toggleCalculatorMinimize = function() {
+                const calculatorWindow = document.getElementById('calculatorWindow');
+                calculatorWindow.style.display = calculatorWindow.style.display === 'none' ? 'block' : 'none';
+            };
+
+            window.openCalculator = function() {
+                const calculatorWindow = document.getElementById('calculatorWindow');
+                calculatorWindow.style.display = 'block';
+            };
+
+            // Calculator JavaScript
+            const inputDisplay = document.getElementById('calculator-input-display');
+            const outputDisplay = document.getElementById('calculator-output-display');
+            const clearBtn = document.getElementById('calculator-clear');
+            const equalsBtn = document.getElementById('calculator-equals');
+            const numberBtns = document.querySelectorAll('.calculator-number, #calculator-decimal');
+            const operatorBtns = document.querySelectorAll('.calculator-operator');
+            const memoryClearBtn = document.getElementById('calculator-memory-clear');
+            const memoryRecallBtn = document.getElementById('calculator-memory-recall');
+            const memoryAddBtn = document.getElementById('calculator-memory-add');
+            const memorySubtractBtn = document.getElementById('calculator-memory-subtract');
+
+            let currentInput = '0';
+            let previousInput = '';
+            let operation = null;
+            let memory = 0;
+
+            function updateDisplay() {
+                inputDisplay.textContent = previousInput + (operation || '') + (currentInput !== '0' ? currentInput : '');
+                outputDisplay.textContent = currentInput;
+            }
+
+            numberBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    if (currentInput === '0' && btn.textContent !== '.') {
+                        currentInput = btn.textContent;
+                    } else if (btn.textContent === '.' && currentInput.includes('.')) {
+                        return;
+                    } else {
+                        currentInput += btn.textContent;
                     }
-                }
-
-                function updateTimer() {
-                    const elapsedTime = Date.now() - parseInt(localStorage.getItem('startTime'), 10);
-                    const remainingTime = Math.max(timeLimit - elapsedTime, 0);
-                    const minutes = Math.floor(remainingTime / 60000);
-                    const seconds = Math.floor((remainingTime % 60000) / 1000);
-                    document.getElementById('timer').textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-
-                    if (remainingTime <= 0) {
-                        alert("Session expired. Please log in again.");
-                        localStorage.removeItem('username');
-                        localStorage.removeItem('startTime');
-                        location.reload();
-                    }
-                }
-
-                setInterval(updateTimer, 1000);
-
-                function updateTimeDisplay() {
-                    const now = new Date();
-                    document.getElementById('timeDisplay').textContent = now.toLocaleTimeString();
-                }
-                setInterval(updateTimeDisplay, 1000);
-
-                window.toggleStartMenu = function() {
-                    const startMenu = document.getElementById('startMenu');
-                    startMenu.style.display = startMenu.style.display === 'flex' ? 'none' : 'flex';
-                };
-
-                window.openFolder = function(folderName) {
-                    // Placeholder for folder opening logic
-                };
-
-                window.openApp = function(appName) {
-                    alert(`Launching ${appName}`);
-                };
-
-                window.openPuzzle = function() {
-                    // Since the puzzle modal was removed, this can be updated to directly open the folder
-                    openFolder('Suspects');
-                };
-
-                window.toggleMinimize = function() {
-                    const emailWindow = document.getElementById('emailWindow');
-                    emailWindow.style.display = emailWindow.style.display === 'none' ? 'block' : 'none';
-                };
+                    updateDisplay();
+                });
             });
-        </script>
-    </body>
-    </html>
+
+            operatorBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    if (previousInput !== '' && currentInput !== '') {
+                        calculate();
+                    }
+                    previousInput = currentInput;
+                    currentInput = '0';
+                    operation = btn.textContent;
+                    updateDisplay();
+                });
+            });
+
+            equalsBtn.addEventListener('click', () => {
+                if (previousInput !== '' && operation !== null) {
+                    calculate();
+                    operation = null;
+                    previousInput = '';
+                }
+            });
+
+            clearBtn.addEventListener('click', () => {
+                currentInput = '0';
+                previousInput = '';
+                operation = null;
+                updateDisplay();
+            });
+
+            memoryClearBtn.addEventListener('click', () => {
+                memory = 0;
+            });
+
+            memoryRecallBtn.addEventListener('click', () => {
+                currentInput = memory.toString();
+                updateDisplay();
+            });
+
+            memoryAddBtn.addEventListener('click', () => {
+                memory += parseFloat(currentInput);
+            });
+
+            memorySubtractBtn.addEventListener('click', () => {
+                memory -= parseFloat(currentInput);
+            });
+
+            function calculate() {
+                const prev = parseFloat(previousInput);
+                const curr = parseFloat(currentInput);
+                let result;
+
+                switch (operation) {
+                    case '+':
+                        result = prev + curr;
+                        break;
+                    case '-':
+                        result = prev - curr;
+                        break;
+                    case '×':
+                        result = prev * curr;
+                        break;
+                    case '/':
+                        result = curr === 0 ? 'Error' : prev / curr;
+                        break;
+                    default:
+                        return;
+                }
+
+                currentInput = result.toString();
+                updateDisplay();
+            }
+
+            // Initial display
+            updateDisplay();
+        });
+    </script>
+</body>
+</html>

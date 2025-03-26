@@ -156,7 +156,8 @@ const fileSystem = {
                      "----------------------------------------",
             meta: "Last modified: March 4, 2025 | Size: 1.3 KB"
         }
-    ],    images: [
+    ],
+    images: [
         {
             id: 1,
             name: "Emily_Drawing.jpg",
@@ -166,19 +167,25 @@ const fileSystem = {
         },
         {
             id: 2,
-            name: "Lab_Photo.jpg",
+            name: "Family💔",
             type: "image",
-            content: "lab_photo.jpg",
+            content: "https://elizabethnord.com/wp-content/uploads/2019/08/wicker-park-newborn-chicago-020.jpg",
             meta: "Last modified: February 28, 2025 | Size: 320 KB"
         },
         {
             id: 3,
-            name: "emily's_super_ \n\nmedTime.jpg",
+            name: "emily's_super_ \n\nmedTime",
             type: "image",
             content: "https://i.guim.co.uk/img/media/d40363fb930ce39f4e7fd962d35cc5d88bb88e87/0_199_1024_614/master/1024.jpg?width=1200&quality=85&auto=format&fit=max&s=c082ed2b81637e48b8f4799236c41485",
             meta: "Last modified: December 25, 2024 | Size: 450 KB"
         },
-        
+        {
+            id: 4,
+            name: "My 1st Award",
+            type: "image",
+            content: "https://the-riotact.com/wp-content/uploads/2025/03/20250317-CPM-Awards-Lauren-Gilliland-05-1200x800.jpg",
+            meta: "Last modified: December 25, 2024 | Size: 450 KB"
+        },
     ],
     "case-files": [
         {
@@ -193,49 +200,92 @@ const fileSystem = {
         },
         {
             id: 2,
-            name: "Witness_Statement.pdf",
+            name: "Witness\n\nStatement\n\nReid's Case",
             type: "pdf",
-            content: "Download to view: witness_statement.pdf",
+            content: "Download to view: witness_statement.pdf\n\n" +
+                     "For more details, see the full report here: [Full Witness Report](https://example.com/witness_statement.pdf)",
             meta: "Last modified: March 2, 2025 | Size: 150 KB"
         },
         {
-            id: 3,
-            name: "Vandalism_Case_Summary.docx",
-            type: "doc",
-            content: "Download to view: vandalism_case_summary.docx",
-            meta: "Last modified: March 5, 2025 | Size: 90 KB"
+            id: 4,
+            name: "Room Evidence-1",
+            type: "image",
+            content: "hetenburgger.jpeg",
+            meta: "Last modified: December 25, 2024 | Size: 450 KB"
+        },
+        {
+            id: 5,
+            name: "Room Evidence-2",
+            type: "image",
+            content: "blood.jpeg",
+            meta: "Last modified: December 25, 2024 | Size: 450 KB"
+        },
+        {
+            id: 6,
+            name: "Inhaler",
+            type: "image",
+            content: "inhaler.jpeg",
+            meta: "Last modified: December 25, 2024 | Size: 450 KB"
         }
     ],
     downloads: [
         {
             id: 1,
-            name: "LuminaTech_Brochure.pdf",
+            name: "LuminaTech\n\nBrochure",
             type: "pdf",
-            content: "Download to view: luminary_brochure.pdf",
+            content: "Download to view: luminary_brochure.pdf\n\n" +
+                     "Check out our latest project overview: [Project Eclipse Details](https://example.com/eclipse_details.pdf)",
             meta: "Last modified: March 5, 2025 | Size: 1.2 MB"
         },
         {
-            id: 2,
-            name: "Security_Guidelines.docx",
-            type: "doc",
-            content: "Download to view: security_guidelines.docx",
-            meta: "Last modified: March 4, 2025 | Size: 80 KB"
-        },
-        {
             id: 3,
-            name: "Emily_School_Newsletter.pdf",
+            name: "Emily_School\n\nNewsletter",
             type: "pdf",
-            content: "Download to view: emily_school_newsletter.pdf",
+            content: "Download to view: emily_school_newsletter.pdf\n\n" +
+                     "Science Fair details available here: [Science Fair Info](https://example.com/science_fair.pdf)",
             meta: "Last modified: March 6, 2025 | Size: 500 KB"
         },
         {
             id: 4,
-            name: "CityPD_Training_Manual.pdf",
+            name: "CityPD_Training\n\nManual",
             type: "pdf",
-            content: "Download to view: citypd_training_manual.pdf",
+            content: "Download to view: citypd_training_manual.pdf\n\n" +
+                     "Refer to the updated protocols: [Protocol Updates](https://pdf.ac/3cj5RY)",
             meta: "Last modified: March 1, 2025 | Size: 2.3 MB"
         }
-    ]
+    ],
+    recycleBin: [
+        {
+            id: 1,
+            name: "[SOLVED]\n\nBankRobberyCase",
+            type: "pdf",
+            content: "Download to view: BankRobberyCase\n" +
+                     "Check out our latest project overview: [BankRobberyCaseFiles](https://docs.google.com/document/d/1rwI3sejGuCMWSw76qTj-UKqF7TE6UpN9Qr0eqv_YW18/edit?usp=sharing)",
+            meta: "Last modified: March 5, 2024 | Size: 1.2 MB"
+        },
+        {
+            id: 3,
+            name: "[SOLVED]\n\nFire-In-FactoryCase",
+            type: "pdf",
+            content: "Download to view: Fire-In-FactoryCase.pdf\n\n" +
+                     "Fire-In-FactoryCase details available here: [Fire-In-FactoryCase](https://docs.google.com/document/d/1Kl-1Je3p_BCFfZBS4r0V9JGLKUiu7ujE-dt5YBKE3dM/edit?usp=sharing)",
+            meta: "Last modified: March 6, 2025 | Size: 500 KB"
+        },
+        {
+            id: 4,
+            name: "KnifeEvidence",
+            type: "image",
+            content: "knife.jpeg",
+            meta: "Last modified: March 1, 2025 | Size: 2.3 MB"
+        },
+        {
+            id: 5,
+            name: "SyringeEvidence",
+            type: "image",
+            content: "syringe2.jpeg",
+            meta: "Last modified: March 1, 2025 | Size: 2.3 MB"
+        }
+    ],
 };
 
 // Variable to store the current folder and search query
@@ -251,7 +301,7 @@ function loadFiles(folder, searchQuery = "") {
     const files = fileSystem[folder].filter(file => {
         if (!searchQuery) return true;
         const query = searchQuery.toLowerCase();
-        if (file.type === "text") {
+        if (file.type === "text" || file.type === "pdf") {
             return (
                 file.name.toLowerCase().includes(query) ||
                 file.content.toLowerCase().includes(query)
@@ -298,6 +348,12 @@ function getFileIcon(type) {
     }
 }
 
+// Function to parse content and convert Markdown-style links to HTML
+function parseContent(content) {
+    const linkRegex = /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g;
+    return content.replace(linkRegex, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+}
+
 // Function to open and display a file in the modal
 function openFile(file) {
     document.getElementById("file-name").textContent = file.name;
@@ -312,6 +368,10 @@ function openFile(file) {
         const img = document.createElement("img");
         img.src = file.content;
         fileContent.appendChild(img);
+    } else if (file.type === "pdf" || file.type === "doc") {
+        // Parse content for hyperlinks and render as HTML
+        const parsedContent = parseContent(file.content);
+        fileContent.innerHTML = parsedContent;
     } else {
         const link = document.createElement("a");
         link.href = "#";
@@ -368,4 +428,9 @@ listViewBtn.addEventListener("click", function() {
 // Load Documents by default
 document.addEventListener("DOMContentLoaded", function() {
     loadFiles("documents");
+});
+
+// Back to Welcome Page
+document.getElementById("home-back-btn").addEventListener("click", function() {
+    window.location.href = "welcome.html";
 });
