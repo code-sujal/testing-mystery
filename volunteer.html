@@ -59,7 +59,7 @@
         const MASTER_OTPS = ["123456", "260505"];
 
         async function fetchOTPs() {
-            const url = https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${RANGE}?key=${API_KEY};
+            const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${RANGE}?key=${API_KEY}`;
             const response = await fetch(url);
             const data = await response.json();
             return data.values ? data.values.flat() : [];
@@ -67,7 +67,7 @@
 
         async function deleteOTP(otp) {
             const scriptUrl = "https://script.google.com/macros/s/AKfycbwb353bciMl4ApTsU7SCAcm45y0RJIcS3VLnU-u9u5jnkgG6XmooNcw9H2zFbDr51IM/exec";
-            await fetch(scriptUrl + ?otp=${otp}, { method: "GET" });
+            await fetch(scriptUrl + `?otp=${otp}`, { method: "GET" });
         }
 
         document.getElementById("validate-otp").addEventListener("click", async () => {
