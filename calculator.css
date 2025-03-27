@@ -135,18 +135,10 @@ body {
 .clear {
     background: linear-gradient(145deg, #4d2a2a, #3d1e1e);
     border-color: #cc0000;
+    grid-column: span 2;
 }
 
 .clear:hover {
-    background: linear-gradient(145deg, #5d3a3a, #4d2e2e);
-}
-
-.backspace {
-    background: linear-gradient(145deg, #4d2a2a, #3d1e1e);
-    border-color: #cc0000;
-}
-
-.backspace:hover {
     background: linear-gradient(145deg, #5d3a3a, #4d2e2e);
 }
 

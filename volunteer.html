@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
     <title>OTP Validation</title>
     <style>
         body {
@@ -197,62 +199,91 @@
     </div>
 
     <script>
-        // Initialize list of hardcoded OTPs
-        const predefinedOtps = [
-        { otp: "123456", isUsed: false },
-    { otp: "654321", isUsed: false },
-    { otp: "987654", isUsed: false },
-    { otp: "456789", isUsed: false },
-    { otp: "112233", isUsed: false },
-    { otp: "223344", isUsed: false },
-    { otp: "334455", isUsed: false },
-    { otp: "445566", isUsed: false },
-    { otp: "556677", isUsed: false },
-    { otp: "667788", isUsed: false },
-    { otp: "778899", isUsed: false },
-    { otp: "889900", isUsed: false },
-    { otp: "998877", isUsed: false },
-    { otp: "876543", isUsed: false },
-    { otp: "765432", isUsed: false },
-    { otp: "654789", isUsed: false },
-    { otp: "543678", isUsed: false },
-    { otp: "432567", isUsed: false },
-    { otp: "321456", isUsed: false },
-    { otp: "210987", isUsed: false },
-    { otp: "109876", isUsed: false },
-    { otp: "908765", isUsed: false },
-    { otp: "807654", isUsed: false },
-    { otp: "706543", isUsed: false },
-    { otp: "605432", isUsed: false },
-    { otp: "504321", isUsed: false },
-    { otp: "403210", isUsed: false },
-    { otp: "302109", isUsed: false },
-    { otp: "201098", isUsed: false },
-    { otp: "100987", isUsed: false },
-    { otp: "999999", isUsed: false },
-    { otp: "888888", isUsed: false },
-    { otp: "777777", isUsed: false },
-    { otp: "666666", isUsed: false },
-    { otp: "555555", isUsed: false },
-    { otp: "444444", isUsed: false },
-    { otp: "333333", isUsed: false },
-    { otp: "222222", isUsed: false },
-    { otp: "111111", isUsed: false },
-    { otp: "135790", isUsed: false },
-    { otp: "246802", isUsed: false },
-    { otp: "975310", isUsed: false },
-    { otp: "864209", isUsed: false },
-    { otp: "753108", isUsed: false },
-    { otp: "642007", isUsed: false },
-    { otp: "531906", isUsed: false },
-    { otp: "420805", isUsed: false },
-    { otp: "319704", isUsed: false },
-    { otp: "208603", isUsed: false },
-    { otp: "107502", isUsed: false }        ];
+        // Simple hash function for demonstration (in production, use a secure hash like SHA-256 server-side)
+        function simpleHash(str) {
+            let hash = 0;
+            for (let i = 0; i < str.length; i++) {
+                const char = str.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash = hash & hash; // Convert to 32-bit integer
+            }
+            return Math.abs(hash).toString(16); // Convert to hex
+        }
 
-        // Check if OTPs are already stored in localStorage, otherwise initialize
+        // Predefined OTPs (plain-text for display, hashed for storage)
+        const predefinedOtps = [
+            { plain: "483920", hash: simpleHash("483920"), isUsed: false },
+            { plain: "750293", hash: simpleHash("750293"), isUsed: false },
+            { plain: "129847", hash: simpleHash("129847"), isUsed: false },
+            { plain: "394017", hash: simpleHash("394017"), isUsed: false },
+            { plain: "687204", hash: simpleHash("687204"), isUsed: false },
+            { plain: "305192", hash: simpleHash("305192"), isUsed: false },
+            { plain: "947381", hash: simpleHash("947381"), isUsed: false },
+            { plain: "571920", hash: simpleHash("571920"), isUsed: false },
+            { plain: "263849", hash: simpleHash("263849"), isUsed: false },
+            { plain: "810475", hash: simpleHash("810475"), isUsed: false },
+            { plain: "392847", hash: simpleHash("392847"), isUsed: false },
+            { plain: "674102", hash: simpleHash("674102"), isUsed: false },
+            { plain: "158390", hash: simpleHash("158390"), isUsed: false },
+            { plain: "920374", hash: simpleHash("920374"), isUsed: false },
+            { plain: "346781", hash: simpleHash("346781"), isUsed: false },
+            { plain: "701293", hash: simpleHash("701293"), isUsed: false },
+            { plain: "583920", hash: simpleHash("583920"), isUsed: false },
+            { plain: "249381", hash: simpleHash("249381"), isUsed: false },
+            { plain: "875104", hash: simpleHash("875104"), isUsed: false },
+            { plain: "310928", hash: simpleHash("310928"), isUsed: false },
+            { plain: "692483", hash: simpleHash("692483"), isUsed: false },
+            { plain: "147502", hash: simpleHash("147502"), isUsed: false },
+            { plain: "983210", hash: simpleHash("983210"), isUsed: false },
+            { plain: "576129", hash: simpleHash("576129"), isUsed: false },
+            { plain: "204837", hash: simpleHash("204837"), isUsed: false },
+            { plain: "831947", hash: simpleHash("831947"), isUsed: false },
+            { plain: "419305", hash: simpleHash("419305"), isUsed: false },
+            { plain: "750128", hash: simpleHash("750128"), isUsed: false },
+            { plain: "392401", hash: simpleHash("392401"), isUsed: false },
+            { plain: "687593", hash: simpleHash("687593"), isUsed: false },
+            { plain: "143209", hash: simpleHash("143209"), isUsed: false },
+            { plain: "928374", hash: simpleHash("928374"), isUsed: false },
+            { plain: "305781", hash: simpleHash("305781"), isUsed: false },
+            { plain: "671920", hash: simpleHash("671920"), isUsed: false },
+            { plain: "249108", hash: simpleHash("249108"), isUsed: false },
+            { plain: "583947", hash: simpleHash("583947"), isUsed: false },
+            { plain: "810392", hash: simpleHash("810392"), isUsed: false },
+            { plain: "174503", hash: simpleHash("174503"), isUsed: false },
+            { plain: "936281", hash: simpleHash("936281"), isUsed: false },
+            { plain: "402819", hash: simpleHash("402819"), isUsed: false },
+            { plain: "758392", hash: simpleHash("758392"), isUsed: false },
+            { plain: "310947", hash: simpleHash("310947"), isUsed: false },
+            { plain: "692583", hash: simpleHash("692583"), isUsed: false },
+            { plain: "147920", hash: simpleHash("147920"), isUsed: false },
+            { plain: "983401", hash: simpleHash("983401"), isUsed: false },
+            { plain: "576302", hash: simpleHash("576302"), isUsed: false },
+            { plain: "249381", hash: simpleHash("249381"), isUsed: false },
+            { plain: "831506", hash: simpleHash("831506"), isUsed: false },
+            { plain: "415927", hash: simpleHash("415927"), isUsed: false },
+            { plain: "702394", hash: simpleHash("702394"), isUsed: false }
+        ];
+
+        // Initialize OTPs in localStorage if not already present
         if (!localStorage.getItem("otps")) {
             localStorage.setItem("otps", JSON.stringify(predefinedOtps));
+        }
+
+        // Generate a simple CSRF token (for demo purposes)
+        function generateCsrfToken() {
+            return Math.random().toString(36).substring(2, 15);
+        }
+
+        // Simple input sanitization
+        function sanitizeInput(input) {
+            const div = document.createElement("div");
+            div.textContent = input;
+            return div.innerHTML.replace(/[<>&"']/g, "");
+        }
+
+        // Generate a session token
+        function generateSessionToken() {
+            return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
         }
 
         // OTP Form Handling
@@ -260,11 +291,15 @@
         const messageDiv = document.getElementById("message");
         const submitBtn = otpForm.querySelector(".form-submit-btn");
 
-        // Rate limiting variables
+        // Rate limiting variables with exponential backoff
         let failedAttempts = 0;
         const maxAttempts = 5;
-        const lockoutDuration = 5 * 60 * 1000; // 5 minutes in milliseconds
+        const baseLockoutDuration = 5 * 1000; // 5 seconds base lockout
         let lockoutUntil = 0;
+
+        // CSRF token
+        let csrfToken = generateCsrfToken();
+        localStorage.setItem("csrfToken", csrfToken);
 
         otpForm.addEventListener("submit", (e) => {
             e.preventDefault();
@@ -282,22 +317,25 @@
             submitBtn.classList.add("loading");
             submitBtn.disabled = true;
 
-            const enteredOTP = document.getElementById("otp-input").value.trim();
+            // Sanitize and hash the entered OTP
+            const enteredOTP = sanitizeInput(document.getElementById("otp-input").value.trim());
+            const enteredOTPHash = simpleHash(enteredOTP);
             const storedOtps = JSON.parse(localStorage.getItem("otps"));
 
-            // Find the OTP in the list
-            const otpEntry = storedOtps.find(entry => entry.otp === enteredOTP);
+            // Find the OTP in the list by hash
+            const otpEntry = storedOtps.find(entry => entry.hash === enteredOTPHash);
 
             if (!otpEntry) {
                 // OTP not found
                 failedAttempts++;
+                const lockoutDuration = baseLockoutDuration * Math.pow(2, failedAttempts - 1); // Exponential backoff
                 if (failedAttempts >= maxAttempts) {
                     lockoutUntil = now + lockoutDuration;
-                    messageDiv.textContent = `Too many failed attempts. Please try again in ${lockoutDuration / 1000} seconds.`;
+                    messageDiv.textContent = `Too many failed attempts. Locked out for ${lockoutDuration / 1000} seconds.`;
                     messageDiv.style.color = "red";
-                    failedAttempts = 0; // Reset attempts after lockout
+                    failedAttempts = 0; // Reset after lockout
                 } else {
-                    messageDiv.textContent = "Invalid OTP. Please try again.";
+                    messageDiv.textContent = `Invalid OTP. ${maxAttempts - failedAttempts} attempts remaining.`;
                     messageDiv.style.color = "red";
                 }
                 submitBtn.classList.remove("loading");
@@ -320,6 +358,10 @@
 
             // Reset failed attempts on successful login
             failedAttempts = 0;
+
+            // Generate session token
+            const sessionToken = generateSessionToken();
+            localStorage.setItem("sessionToken", sessionToken);
 
             // Show success message
             messageDiv.textContent = "OTP validated successfully! Redirecting...";

@@ -9,7 +9,6 @@ const memoryRecallBtn = document.getElementById('memory-recall');
 const memoryAddBtn = document.getElementById('memory-add');
 const memorySubtractBtn = document.getElementById('memory-subtract');
 const backBtn = document.getElementById('back-btn');
-const backspaceBtn = document.getElementById('backspace');
 
 let currentInput = '0';
 let previousInput = '';
@@ -61,15 +60,6 @@ clearBtn.addEventListener('click', () => {
     updateDisplay();
 });
 
-backspaceBtn.addEventListener('click', () => {
-    if (currentInput.length > 1) {
-        currentInput = currentInput.slice(0, -1);
-    } else {
-        currentInput = '0';
-    }
-    updateDisplay();
-});
-
 memoryClearBtn.addEventListener('click', () => {
     memory = 0;
 });
@@ -95,7 +85,7 @@ function calculate() {
     const prev = parseFloat(previousInput);
     const curr = parseFloat(currentInput);
     let result;
-    
+
     switch (operation) {
         case '+':
             result = prev + curr;
@@ -112,7 +102,7 @@ function calculate() {
         default:
             return;
     }
-    
+
     currentInput = result.toString();
     updateDisplay();
 }
