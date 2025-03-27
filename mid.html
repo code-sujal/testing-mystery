@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crime Scene Restricted</title>
+    <link rel="stylesheet" href="mid.css">
+    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Roboto:wght@300&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="modal" id="authModal">
+        <div class="modal-content">
+            <h2>Restricted Access</h2>
+            <p>Detective, you’re on the verge of accessing a top-secret briefing with Headquarters. We strongly advise you to thoroughly investigate the desktop page first—every clue matters. Once you enter this confidential chat, there’s no turning back; revisiting the desktop will be strictly forbidden.</p>
+            <label class="checkbox-label">
+                <input type="checkbox" id="authCheckbox">
+                <span>I/This team solemnly swears that I/we will not attempt to return to the desktop page after entering this restricted zone. Any breach of this oath will lead to immediate elimination from the investigation (The Game).</span>
+            </label>
+            <button id="enterBtn" disabled>Proceed to Headquarters</button>
+        </div>
+        <div class="tape tape-modal"></div>
+    </div>
+
+    <div class="container" id="mainContent" style="display: none;">
+        <div class="overlay"></div>
+        <div class="tape tape-top"></div>
+        <div class="content">
+            <h1>WARNING!</h1>
+            <p>This phase you are about to visit is the final phase of this round,<br> We hope you have explored all the clues and you are ready with the suspects you think might be involved<br><span style="color: #f1c40f;font-weight: bold;">There's no going back!!</span></p>
+            <div class="subtext">Step Carefully... The Truth Awaits</div>
+            <a href="secret_channel.html" class="proceed-btn">
+                <span class="btn-main">Proceed</span>
+                <span class="btn-subtext">Enter the Secure Channel <br>You would need a channel Password (Proceed only if you have)</span>
+            </a><br>
+            <a href="welcome.html" class="back-btn">
+                <span class="btn-main">Retreat</span>
+                <span class="btn-subtext">I need more time for investigation <br>(Taken back to desktop for further investigation)</span>
+            </a>
+            <div class="blood-drip drip-1"></div>
+            <div class="blood-drip drip-2"></div>
+        </div>
+        <div class="tape tape-bottom"></div>
+    </div>
+
+    <script src="mid.js"></script>
+</body>
+</html>

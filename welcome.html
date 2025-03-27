@@ -11,7 +11,7 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
-        /* Existing styles remain unchanged until taskbar redesign */
+        /* Existing styles remain unchanged until new notification styles */
         body {
             font-family: 'Roboto', sans-serif;
             background: linear-gradient(135deg, #1a2526 0%, #2c3e50 100%);
@@ -88,14 +88,13 @@
             background: rgba(255, 255, 255, 0.1);
         }
 
-        /* Redesigned Taskbar - Clean and Minimal */
         .taskbar {
-            background: #2c3e50; /* Solid dark color for simplicity */
+            background: #2c3e50;
             padding: 10px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-top: 1px solid #3a5266; /* Subtle border */
+            border-top: 1px solid #3a5266;
             box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
         }
 
@@ -142,7 +141,6 @@
             width: 100%;
             height: 100%;
             border-radius: 4px;
-            /* Removed filter to keep original colors */
         }
 
         .taskbar-icons .icon:hover {
@@ -191,7 +189,7 @@
             margin-right: 10px;
             width: 20px;
             height: 20px;
-            filter: brightness(0) invert(1); /* Keep this for start menu icons */
+            filter: brightness(0) invert(1);
         }
 
         .start-menu button:hover {
@@ -420,6 +418,73 @@
             background: linear-gradient(145deg, #4a5055, #3a4045);
         }
 
+        /* Notification Popup Styles */
+        .notification {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 350px;
+            background: rgba(40, 44, 52, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            z-index: 200;
+            animation: slide-in 0.5s ease-out;
+            color: #fff;
+        }
+
+        .notification.hidden {
+            display: none;
+        }
+
+        .notification-profile {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-right: 15px;
+            border: 2px solid #f1c40f;
+            object-fit: cover;
+        }
+
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: #f1c40f;
+            margin-bottom: 5px;
+        }
+
+        .notification-message {
+            font-size: 14px;
+            color: #d0d5da;
+            line-height: 1.4;
+        }
+
+        .notification-close {
+            background: none;
+            border: none;
+            color: #ff5555;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 5px;
+            transition: color 0.3s ease;
+        }
+
+        .notification-close:hover {
+            color: #ff7777;
+        }
+
+        @keyframes slide-in {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             .icons {
@@ -481,11 +546,42 @@
                 font-size: 1rem;
                 padding: 12px;
             }
+
+            .notification {
+                width: 300px;
+                bottom: 70px;
+                right: 10px;
+            }
+
+            .notification-profile {
+                width: 50px;
+                height: 50px;
+            }
+
+            .notification-title {
+                font-size: 14px;
+            }
+
+            .notification-message {
+                font-size: 12px;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Email Window (unchanged) -->
+    <!-- Notification Popup -->
+    <div class="notification" id="notificationPopup">
+        <img src="police.png" alt="Profile" class="notification-profile">
+        <div class="notification-content">
+            <div class="notification-title">Captain Harrison(HQs)</div>
+            <div class="notification-message">
+                Detective,I have given you the access of Alice Harper's computer, you can now access her files.I want you to investigate and report me at the end of the investigation, we will be using a secret channel for conversation the password for the channel is hidden in the e-mail that I sent in this computer!
+            </div>
+        </div>
+        <button class="notification-close" onclick="dismissNotification()">×</button>
+    </div>
+
+    <!-- Email Window -->
     <div id="emailWindow">
         <div id="emailHeader">
             <span>Email Application</span>
@@ -548,7 +644,7 @@
                 <p>Email</p>
             </div>
             <div class="icon" onclick="openFolder('Chat')">
-                <a href="chat.html" ><img src="https://cdn-icons-png.flaticon.com/512/124/124034.png" alt="Chat"></a>
+                <a href="chat.html"><img src="https://cdn-icons-png.flaticon.com/512/124/124034.png" alt="Chat"></a>
                 <p>Chat</p>
             </div>
             <div class="icon" onclick="openFolder('Case Files')">
@@ -588,7 +684,6 @@
             </div>
         </div>
         <div class="start-menu" id="startMenu">
-            
             <button>
                 <a href="files.html" style="text-decoration: none; color: white;">
                     <img src="https://cdn-icons-png.flaticon.com/512/3767/3767084.png" alt="Documents">
@@ -622,6 +717,10 @@
             const name = localStorage.getItem('username');
             const startTime = localStorage.getItem('startTime');
             const timeLimit = 60 * 60 * 1000; // 1 hour in milliseconds
+
+            // Show notification on page load
+            const notification = document.getElementById('notificationPopup');
+            notification.classList.remove('hidden');
 
             if (name) {
                 document.getElementById('greeting').textContent = `Welcome, ${name}`;
@@ -687,6 +786,11 @@
             window.openCalculator = function() {
                 const calculatorWindow = document.getElementById('calculatorWindow');
                 calculatorWindow.style.display = 'block';
+            };
+
+            window.dismissNotification = function() {
+                const notification = document.getElementById('notificationPopup');
+                notification.classList.add('hidden');
             };
 
             // Calculator JavaScript

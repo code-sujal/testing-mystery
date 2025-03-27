@@ -1,0 +1,404 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: url('https://www.transparenttextures.com/patterns/grunge-wall.png') #0d0d0d;
+    background-size: 300px 300px;
+    animation: bgShift 25s linear infinite;
+    font-family: 'Roboto', sans-serif;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* Modal Styles */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: #1a1a1a;
+    padding: 40px;
+    border: 1px solid #f1c40f;
+    border-radius: 8px;
+    text-align: center;
+    color: #e0e0e0;
+    max-width: 500px;
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.9);
+    position: relative;
+    animation: fadeIn 0.7s ease-in-out;
+}
+
+.modal-content h2 {
+    font-family: 'Special Elite', cursive;
+    font-size: 2.5rem;
+    color: #f1c40f;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 10px rgba(241, 196, 15, 0.6);
+}
+
+.modal-content p {
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 0.95rem;
+    color: #b0b0b0;
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+.checkbox-label input {
+    margin-top: 4px;
+}
+
+#enterBtn {
+    background: #f1c40f;
+    color: #0d0d0d;
+    border: none;
+    padding: 12px 35px;
+    font-family: 'Special Elite', cursive;
+    font-size: 1.3rem;
+    text-transform: uppercase;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+    animation: pulse 2s infinite ease-in-out;
+}
+
+#enterBtn:disabled {
+    background: #4a4a4a;
+    cursor: not-allowed;
+    animation: none;
+}
+
+#enterBtn:hover:not(:disabled) {
+    background: #d4ac0d;
+    transform: scale(1.05);
+}
+
+/* Main Content Styles */
+.container {
+    position: relative;
+    text-align: center;
+    color: #fff;
+    padding: 70px;
+    background: rgba(0, 0, 0, 0.85);
+    border: 2px solid #f1c40f;
+    border-radius: 10px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9);
+    overflow: hidden;
+    animation: fadeIn 1.2s ease-in-out;
+    z-index: 1;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('https://www.transparenttextures.com/patterns/45-degree-fabric-dark.png');
+    opacity: 0.2;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.content {
+    position: relative;
+    z-index: 3;
+}
+
+.content h1 {
+    font-family: 'Special Elite', cursive;
+    font-size: 5.5rem;
+    font-weight: 400;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: #f1c40f;
+    margin-bottom: 20px;
+    text-shadow: 4px 4px 20px rgba(241, 196, 15, 0.8), 0 0 10px rgba(241, 196, 15, 0.4);
+    animation: flicker 0.15s infinite alternate, glow 4s infinite alternate;
+}
+
+.content p {
+    font-size: 1.7rem;
+    font-weight: 300;
+    line-height: 1.6;
+    color: #d0d0d0;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+}
+
+.subtext {
+    margin-top: 25px;
+    margin-bottom: 40px;
+    font-size: 1.2rem;
+    color: #a0a0a0;
+    font-style: italic;
+    animation: slideUp 2.5s ease-in-out;
+}
+
+/* Redesigned Back Button (No Shake) */
+.back-btn {
+    display: inline-block;
+    padding: 15px 40px;
+    background: #1a1a1a;
+    border: 3px dashed #f1c40f;
+    border-radius: 8px;
+    text-decoration: none;
+    font-family: 'Special Elite', cursive;
+    text-align: center;
+    transition: background 0.3s, border-color 0.3s, transform 0.3s;
+    box-shadow: 0 5px 20px rgba(241, 196, 15, 0.3);
+    position: relative;
+    z-index: 4;
+}
+
+.back-btn:hover {
+    background: #8b0000;
+    border-color: #8b0000;
+    transform: scale(1.05);
+    box-shadow: 0 5px 25px rgba(139, 0, 0, 0.7);
+}
+
+.btn-main {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    color: #f1c40f;
+    text-shadow: 1px 1px 5px rgba(241, 196, 15, 0.6);
+}
+
+.back-btn:hover .btn-main {
+    color: #fff;
+    text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.6);
+}
+
+.btn-subtext {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 300;
+    text-transform: none;
+    color: #b0b0b0;
+    margin-top: 6px;
+}
+
+.back-btn:hover .btn-subtext {
+    color: #fff;
+}
+
+/* Police Tape */
+.tape {
+    position: absolute;
+    width: 150%;
+    height: 70px;
+    background: repeating-linear-gradient(
+        45deg,
+        #f1c40f,
+        #f1c40f 20px,
+        #0d0d0d 20px,
+        #0d0d0d 40px
+    );
+    color: #0d0d0d;
+    font-family: 'Special Elite', cursive;
+    font-size: 1.5rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: rotate(-15deg);
+    box-shadow: 0 5px 20px rgba(241, 196, 15, 0.5);
+    border: 3px solid #f1c40f;
+    animation: tapeWobble 5s infinite ease-in-out;
+    z-index: 3;
+}
+
+.tape-top {
+    top: -80px;
+    left: -25%;
+}
+
+.tape-top::before {
+    content: "RESTRICTED • CRIME SCENE • RESTRICTED • CRIME SCENE";
+    white-space: nowrap;
+    animation: tape-slide 10s linear infinite;
+}
+
+.tape-bottom {
+    bottom: -80px;
+    left: -25%;
+}
+
+.tape-bottom::before {
+    content: "RESTRICTED • CRIME SCENE • RESTRICTED • CRIME SCENE";
+    white-space: nowrap;
+    animation: tape-slide 10s linear infinite reverse;
+}
+
+.tape-modal {
+    top: -60px;
+    left: -25%;
+    z-index: -1;
+}
+
+/* Blood Drip Effect */
+.blood-drip {
+    position: absolute;
+    background: #8b0000;
+    border-radius: 50%;
+    animation: drip 3s infinite ease-in-out;
+    z-index: 3;
+}
+
+.drip-1 {
+    width: 20px;
+    height: 20px;
+    top: 10%;
+    left: 20%;
+    animation-delay: 0s;
+}
+
+.drip-2 {
+    width: 15px;
+    height: 15px;
+    top: 15%;
+    right: 25%;
+    animation-delay: 1.5s;
+}
+
+/* Animations */
+@keyframes tape-slide {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+@keyframes glow {
+    0% { text-shadow: 4px 4px 20px rgba(241, 196, 15, 0.8), 0 0 10px rgba(241, 196, 15, 0.4); }
+    100% { text-shadow: 4px 4px 25px rgba(241, 196, 15, 1), 0 0 15px rgba(241, 196, 15, 0.6); }
+}
+
+@keyframes slideUp {
+    0% { transform: translateY(25px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes flicker {
+    0% { opacity: 1; }
+    50% { opacity: 0.92; }
+    100% { opacity: 0.98; }
+}
+
+@keyframes tapeWobble {
+    0% { transform: rotate(-15deg) translateY(0); }
+    50% { transform: rotate(-15deg) translateY(15px); }
+    100% { transform: rotate(-15deg) translateY(0); }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.04); }
+    100% { transform: scale(1); }
+}
+
+@keyframes bgShift {
+    0% { background-position: 0 0; }
+    100% { background-position: 300px 300px; }
+}
+
+@keyframes drip {
+    0% { transform: translateY(-50px) scale(0.8); opacity: 0; }
+    50% { transform: translateY(50px) scale(1); opacity: 0.8; }
+    100% { transform: translateY(100px) scale(0.9); opacity: 0; }
+}
+
+@media (max-width: 600px) {
+    .modal-content { padding: 25px; max-width: 90%; }
+    .modal-content h2 { font-size: 2rem; }
+    .checkbox-label { font-size: 0.85rem; }
+    #enterBtn { padding: 10px 25px; font-size: 1.1rem; }
+    .container { padding: 40px; }
+    .content h1 { font-size: 3.5rem; letter-spacing: 4px; }
+    .content p { font-size: 1.3rem; }
+    .subtext { font-size: 1rem; margin-bottom: 30px; }
+    .tape { height: 50px; font-size: 1.2rem; }
+    .back-btn { padding: 12px 30px; }
+    .btn-main { font-size: 1.2rem; }
+    .btn-subtext { font-size: 0.7rem; }
+    .blood-drip { width: 12px; height: 12px; }
+}
+
+/* Proceed Button */
+.proceed-btn {
+    display: inline-block;
+    margin-bottom: 20px; /* Space between Proceed and Retreat buttons */
+    padding: 15px 40px;
+    background: #1a1a1a;
+    border: 3px solid #00cc00; /* Green border for a secretive, techy feel */
+    border-radius: 8px;
+    text-decoration: none;
+    font-family: 'Special Elite', cursive;
+    text-align: center;
+    transition: background 0.3s, border-color 0.3s, transform 0.3s;
+    box-shadow: 0 5px 20px rgba(0, 204, 0, 0.3);
+    position: relative;
+    z-index: 4;
+}
+
+.proceed-btn:hover {
+    background: #003300; /* Dark green for hover */
+    border-color: #00ff00;
+    transform: scale(1.05);
+    box-shadow: 0 5px 25px rgba(0, 255, 0, 0.7);
+}
+
+.proceed-btn .btn-main {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    color: #00cc00; /* Green text */
+    text-shadow: 1px 1px 5px rgba(0, 204, 0, 0.6);
+}
+
+.proceed-btn:hover .btn-main {
+    color: #00ff00; /* Brighter green on hover */
+    text-shadow: 1px 1px 5px rgba(0, 255, 0, 0.6);
+}
+
+.proceed-btn .btn-subtext {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 300;
+    text-transform: none;
+    color: #b0b0b0;
+    margin-top: 6px;
+}
+
+.proceed-btn:hover .btn-subtext {
+    color: #fff;
+}

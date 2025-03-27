@@ -41,7 +41,7 @@ const emailFolders = {
                   "Reid was last seen in his lab, all other details are there in the case report I've attached. You’ll need to tread carefully—LuminaTech has powerful backers. I’m attaching the case report from the night of his death.\n\n" +
                   "Keep me updated.\n\n" +
                   "– Captain Harrison",
-            attachments: [{name: "📁 case_report.pdf", url: "https://docs.google.com/document/d/1LTsr9V_e5KBrJfaeT4kFixgcWPqe88orw3JnrmT7aQ4/edit?usp=sharing"}],
+            attachments: [{name: "📁 case_report.pdf", url: "https://docs.google.com/document/d/1ieSpgD73hmUXtPZFZGMi6TD0LyOA2uPnX4qbPtdLK2Q/edit?usp=drivesdk"}],
             dateTime: "March 5, 2025 | 9:32 AM"
         },
         // 5. Closure of Reid Case (March 6, 2025)
