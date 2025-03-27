@@ -3,378 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-Content-Type-Options" content="nosniff">
-    <meta http-equiv="X-Frame-Options" content="DENY">
     <title>OTP Validation</title>
     <style>
         body {
+            font-family: Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            background-color: #f5f5f5;
-            font-family: Arial, sans-serif;
+            height: 100vh;
+            background-image: url('https://media3.giphy.com/media/11UhXwm8Ipd9C/giphy.webp?cid=ecf05e47cf14qpisjmueby3s31by8ra6deqktssp8kllok50&ep=v1_gifs_search&rid=giphy.webp&ct=g');
         }
-
-        .form-container {
-            width: 400px;
-            background: linear-gradient(#212121, #212121) padding-box,
-                        linear-gradient(145deg, transparent 35%,#e81cff, #40c9ff) border-box;
-            border: 2px solid transparent;
-            padding: 32px 24px;
-            font-size: 14px;
-            font-family: inherit;
-            color: white;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            box-sizing: border-box;
-            border-radius: 16px;
-        }
-
-        .form-container button:active {
-            scale: 0.95;
-        }
-
-        .form-container .form {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .form-container .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-
-        .form-container .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            color: #717171;
-            font-weight: 600;
-            font-size: 12px;
-        }
-
-        .form-container .form-group input {
-            width: 90%;
-            padding: 12px 16px;
-            border-radius: 8px;
-            color: #fff;
-            font-family: inherit;
-            background-color: transparent;
-            border: 1px solid #414141;
-        }
-
-        .form-container .form-group textarea {
-            width: 90%;
-            padding: 12px 16px;
-            border-radius: 8px;
-            resize: none;
-            color: #fff;
-            height: 96px;
-            border: 1px solid #414141;
-            background-color: transparent;
-            font-family: inherit;
-        }
-
-        .form-container .form-group input::placeholder {
-            opacity: 0.5;
-        }
-
-        .form-container .form-group input:focus {
-            outline: none;
-            border-color: #e81cff;
-        }
-
-        .form-container .form-group textarea:focus {
-            outline: none;
-            border-color: #e81cff;
-        }
-
-        .form-container .form-submit-btn {
-            display: flex;
-            align-items: flex-start;
-            justify-content: center;
-            align-self: flex-start;
-            font-family: inherit;
-            color: #000000;
-            font-weight: 600;
-            width: 40%;
-            background: #e9e7e7;
-            border: 1px solid #414141;
-            padding: 12px 16px;
-            font-size: inherit;
-            gap: 8px;
-            margin-top: 8px;
-            cursor: pointer;
-            border-radius: 6px;
-            position: relative;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .form-container .form-submit-btn:hover {
-            background-color: #acacac;
-            border-color: #acacac;
-        }
-
-        .form-container .form-submit-btn:disabled {
-            background: #cccccc;
-            cursor: not-allowed;
-        }
-
-        .form-submit-btn .spinner {
-            display: none;
-            width: 16px;
-            height: 16px;
-            border: 2px solid #000;
-            border-top: 2px solid transparent;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        .form-submit-btn.loading .spinner {
-            display: block;
-        }
-
-        .form-submit-btn.loading span {
-            visibility: hidden;
-        }
-
-        @keyframes spin {
-            0% { transform: translate(-50%, -50%) rotate(0deg); }
-            100% { transform: translate(-50%, -50%) rotate(360deg); }
-        }
-
-        #message {
-            color: white;
-            margin-top: 20px;
-            text-align: center;
-            font-weight: bold;
-        }
-
         .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: center;
         }
-
-        h1 {
-            color: white;
-            margin-bottom: 20px;
+        input {
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 80%;
         }
-
-        .warning-text {
-            font-size: 15px;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        button {
+            padding: 10px 20px;
+            border: none;
+            background: #28a745;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:disabled {
+            background: #ccc;
+        }
+        #message {
+            margin-top: 10px;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <div style="width: 100%; height: 100vh; display: flex; align-items: center; justify-content: center; background: url('https://media3.giphy.com/media/11UhXwm8Ipd9C/giphy.webp?cid=ecf05e47cf14qpisjmueby3s31by8ra6deqktssp8kllok50&ep=v1_gifs_search&rid=giphy.webp&ct=g');">
-        <div style="height: 100vh; display: flex; align-items: center; justify-content: center;">
-            <div class="container">  
-                <h1 style="color:#212121;background-color: #fff; padding: 3px;">OTP Validation</h1>
-                
-                <div id="login-form" class="form-container">
-                    <form class="form" id="otp-form">
-                        <div class="form-group">
-                            <label for="otp-input">Request OTP</label>
-                            <input type="text" id="otp-input" name="otp" required placeholder="Enter your OTP code">
-                            <p class="warning-text">Request OTP from the volunteer nearby!</p>
-                        </div>
-                        <center><button class="form-submit-btn" type="submit">
-                            <span>Validate</span>
-                            <div class="spinner"></div>
-                        </button></center>
-                    </form>
-                    <div id="message"></div>
-                </div>
-            </div>
-        </div>
+    <div class="container">
+        <h2>Enter OTP</h2>
+        <input type="text" id="otp-code" placeholder="Enter OTP">
+        <button id="validate-otp">Validate OTP</button>
+        <p id="message"></p>
     </div>
-
+    
     <script>
-        // Simple hash function for demonstration (in production, use a secure hash like SHA-256 server-side)
-        function simpleHash(str) {
-            let hash = 0;
-            for (let i = 0; i < str.length; i++) {
-                const char = str.charCodeAt(i);
-                hash = ((hash << 5) - hash) + char;
-                hash = hash & hash; // Convert to 32-bit integer
-            }
-            return Math.abs(hash).toString(16); // Convert to hex
+        const SHEET_ID = "1D6iyPTtkSn7LO0ibqgmAO8JLnim5UP12f7MUb87W_1Y";
+        const API_KEY = "AIzaSyBUU-gB-cZJwtQEOXb5w0VW9mBMWr2-oQM";
+        const RANGE = "Sheet1!A:A";
+        const MASTER_OTPS = ["123456", "260505"];
+
+        async function fetchOTPs() {
+            const url = https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${RANGE}?key=${API_KEY};
+            const response = await fetch(url);
+            const data = await response.json();
+            return data.values ? data.values.flat() : [];
         }
 
-        // Predefined OTPs (plain-text for display, hashed for storage)
-        const predefinedOtps = [
-            { plain: "483920", hash: simpleHash("483920"), isUsed: false },
-            { plain: "750293", hash: simpleHash("750293"), isUsed: false },
-            { plain: "129847", hash: simpleHash("129847"), isUsed: false },
-            { plain: "394017", hash: simpleHash("394017"), isUsed: false },
-            { plain: "687204", hash: simpleHash("687204"), isUsed: false },
-            { plain: "305192", hash: simpleHash("305192"), isUsed: false },
-            { plain: "947381", hash: simpleHash("947381"), isUsed: false },
-            { plain: "571920", hash: simpleHash("571920"), isUsed: false },
-            { plain: "263849", hash: simpleHash("263849"), isUsed: false },
-            { plain: "810475", hash: simpleHash("810475"), isUsed: false },
-            { plain: "392847", hash: simpleHash("392847"), isUsed: false },
-            { plain: "674102", hash: simpleHash("674102"), isUsed: false },
-            { plain: "158390", hash: simpleHash("158390"), isUsed: false },
-            { plain: "920374", hash: simpleHash("920374"), isUsed: false },
-            { plain: "346781", hash: simpleHash("346781"), isUsed: false },
-            { plain: "701293", hash: simpleHash("701293"), isUsed: false },
-            { plain: "583920", hash: simpleHash("583920"), isUsed: false },
-            { plain: "249381", hash: simpleHash("249381"), isUsed: false },
-            { plain: "875104", hash: simpleHash("875104"), isUsed: false },
-            { plain: "310928", hash: simpleHash("310928"), isUsed: false },
-            { plain: "692483", hash: simpleHash("692483"), isUsed: false },
-            { plain: "147502", hash: simpleHash("147502"), isUsed: false },
-            { plain: "983210", hash: simpleHash("983210"), isUsed: false },
-            { plain: "576129", hash: simpleHash("576129"), isUsed: false },
-            { plain: "204837", hash: simpleHash("204837"), isUsed: false },
-            { plain: "831947", hash: simpleHash("831947"), isUsed: false },
-            { plain: "419305", hash: simpleHash("419305"), isUsed: false },
-            { plain: "750128", hash: simpleHash("750128"), isUsed: false },
-            { plain: "392401", hash: simpleHash("392401"), isUsed: false },
-            { plain: "687593", hash: simpleHash("687593"), isUsed: false },
-            { plain: "143209", hash: simpleHash("143209"), isUsed: false },
-            { plain: "928374", hash: simpleHash("928374"), isUsed: false },
-            { plain: "305781", hash: simpleHash("305781"), isUsed: false },
-            { plain: "671920", hash: simpleHash("671920"), isUsed: false },
-            { plain: "249108", hash: simpleHash("249108"), isUsed: false },
-            { plain: "583947", hash: simpleHash("583947"), isUsed: false },
-            { plain: "810392", hash: simpleHash("810392"), isUsed: false },
-            { plain: "174503", hash: simpleHash("174503"), isUsed: false },
-            { plain: "936281", hash: simpleHash("936281"), isUsed: false },
-            { plain: "402819", hash: simpleHash("402819"), isUsed: false },
-            { plain: "758392", hash: simpleHash("758392"), isUsed: false },
-            { plain: "310947", hash: simpleHash("310947"), isUsed: false },
-            { plain: "692583", hash: simpleHash("692583"), isUsed: false },
-            { plain: "147920", hash: simpleHash("147920"), isUsed: false },
-            { plain: "983401", hash: simpleHash("983401"), isUsed: false },
-            { plain: "576302", hash: simpleHash("576302"), isUsed: false },
-            { plain: "249381", hash: simpleHash("249381"), isUsed: false },
-            { plain: "831506", hash: simpleHash("831506"), isUsed: false },
-            { plain: "415927", hash: simpleHash("415927"), isUsed: false },
-            { plain: "702394", hash: simpleHash("702394"), isUsed: false }
-        ];
-
-        // Initialize OTPs in localStorage if not already present
-        if (!localStorage.getItem("otps")) {
-            localStorage.setItem("otps", JSON.stringify(predefinedOtps));
+        async function deleteOTP(otp) {
+            const scriptUrl = "https://script.google.com/macros/s/AKfycbwb353bciMl4ApTsU7SCAcm45y0RJIcS3VLnU-u9u5jnkgG6XmooNcw9H2zFbDr51IM/exec";
+            await fetch(scriptUrl + ?otp=${otp}, { method: "GET" });
         }
 
-        // Generate a simple CSRF token (for demo purposes)
-        function generateCsrfToken() {
-            return Math.random().toString(36).substring(2, 15);
-        }
+        document.getElementById("validate-otp").addEventListener("click", async () => {
+            const otpCode = document.getElementById("otp-code").value;
+            const message = document.getElementById("message");
+            const button = document.getElementById("validate-otp");
 
-        // Simple input sanitization
-        function sanitizeInput(input) {
-            const div = document.createElement("div");
-            div.textContent = input;
-            return div.innerHTML.replace(/[<>&"']/g, "");
-        }
+            button.disabled = true;
 
-        // Generate a session token
-        function generateSessionToken() {
-            return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-        }
-
-        // OTP Form Handling
-        const otpForm = document.getElementById("otp-form");
-        const messageDiv = document.getElementById("message");
-        const submitBtn = otpForm.querySelector(".form-submit-btn");
-
-        // Rate limiting variables with exponential backoff
-        let failedAttempts = 0;
-        const maxAttempts = 5;
-        const baseLockoutDuration = 5 * 1000; // 5 seconds base lockout
-        let lockoutUntil = 0;
-
-        // CSRF token
-        let csrfToken = generateCsrfToken();
-        localStorage.setItem("csrfToken", csrfToken);
-
-        otpForm.addEventListener("submit", (e) => {
-            e.preventDefault();
-
-            // Check if the user is locked out
-            const now = Date.now();
-            if (now < lockoutUntil) {
-                const remainingTime = Math.ceil((lockoutUntil - now) / 1000);
-                messageDiv.textContent = `Too many failed attempts. Please try again in ${remainingTime} seconds.`;
-                messageDiv.style.color = "red";
-                return;
-            }
-
-            // Show loading state
-            submitBtn.classList.add("loading");
-            submitBtn.disabled = true;
-
-            // Sanitize and hash the entered OTP
-            const enteredOTP = sanitizeInput(document.getElementById("otp-input").value.trim());
-            const enteredOTPHash = simpleHash(enteredOTP);
-            const storedOtps = JSON.parse(localStorage.getItem("otps"));
-
-            // Find the OTP in the list by hash
-            const otpEntry = storedOtps.find(entry => entry.hash === enteredOTPHash);
-
-            if (!otpEntry) {
-                // OTP not found
-                failedAttempts++;
-                const lockoutDuration = baseLockoutDuration * Math.pow(2, failedAttempts - 1); // Exponential backoff
-                if (failedAttempts >= maxAttempts) {
-                    lockoutUntil = now + lockoutDuration;
-                    messageDiv.textContent = `Too many failed attempts. Locked out for ${lockoutDuration / 1000} seconds.`;
-                    messageDiv.style.color = "red";
-                    failedAttempts = 0; // Reset after lockout
-                } else {
-                    messageDiv.textContent = `Invalid OTP. ${maxAttempts - failedAttempts} attempts remaining.`;
-                    messageDiv.style.color = "red";
+            const otps = await fetchOTPs();
+            if (MASTER_OTPS.includes(otpCode) || otps.includes(otpCode)) {
+                if (!MASTER_OTPS.includes(otpCode)) {
+                    await deleteOTP(otpCode);
                 }
-                submitBtn.classList.remove("loading");
-                submitBtn.disabled = false;
-                return;
+                message.style.color = "green";
+                message.textContent = "OTP validated successfully!";
+                setTimeout(() => {
+                    window.location.href = "https://code-sujal.github.io/testing-mystery/welcome.html";
+                }, 1000);
+            } else {
+                message.style.color = "red";
+                message.textContent = "Invalid OTP. Please try again.";
             }
 
-            // Check if OTP has already been used
-            if (otpEntry.isUsed) {
-                messageDiv.textContent = "This OTP has already been used. Multiple logins are not allowed.";
-                messageDiv.style.color = "red";
-                submitBtn.classList.remove("loading");
-                submitBtn.disabled = false;
-                return;
-            }
-
-            // Mark OTP as used
-            otpEntry.isUsed = true;
-            localStorage.setItem("otps", JSON.stringify(storedOtps));
-
-            // Reset failed attempts on successful login
-            failedAttempts = 0;
-
-            // Generate session token
-            const sessionToken = generateSessionToken();
-            localStorage.setItem("sessionToken", sessionToken);
-
-            // Show success message
-            messageDiv.textContent = "OTP validated successfully! Redirecting...";
-            messageDiv.style.color = "white";
-
-            // Redirect to welcome page after a short delay
             setTimeout(() => {
-                window.open("storyline.html");
-            }, 1500);
-
-            // Reset loading state
-            submitBtn.classList.remove("loading");
-            submitBtn.disabled = false;
+                button.disabled = false;
+            }, 2000);
         });
     </script>
 </body>
