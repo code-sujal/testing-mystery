@@ -373,3 +373,209 @@ body {
     height: 16px;
     filter: invert(20%); /* Dark gray for icon */
 }
+
+/* Dark Mode Styles for Detective Files App */
+
+/* Variables for dark mode colors */
+:root {
+    --dark-bg: #1a1a1a;
+    --dark-element-bg: #2c2c2c;
+    --dark-border: #414141;
+    --dark-hover: #3a3a3a;
+    --dark-text: #e0e0e0;
+    --dark-secondary-text: #b0b0b0;
+    --dark-accent: #7b83ff; /* Brightened neon indigo for dark mode */
+    --dark-shadow: rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Dark Mode Class to be toggled */
+  body.dark-mode {
+    background-color: var(--dark-bg);
+    color: var(--dark-text);
+  }
+  
+  /* Command Bar */
+  body.dark-mode .command-bar {
+    background-color: var(--dark-element-bg);
+    border-bottom: 1px solid var(--dark-border);
+    box-shadow: 0 2px 4px var(--dark-shadow);
+  }
+  
+  body.dark-mode .nav-controls button:hover:not(:disabled) {
+    background-color: var(--dark-hover);
+  }
+  
+  body.dark-mode .nav-controls img,
+  body.dark-mode .breadcrumb-icon,
+  body.dark-mode .view-toggle img,
+  body.dark-mode #home-back-btn img,
+  body.dark-mode #close-modal-btn img {
+    filter: invert(90%); /* Light gray for icons in dark mode */
+  }
+  
+  body.dark-mode .breadcrumb {
+    color: var(--dark-accent);
+  }
+  
+  /* Search */
+  body.dark-mode #search {
+    background-color: var(--dark-element-bg);
+    border: 1px solid var(--dark-border);
+    color: var(--dark-text);
+  }
+  
+  body.dark-mode #search:focus {
+    background-color: #3a3a3a;
+    border-color: var(--dark-accent);
+  }
+  
+  body.dark-mode #search::placeholder {
+    color: var(--dark-secondary-text);
+  }
+  
+  /* View Toggle */
+  body.dark-mode .view-toggle button:hover {
+    background-color: var(--dark-hover);
+  }
+  
+  body.dark-mode .view-toggle button.active {
+    background-color: var(--dark-hover);
+  }
+  
+  /* Sidebar */
+  body.dark-mode .sidebar {
+    background-color: var(--dark-element-bg);
+    border-right: 1px solid var(--dark-border);
+  }
+  
+  body.dark-mode .folder img {
+    filter: invert(90%);
+  }
+  
+  body.dark-mode .folder span {
+    color: var(--dark-text);
+  }
+  
+  body.dark-mode .folder:hover {
+    background-color: var(--dark-hover);
+  }
+  
+  body.dark-mode .folder.active {
+    background-color: var(--dark-accent);
+  }
+  
+  /* Main Content */
+  body.dark-mode .main-content {
+    background-color: var(--dark-bg);
+  }
+  
+  body.dark-mode #file-list.grid-view .file:hover,
+  body.dark-mode #file-list.list-view .file:hover {
+    background-color: var(--dark-hover);
+    box-shadow: 0 2px 4px var(--dark-shadow);
+  }
+  
+  body.dark-mode #file-list.grid-view .file span,
+  body.dark-mode #file-list.list-view .file span {
+    color: var(--dark-accent);
+  }
+  
+  body.dark-mode #file-list.list-view .file small {
+    color: var(--dark-secondary-text);
+  }
+  
+  /* File Modal */
+  body.dark-mode .modal-content {
+    background-color: var(--dark-element-bg);
+    box-shadow: 0 4px 12px var(--dark-shadow);
+  }
+  
+  body.dark-mode #file-name {
+    color: var(--dark-accent);
+  }
+  
+  body.dark-mode #file-meta {
+    color: var(--dark-secondary-text);
+  }
+  
+  body.dark-mode #file-content {
+    background-color: #222222;
+    color: var(--dark-text);
+  }
+  
+  body.dark-mode #file-content::-webkit-scrollbar-track {
+    background: #3a3a3a;
+  }
+  
+  body.dark-mode #file-content::-webkit-scrollbar-thumb {
+    background: var(--dark-accent);
+  }
+  
+  body.dark-mode #file-content::-webkit-scrollbar-thumb:hover {
+    background: #8c92ff;
+  }
+  
+  /* Toggle Switch for Dark Mode */
+  .theme-switch-wrapper {
+    display: flex;
+    align-items: center;
+    margin-right: 16px;
+  }
+  
+  .theme-switch {
+    display: inline-block;
+    height: 24px;
+    position: relative;
+    width: 44px;
+  }
+  
+  .theme-switch input {
+    display: none;
+  }
+  
+  .slider {
+    background-color: #ccc;
+    bottom: 0;
+    cursor: pointer;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: .4s;
+    border-radius: 34px;
+  }
+  
+  .slider:before {
+    background-color: white;
+    bottom: 4px;
+    content: "";
+    height: 16px;
+    left: 4px;
+    position: absolute;
+    transition: .4s;
+    width: 16px;
+    border-radius: 50%;
+  }
+  
+  input:checked + .slider {
+    background-color: var(--dark-accent);
+  }
+  
+  input:checked + .slider:before {
+    transform: translateX(20px);
+  }
+  
+  /* Sun and moon icons */
+  .slider:after {
+    content: "☀️";
+    position: absolute;
+    right: 6px;
+    top: 3px;
+    font-size: 14px;
+  }
+  
+  input:checked + .slider:after {
+    content: "🌙";
+    left: 6px;
+    right: auto;
+  }

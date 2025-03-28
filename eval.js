@@ -17,11 +17,11 @@ function generateCheckValue(str) {
   return hash;
 }
 
-// Pre-calculated check values for correct answers (alice, charlie, edward)
+// Pre-calculated check values for correct answers (jake, ryan, candice)
 const checkValues = [
-  generateCheckValue('Ryan'),
-  generateCheckValue('CEO'),
-  generateCheckValue('Jake')
+  generateCheckValue('jake'),
+  generateCheckValue('ryan'),
+  generateCheckValue('candice')
 ];
 
 // Conversation flow with player options
@@ -62,8 +62,8 @@ const conversation = [
 
 // Suspect list
 const suspects = [
-  "Alice", "Ryan ", "Jake", "Candice", "Dr.Anoop A Rao",
-  "Mira D.", "Lila", "Ethan", "Dr. Priya Sharma", "Sophia Reid","CEO"
+  "Jake", "Lila", "Mira D.", "Ethan", "Candice",
+  "Ryan", "Dr.Anoop", "Dr. Priya", "CEO", "Sophia Reid"
 ];
 
 // Utility to scroll to bottom
@@ -174,6 +174,15 @@ function sendSuspects() {
   });
 }
 
+// Existing code remains unchanged until evaluateSelections...
+
+// Function to generate a unique player ID
+function generatePlayerId() {
+  const timestamp = Date.now();
+  const random = Math.floor(Math.random() * 10000); // Random 4-digit number
+  return `PID-${timestamp}-${random}`;
+}
+
 // Evaluate selections
 function evaluateSelections() {
   appendMessage('bot', "Let me review your picks…", () => {
@@ -185,19 +194,58 @@ function evaluateSelections() {
       }
     });
 
+    const playerId = generatePlayerId();
+    const submissionTime = new Date().toLocaleString(); // Current date and time
+    const status = correctCount >= 3 ? 'Pass' : 'Fail';
+
     setTimeout(() => {
       resultDiv.style.display = 'flex';
+      resultDiv.innerHTML = ''; // Clear previous content
+      resultDiv.classList.remove('eliminated', 'passed');
+
       if (correctCount >= 3) {
-        resultDiv.style.backgroundColor = 'green';
-        resultDiv.textContent = 'Great Job Detective,You Passed!'+'\n\n Call your volunteer nearby to move to next Round';
+        resultDiv.classList.add('passed');
+        resultDiv.innerHTML = `
+          You Passed!<br>
+          Player ID: ${playerId}<br>
+          Submitted: ${submissionTime}
+        `;
       } else {
-        resultDiv.style.backgroundColor = 'red';
-        resultDiv.textContent = 'Player Eliminated'+'\n\n You did not end up chooisng the correct suspects!!';
+        resultDiv.classList.add('eliminated');
+        resultDiv.innerHTML = `
+          Player Eliminated<br>
+          Player ID: ${playerId}<br>
+          Submitted: ${submissionTime}
+        `;
       }
+
+      // Save to Google Spreadsheet
+      saveToGoogleSpreadsheet(playerId, submissionTime, status);
     }, 1500); // Delay for dramatic effect
   });
 }
 
+// Function to save data to Google Spreadsheet
+function saveToGoogleSpreadsheet(playerId, submissionTime, status) {
+  const data = {
+    playerId: playerId,
+    submissionTime: submissionTime,
+    status: status
+  };
+
+  fetch('https://script.google.com/macros/s/AKfycbxdVkGHwjHcUzfUmZfG75TzNj9T8_7DkkzOQAqHhedQmqUGU_qSFlWK-AIJd3Njdp3aow/exec', {
+    method: 'POST',
+    mode: 'no-cors', // Required for Google Apps Script due to CORS limitations
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+  .then(() => console.log('Data sent to Google Spreadsheet'))
+  .catch(error => console.error('Error saving to spreadsheet:', error));
+}
+
+// Rest of your existing code (progressChat, resetChat, etc.) remains unchanged
 // Progress chat
 function progressChat() {
   if (conversationStep >= conversation.length) return;
@@ -220,6 +268,7 @@ function resetChat() {
   optionContainer.innerHTML = '';
   optionContainer.style.display = 'none';
   resultDiv.style.display = 'none';
+  resultDiv.className = ''; // Reset class
   resetButton.style.display = 'block';
   progressChat();
 }
