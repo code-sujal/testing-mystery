@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404: Murder Not Found</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            background: #000000;
+            color: #ffffff;
+            font-family: 'Courier New', monospace; /* Minimal typewriter vibe */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Animation Keyframes */
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes subtleGlow {
+            0%, 100% { text-shadow: 0 0 5px rgba(255,0,0,0.3); }
+            50% { text-shadow: 0 0 10px rgba(255,0,0,0.5); }
+        }
+
+        /* Logo Styling */
+        #logo {
+            width: 120px;
+            height: auto;
+            margin-bottom: 20px;
+            animation: fadeIn 1.5s ease-in forwards;
+        }
+
+        /* Headline Styling */
+        h1 {
+            font-size: 1.5rem;
+            font-weight: normal;
+            letter-spacing: 2px;
+            color: #ff3333; /* Blood red */
+            text-transform: uppercase;
+            animation: fadeIn 2s ease-in 0.5s forwards;
+            opacity: 0;
+        }
+
+        /* Subtitle Styling */
+        p {
+            font-size: 1.8rem;
+            color: #ffffff;
+            margin-top: 10px;
+            letter-spacing: 1px;
+            animation: fadeIn 2s ease-in 1s forwards, subtleGlow 4s infinite;
+            opacity: 0;
+        }
+
+        /* Progress Bar */
+        .progress {
+            width: 20%;
+            height: 2px;
+            background: #ff3333;
+            position: absolute;
+            bottom: 10%;
+            animation: loadProgress 5s ease-in-out forwards;
+        }
+
+        @keyframes loadProgress {
+            0% { width: 0%; }
+            100% { width: 20%; }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 { font-size: 1.2rem; }
+            p { font-size: 1.5rem; }
+            #logo { width: 100px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- IEEE EMBS Logo -->
+    <img id="logo" src="ieee.png" alt="IEEE EMBS Logo">
+
+    <!-- Headline -->
+    <h1>IEEE EMBS <span style="color: white;">x</span> Dept. of Medical ELectronics Engineering Presents</h1>
+
+    <!-- Subtitle -->
+    <p>404: Murder Not Found</p>
+
+    <!-- Minimal Progress Bar -->
+    <div class="progress"></div>
+
+    <script>
+        setTimeout(() => {
+            window.location.href = "welcome.html";
+        }, 8000);
+    </script>
+</body>
+</html>

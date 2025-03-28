@@ -16,7 +16,7 @@ const playPauseBtn = document.getElementById('play-pause');
 let alertHistory = [];
 let showingHistory = false;
 
-function goBack() {
+function goBack() { 
     window.history.back();
 }
 

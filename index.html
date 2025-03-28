@@ -491,7 +491,6 @@
         <button id="loginButton" onclick="submitCredentials()">Sign In</button>
         
         <!-- Hint Button with Popover -->
-        <button id="hintButton" type="button" class="hint-btn mt-3" data-bs-toggle="popover" data-bs-content="Hint: The password is 'secret123'." data-bs-placement="top" title="Hint: The password is 'secret123'">Need a Hint?</button>
     </div>
 
     <!-- Loader Screen -->
@@ -655,14 +654,14 @@
             if (name && password) {
                 if (password === correctPassword) {
                     showLoader("Initializing System...", 1);
-                    setTimeout(() => { showLoader("Verifying Credentials...", 2); }, 2000);
-                    setTimeout(() => { showLoader("Accessing Database...", 3); }, 4000);
-                    setTimeout(() => { showLoader("Loading Case Files...", 4); }, 6000);
-                    setTimeout(() => { showLoader("Syncing Data...", 5); }, 8000);
-                    setTimeout(() => { showLoader("Establishing Connection...", 6); }, 10000);
-                    setTimeout(() => { showLoader("Preparing Desktop...", 7); }, 12000);
-                    setTimeout(() => { showLoader("Finalizing Access...", 8); }, 14000);
-                    setTimeout(() => { showLoader("Access Granted.", 9); }, 16000);
+                    setTimeout(() => { showLoader("Verifying Credentials...", 2); }, 500);
+                    setTimeout(() => { showLoader("Accessing Database...", 3); }, 300);
+                    setTimeout(() => { showLoader("Loading Case Files...", 4); }, 750);
+                    setTimeout(() => { showLoader("Syncing Data...", 5); }, 2000);
+                    setTimeout(() => { showLoader("Establishing Connection...", 6); }, 500);
+                    setTimeout(() => { showLoader("Preparing Desktop...", 7); }, 3000);
+                    setTimeout(() => { showLoader("Finalizing Access...", 8); }, 1000);
+                    setTimeout(() => { showLoader("Access Granted.", 9); }, 2000);
 
                     setTimeout(() => {
                         localStorage.setItem('username', name);

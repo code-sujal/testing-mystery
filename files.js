@@ -104,7 +104,7 @@ const fileSystem = {
                      "Emily’s been my rock, even if she doesn’t know it. She showed me her science fair project today—a model of the solar system. She was so proud of it, and seeing her smile made all the stress melt away for a moment. I just want to give her a normal life, but it’s hard when I’m always working late. I need to be better for her.\n\n" +
                      "I got a call from an unknown number yesterday. They didn’t say anything—just heavy breathing on the other end. I hung up, but it’s been on my mind. Is this related to the case? I need to be careful. Maybe I should talk to Captain Reynolds about getting some backup, but I don’t want to seem paranoid.\n\n" +
                      "I just want this case to be over so I can focus on being a mom again.\n" +
-                     "----------------------------------------",
+                     "secure_Channel_pw is something you would find in today's calender",
             meta: "Last modified: March 5, 2025 | Size: 1.5 KB"
         },
         {
@@ -212,12 +212,11 @@ const fileSystem = {
             meta: "Last modified: March 2, 2025 | Size: 2.5 KB"
         },
         {
-            id: 2,
-            name: "Witness\n\nStatement\n\nReid's Case",
-            type: "pdf",
-            content: "Download to view: witness_statement.pdf\n\n" +
-                     "For more details, see the full report here: [Full Witness Report](https://example.com/witness_statement.pdf)",
-            meta: "Last modified: March 2, 2025 | Size: 150 KB"
+            id: 4,
+            name: "Harley_Intern\n\nNotes",
+            type: "image",
+            content: "dn.jpeg",
+            meta: "Last modified: December 25, 2024 | Size: 450 KB"
         },
         {
             id: 4,
@@ -239,30 +238,24 @@ const fileSystem = {
             type: "image",
             content: "inhaler.jpeg",
             meta: "Last modified: December 25, 2024 | Size: 450 KB"
-        }
-    ],
-    downloads: [
+        },
         {
-            id: 3,
-            name: "Luma",
+            id: 4,
+            name: "Harley Sawyer\n\nLuminaTech Intern",
             type: "image",
-            content: "https://i.guim.co.uk/img/media/d40363fb930ce39f4e7fd962d35cc5d88bb88e87/0_199_1024_614/master/1024.jpg?width=1200&quality=85&auto=format&fit=max&s=c082ed2b81637e48b8f4799236c41485",
+            content: "harleysawyer.jpeg",
             meta: "Last modified: December 25, 2024 | Size: 450 KB"
         },
-        {
-            id: 3,
-            name: "Emily_School\n\nNewsletter",
-            type: "pdf",
-            content: "Download to view: emily_school_newsletter.pdf\n\n" +
-                     "Science Fair details available here: [Science Fair Info](https://example.com/science_fair.pdf)",
-            meta: "Last modified: March 6, 2025 | Size: 500 KB"
-        },
+    ],
+    downloads: [
+        
+        
         {
             id: 4,
             name: "CityPD_Training\n\nManual",
             type: "pdf",
             content: "Download to view: citypd_training_manual.pdf\n\n" +
-                     "Refer to the updated protocols: [Protocol Updates](https://pdf.ac/3cj5RY)",
+                     "Refer to the updated protocols: [Protocol Updates](https://drive.google.com/file/d/1zliHrtrBy-6t92aqfdZ9YDzeKdJZhcUm/view?usp=sharing)",
             meta: "Last modified: March 1, 2025 | Size: 2.3 MB"
         }
     ],
@@ -296,7 +289,14 @@ const fileSystem = {
             type: "image",
             content: "syringe2.jpeg",
             meta: "Last modified: March 1, 2025 | Size: 2.3 MB"
-        }
+        },
+        {
+            id: 4,
+            name: "LuminaTech Campaign",
+            type: "image",
+            content: "lumi.jpeg",
+            meta: "Last modified: March 1, 2025 | Size: 2.3 MB"
+        },
     ],
 };
 

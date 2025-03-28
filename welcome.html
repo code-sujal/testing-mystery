@@ -635,43 +635,81 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            // Double-check evalauth again in case it was set during page load
-            if (localStorage.getItem('evalauth') === 'true') {
-                window.location.href = './eval.html';
-                return; // Stop further execution
-            }
+    // Check localStorage for evalauth before the DOM loads (unchanged)
+    if (localStorage.getItem('evalauth') === 'true') {
+        window.location.href = './eval.html';
+        return;
+    }
 
-            const name = localStorage.getItem('username');
-            const startTime = localStorage.getItem('startTime');
-            const timeLimit = 60 * 60 * 1000; // 1 hour in milliseconds
+    const name = localStorage.getItem('username');
+    const startTime = localStorage.getItem('startTime');
+    const timeLimit = 75 * 60 * 1000; // Changed from 60 to 75 minutes (4500000 milliseconds)
 
-            if (name) {
-                document.getElementById('greeting').textContent = `Welcome, ${name}`;
-            } else {
-                const username = prompt("Enter your username:");
-                if (username) {
-                    localStorage.setItem('username', username);
-                    localStorage.setItem('startTime', Date.now());
-                    document.getElementById('greeting').textContent = `Welcome, ${username}`;
-                }
-            }
+    if (name) {
+        document.getElementById('greeting').textContent = `Welcome, ${name}`;
+    } else {
+        const username = prompt("Enter your username:");
+        if (username) {
+            localStorage.setItem('username', username);
+            localStorage.setItem('startTime', Date.now());
+            document.getElementById('greeting').textContent = `Welcome, ${username}`;
+        }
+    }
 
-            function updateTimer() {
-                const elapsedTime = Date.now() - parseInt(localStorage.getItem('startTime'), 10);
-                const remainingTime = Math.max(timeLimit - elapsedTime, 0);
-                const minutes = Math.floor(remainingTime / 60000);
-                const seconds = Math.floor((remainingTime % 60000) / 1000);
-                document.getElementById('timer').textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    function updateTimer() {
+        const elapsedTime = Date.now() - parseInt(localStorage.getItem('startTime'), 10);
+        const remainingTime = Math.max(timeLimit - elapsedTime, 0);
+        const minutes = Math.floor(remainingTime / 60000);
+        const seconds = Math.floor((remainingTime % 60000) / 1000);
+        document.getElementById('timer').textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
 
-                if (remainingTime <= 0) {
-                    alert("Session expired. Please log in again.");
-                    localStorage.removeItem('username');
-                    localStorage.removeItem('startTime');
-                    location.reload();
-                }
-            }
+        if (remainingTime <= 0) {
+            // Create the red overlay dynamically (as per previous edit)
+            const overlay = document.createElement('div');
+            overlay.id = 'timeout-overlay';
+            overlay.style.position = 'fixed';
+            overlay.style.top = '0';
+            overlay.style.left = '0';
+            overlay.style.width = '100%';
+            overlay.style.height = '100%';
+            overlay.style.background = 'rgba(255, 0, 0, 0.9)';
+            overlay.style.display = 'flex';
+            overlay.style.flexDirection = 'column';
+            overlay.style.justifyContent = 'center';
+            overlay.style.alignItems = 'center';
+            overlay.style.zIndex = '1000';
+            overlay.style.fontFamily = "'Roboto Mono', monospace";
+            overlay.style.color = '#fff';
+            overlay.style.textAlign = 'center';
+            overlay.style.animation = 'fadeInRed 0.5s ease forwards';
 
-            setInterval(updateTimer, 1000);
+            const message = document.createElement('h2');
+            message.textContent = "Time's Up Detective";
+            message.style.fontSize = '4rem';
+            message.style.textShadow = '0 0 10px rgba(255, 255, 255, 0.5)';
+            overlay.appendChild(message);
+
+            document.body.appendChild(overlay);
+
+            setTimeout(() => {
+                localStorage.removeItem('username');
+                localStorage.removeItem('startTime');
+                location.reload();
+            }, 2000);
+        }
+    }
+
+    setInterval(updateTimer, 1000);
+
+    // Add fade-in animation if not already present
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes fadeInRed {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+    `;
+    document.head.appendChild(style);
 
             function updateTimeDisplay() {
                 const now = new Date();

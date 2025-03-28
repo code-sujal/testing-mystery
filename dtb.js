@@ -158,7 +158,7 @@ const cases = [
             name: "Dr. Samuel Reid",
             age: 34,
             images: [
-                "https://img.freepik.com/free-photo/confident-middle-aged-man-portrait_23-2149051736.jpg",
+                "samuel.jpeg",
                 
             ],
             lastSeen: "March 4, 2025",

@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404: Murder Not Found - Video Player</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto Mono', monospace;
+            background: #1a1a1a;
+            color: #e0e0e0;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Toolbar */
+        .toolbar {
+            display: flex;
+            gap: 10px;
+            padding: 5px;
+            background: #252525;
+            border-bottom: 1px solid #333;
+        }
+
+        .toolbar-btn {
+            background: #333;
+            color: #e0e0e0;
+            border: 1px solid #444;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background 0.2s;
+            text-decoration: none;
+        }
+
+        .toolbar-btn:hover {
+            background: #ff3333;
+        }
+
+        .container {
+            width: 100%;
+            height: calc(100% - 40px); /* Adjust for toolbar height */
+            display: flex;
+        }
+
+        /* Video List Sidebar */
+        .video-list {
+            width: 300px;
+            background: #252525;
+            border-right: 1px solid #333;
+            padding: 10px;
+            overflow-y: auto;
+        }
+
+        .video-item {
+            padding: 10px;
+            background: #333;
+            border: 1px solid #444;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .video-item:hover {
+            background: #3a3a3a;
+            border-color: #ff3333;
+        }
+
+        .video-item.active {
+            background: #ff3333;
+            border-color: #ff5555;
+        }
+
+        .video-title {
+            font-size: 0.9rem;
+            color: #e0e0e0;
+        }
+
+        .video-timestamp {
+            font-size: 0.8rem;
+            color: #999;
+        }
+
+        /* Video Player Area */
+        .player-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: #222;
+            position: relative;
+            transition: opacity 0.3s;
+        }
+
+        .player-area.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .video-player {
+            width: 80%;
+            max-height: 70vh;
+            background: #000;
+            border: 1px solid #333;
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .video-screen {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: grayscale(50%) contrast(1.1);
+        }
+
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 5px;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+
+        .video-label {
+            color: #e0e0e0;
+            text-transform: uppercase;
+        }
+
+        .timestamp {
+            color: #999;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ff3333;
+            color: #e0e0e0;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .close-btn:hover {
+            background: #ff5555;
+        }
+
+        .playback-controls {
+            display: flex;
+            gap: 10px;
+            padding: 10px;
+            background: #252525;
+            width: 80%;
+            justify-content: center;
+            align-items: center;
+            border-top: 1px solid #333;
+        }
+
+        .control-btn {
+            background: #333;
+            color: #e0e0e0;
+            border: 1px solid #444;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .control-btn:hover {
+            background: #ff3333;
+        }
+
+        .control-btn.active {
+            background: #ff3333;
+        }
+
+        .system-stats {
+            font-size: 0.8rem;
+            color: #999;
+            margin-left: auto;
+        }
+
+        @media (max-width: 768px) {
+            .video-list { width: 200px; }
+            .video-item { padding: 8px; }
+            .video-title { font-size: 0.8rem; }
+            .video-timestamp { font-size: 0.7rem; }
+            .video-player { width: 90%; }
+            .playback-controls { width: 90%; }
+            .toolbar-btn { font-size: 0.8rem; padding: 4px 8px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Toolbar -->
+    <div class="toolbar">
+        <a href="cctv.html" class="toolbar-btn">Back to LIVE</a>
+    </div>
+
+    <div class="container">
+        <!-- Video List -->
+        <div class="video-list">
+            <div class="video-item" data-video="cam1f1.mp4" data-label="LAB-ANGLE-01">
+                <div class="video-title">CAM01/LAB/FOOTAGE01</div>
+                <div class="video-timestamp">03/28/25 23:15</div>
+            </div>
+            <div class="video-item" data-video="cam1f2.mp4" data-label="LAB-ANGLE-01">
+                <div class="video-title">CAM01/FOOTAGE02</div>
+                <div class="video-timestamp">03/28/25 23:30</div>
+            </div>
+            <div class="video-item" data-video="cam2f1.mp4" data-label="LAB-ANGLE-02">
+                <div class="video-title">CAM02/FOOTAGE01</div>
+                <div class="video-timestamp">03/28/25 23:45</div>
+            </div>
+            <div class="video-item" data-video="cam2f2.mp4" data-label="LAB-ANGLE-02">
+                <div class="video-title">CAM02/FOOTAGE02</div>
+                <div class="video-timestamp">03/29/25 00:05</div>
+            </div>
+            <div class="video-item" data-video="cam1f3.mp4" data-label="LAB-ANGLE-01">
+                <div class="video-title">CAM01/LAB/FOOTAGE03</div>
+                <div class="video-timestamp">03/29/25 00:20</div>
+            </div>
+            <div class="video-item" data-video="cam2f3.mp4" data-label="LAB-ANGLE-02">
+                <div class="video-title">CAM02/LAB/FOOTAGE03</div>
+                <div class="video-timestamp">03/29/25 00:35</div>
+            </div>
+        </div>
+
+        <!-- Video Player Area -->
+        <div class="player-area hidden">
+            <div class="video-player">
+                <video class="video-screen" id="current-video" controls>
+                    <source id="video-source" src="" type="video/mp4">
+                </video>
+                <div class="video-overlay">
+                    <span class="video-label" id="video-label"></span>
+                    <span class="timestamp" id="video-timestamp"></span>
+                </div>
+                <button class="close-btn" id="close-player">Close</button>
+            </div>
+            <div class="playback-controls">
+                <button class="control-btn" id="rewind">◄◄</button>
+                <button class="control-btn" id="play-pause">►</button>
+                <button class="control-btn" id="fast-forward">►►</button>
+                <div class="system-stats" id="system-time">System Time: Loading...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const videoItems = document.querySelectorAll('.video-item');
+        const playerArea = document.querySelector('.player-area');
+        const videoPlayer = document.getElementById('current-video');
+        const videoSource = document.getElementById('video-source');
+        const videoLabel = document.getElementById('video-label');
+        const videoTimestamp = document.getElementById('video-timestamp');
+        const closeBtn = document.getElementById('close-player');
+        const playPauseBtn = document.getElementById('play-pause');
+        let isPlaying = false;
+
+        // Real-time system clock
+        function updateSystemTime() {
+            const systemTime = document.getElementById('system-time');
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: '2-digit' });
+            const timeStr = now.toLocaleTimeString('en-US', { hour12: false });
+            systemTime.textContent = `System Time: ${dateStr} ${timeStr}`;
+        }
+        setInterval(updateSystemTime, 1000);
+        updateSystemTime();
+
+        // Video selection
+        videoItems.forEach(item => {
+            item.addEventListener('click', () => {
+                // Remove active class from all items
+                videoItems.forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+
+                // Load video
+                const videoFile = item.getAttribute('data-video');
+                const label = item.getAttribute('data-label');
+                const timestamp = item.getAttribute('data-time');
+
+                videoSource.src = videoFile;
+                videoLabel.textContent = label;
+                videoTimestamp.textContent = timestamp;
+                videoPlayer.load();
+                videoPlayer.pause();
+                isPlaying = false;
+                playPauseBtn.textContent = '►';
+                playPauseBtn.classList.remove('active');
+
+                // Show player
+                playerArea.classList.remove('hidden');
+            });
+        });
+
+        // Close player
+        closeBtn.addEventListener('click', () => {
+            playerArea.classList.add('hidden');
+            videoPlayer.pause();
+            videoItems.forEach(i => i.classList.remove('active'));
+        });
+
+        // Playback controls
+        playPauseBtn.addEventListener('click', () => {
+            isPlaying = !isPlaying;
+            playPauseBtn.textContent = isPlaying ? '■' : '►';
+            playPauseBtn.classList.toggle('active', isPlaying);
+            if (isPlaying) videoPlayer.play();
+            else videoPlayer.pause();
+        });
+
+        document.getElementById('rewind').addEventListener('click', () => {
+            videoPlayer.currentTime = Math.max(0, videoPlayer.currentTime - 5);
+        });
+
+        document.getElementById('fast-forward').addEventListener('click', () => {
+            videoPlayer.currentTime = Math.min(videoPlayer.duration, videoPlayer.currentTime + 5);
+        });
+    </script>
+</body>
+</html>
