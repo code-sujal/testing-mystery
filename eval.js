@@ -206,7 +206,7 @@ function evaluateSelections() {
       if (correctCount >= 3) {
         resultDiv.classList.add('passed');
         resultDiv.innerHTML = `
-          You Passed!<br>
+          You Passed! Out of 5, your 3 suspects were correct! Good Job Detective<br>
           Player ID: ${playerId}<br>
           Submitted: ${submissionTime}
         `;
@@ -219,21 +219,26 @@ function evaluateSelections() {
         `;
       }
 
-      // Save to Google Spreadsheet
-      saveToGoogleSpreadsheet(playerId, submissionTime, status);
+      // Save to Google Spreadsheet, including selected suspects
+      saveToGoogleSpreadsheet(playerId, submissionTime, status, selectedSuspects);
     }, 1500); // Delay for dramatic effect
   });
 }
 
 // Function to save data to Google Spreadsheet
-function saveToGoogleSpreadsheet(playerId, submissionTime, status) {
+function saveToGoogleSpreadsheet(playerId, submissionTime, status, selectedSuspects) {
   const data = {
     playerId: playerId,
     submissionTime: submissionTime,
-    status: status
+    status: status,
+    suspect1: selectedSuspects[0] || '', // Handle cases where fewer than 5 are selected (unlikely here)
+    suspect2: selectedSuspects[1] || '',
+    suspect3: selectedSuspects[2] || '',
+    suspect4: selectedSuspects[3] || '',
+    suspect5: selectedSuspects[4] || ''
   };
 
-  fetch('https://script.google.com/macros/s/AKfycbxdVkGHwjHcUzfUmZfG75TzNj9T8_7DkkzOQAqHhedQmqUGU_qSFlWK-AIJd3Njdp3aow/exec', {
+  fetch('https://script.google.com/macros/s/AKfycbwunviBRK6pnfrRInUbuavA9Z_uCLlRc4X1e2b3Ncd09sIIfTuoW8B7q2DN3peYN4WKyQ/exec', {
     method: 'POST',
     mode: 'no-cors', // Required for Google Apps Script due to CORS limitations
     headers: {

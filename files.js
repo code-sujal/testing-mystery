@@ -186,6 +186,19 @@ const fileSystem = {
             content: "https://the-riotact.com/wp-content/uploads/2025/03/20250317-CPM-Awards-Lauren-Gilliland-05-1200x800.jpg",
             meta: "Last modified: December 25, 2024 | Size: 450 KB"
         },
+        {
+            id: 4,
+            name: "Sophie's Chat \n\n with HR.1",
+            type: "image",
+            content: "chatss1.jpeg",
+            meta: "Last modified: December 25, 2024 | Size: 450 KB"
+        },{
+            id: 4,
+            name: "Sophie's Chat \n\n with HR.2",
+            type: "image",
+            content: "chatss2.jpeg",
+            meta: "Last modified: December 25, 2024 | Size: 450 KB"
+        },
     ],
     "case-files": [
         {
@@ -222,7 +235,7 @@ const fileSystem = {
         },
         {
             id: 6,
-            name: "Inhaler",
+            name: "Room Evidence-3",
             type: "image",
             content: "inhaler.jpeg",
             meta: "Last modified: December 25, 2024 | Size: 450 KB"
@@ -230,12 +243,11 @@ const fileSystem = {
     ],
     downloads: [
         {
-            id: 1,
-            name: "LuminaTech\n\nBrochure",
-            type: "pdf",
-            content: "Download to view: luminary_brochure.pdf\n\n" +
-                     "Check out our latest project overview: [Project Eclipse Details](https://example.com/eclipse_details.pdf)",
-            meta: "Last modified: March 5, 2025 | Size: 1.2 MB"
+            id: 3,
+            name: "Luma",
+            type: "image",
+            content: "https://i.guim.co.uk/img/media/d40363fb930ce39f4e7fd962d35cc5d88bb88e87/0_199_1024_614/master/1024.jpg?width=1200&quality=85&auto=format&fit=max&s=c082ed2b81637e48b8f4799236c41485",
+            meta: "Last modified: December 25, 2024 | Size: 450 KB"
         },
         {
             id: 3,
