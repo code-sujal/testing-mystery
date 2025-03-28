@@ -17,14 +17,14 @@ function generateCheckValue(str) {
   return hash;
 }
 
-// Pre-calculated check values for correct answers (jake, ryan, candice)
+
 const checkValues = [
   generateCheckValue('jake'),
   generateCheckValue('ryan'),
-  generateCheckValue('candice')
+  generateCheckValue('ceo')
 ];
 
-// Conversation flow with player options
+
 const conversation = [
   { 
     bot: "Greetings, Detective! I’m Captain Harrison. Reid’s case has us all on edge. What’s your initial take on this mess?",
@@ -63,7 +63,7 @@ const conversation = [
 // Suspect list
 const suspects = [
   "Jake", "Lila", "Mira D.", "Ethan", "Candice",
-  "Ryan", "Dr.Anoop", "Dr. Priya", "CEO", "Sophia Reid"
+  "Ryan", "Dr.Anoop", "Dr. Priya", "CEO", "Harley"
 ];
 
 // Utility to scroll to bottom
@@ -206,7 +206,7 @@ function evaluateSelections() {
       if (correctCount >= 3) {
         resultDiv.classList.add('passed');
         resultDiv.innerHTML = `
-          You Passed! Out of 5, your 3 suspects were correct! Good Job Detective<br>
+          You Passed! Good Job Detective<br>
           Player ID: ${playerId}<br>
           Submitted: ${submissionTime}
         `;

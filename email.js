@@ -38,10 +38,10 @@ const emailFolders = {
             subject: "Case Assignment – Samuel Reid’s Death",
             body: "Detective Mercer,\n\n" +
                   "You’ve been assigned to investigate the sudden death of Samuel Reid, LuminaTech’s lead scientist. The preliminary autopsy report suggests possible foul play, but LuminaTech is pushing to close the case as an accident.\n\n" +
-                  "Reid was last seen in his lab, all other details are there in the case report I've attached. You’ll need to tread carefully—LuminaTech has powerful backers. I’m attaching the case report from the night of his death.\n\n" +
-                  "Keep me updated.\n\n" +
+                  "Reid was last seen in his lab, all other details are there in the case report I've attached. You’ll need to tread carefully—LuminaTech has powerful backers. I’m attaching the case report from the night of his death.I've provided you access to Alice's computer,I hope its Mercer reading this!\n\n" +
+                  "Keep me updated.We will be contacting again through a secure channel,maybe you can find its passwords somewhere in her notes!!\n\n" +
                   "– Captain Harrison",
-            attachments: [{name: "📁 case_report.pdf", url: "https://docs.google.com/document/d/1LTsr9V_e5KBrJfaeT4kFixgcWPqe88orw3JnrmT7aQ4/edit?usp=sharing"}],
+            attachments: [{name: "📁 case_report.pdf", url: "https://docs.google.com/document/d/1ieSpgD73hmUXtPZFZGMi6TD0LyOA2uPnX4qbPtdLK2Q/edit?usp=sharing"}],
             dateTime: "March 5, 2025 | 9:32 AM"
         },
         // 5. Closure of Reid Case (March 6, 2025)

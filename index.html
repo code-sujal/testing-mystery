@@ -655,13 +655,13 @@
                 if (password === correctPassword) {
                     showLoader("Initializing System...", 1);
                     setTimeout(() => { showLoader("Verifying Credentials...", 2); }, 500);
-                    setTimeout(() => { showLoader("Accessing Database...", 3); }, 1000);
-                    setTimeout(() => { showLoader("Loading Case Files...", 4); }, 1500);
+                    setTimeout(() => { showLoader("Accessing Database...", 3); }, 300);
+                    setTimeout(() => { showLoader("Loading Case Files...", 4); }, 750);
                     setTimeout(() => { showLoader("Syncing Data...", 5); }, 2000);
-                    setTimeout(() => { showLoader("Establishing Connection...", 6); }, 2500);
+                    setTimeout(() => { showLoader("Establishing Connection...", 6); }, 500);
                     setTimeout(() => { showLoader("Preparing Desktop...", 7); }, 3000);
-                    setTimeout(() => { showLoader("Finalizing Access...", 8); }, 3500);
-                    setTimeout(() => { showLoader("Access Granted.", 9); }, 4000);
+                    setTimeout(() => { showLoader("Finalizing Access...", 8); }, 1000);
+                    setTimeout(() => { showLoader("Access Granted.", 9); }, 2000);
 
                     setTimeout(() => {
                         localStorage.setItem('username', name);

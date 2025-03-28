@@ -84,6 +84,21 @@ body {
     animation: pulse 2s infinite ease-in-out;
 }
 
+#backBtn {
+    background: #f1c40f;
+    color: #0d0d0d;
+    border: none;
+    padding: 12px 35px;
+    font-family: 'Special Elite', cursive;
+    font-size: 1.3rem;
+    text-transform: uppercase;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+    animation: pulse 2s infinite ease-in-out;
+}
+
+
 #enterBtn:disabled {
     background: #4a4a4a;
     cursor: not-allowed;
@@ -402,3 +417,41 @@ body {
 .proceed-btn:hover .btn-subtext {
     color: #fff;
 }
+
+/* Existing CSS remains unchanged until this point */
+
+/* Blinking Screen */
+.blink-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #ffff66; /* Brighter yellow */
+    z-index: 2000; /* Above everything else */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: blink 0.5s infinite alternate; /* Blinking effect */
+    font-family: 'Special Elite', cursive; /* Match your theme */
+    font-size: 3rem;
+    color: #0d0d0d; /* Dark text for contrast */
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.6); /* Shadow for readability */
+}
+
+.blink-screen::before {
+    content: "Entering Secure Channel";
+    white-space: nowrap;
+}
+
+@keyframes blink {
+    0% { opacity: 0.7; }
+    100% { opacity: 1; }
+}
+
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+/* Existing media queries and other styles remain unchanged */

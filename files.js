@@ -104,7 +104,7 @@ const fileSystem = {
                      "Emily’s been my rock, even if she doesn’t know it. She showed me her science fair project today—a model of the solar system. She was so proud of it, and seeing her smile made all the stress melt away for a moment. I just want to give her a normal life, but it’s hard when I’m always working late. I need to be better for her.\n\n" +
                      "I got a call from an unknown number yesterday. They didn’t say anything—just heavy breathing on the other end. I hung up, but it’s been on my mind. Is this related to the case? I need to be careful. Maybe I should talk to Captain Reynolds about getting some backup, but I don’t want to seem paranoid.\n\n" +
                      "I just want this case to be over so I can focus on being a mom again.\n" +
-                     "secure_Channel_pw is something you would find in today's calender(DDMMYY)",
+                     "secure_Channel_pw is something you would find in today's calender",
             meta: "Last modified: March 5, 2025 | Size: 1.5 KB"
         },
         {
@@ -188,13 +188,13 @@ const fileSystem = {
         },
         {
             id: 4,
-            name: "Sophie's Chat \n\n with HR.1",
+            name: "Sophie's Chat-1",
             type: "image",
             content: "chatss1.jpeg",
             meta: "Last modified: December 25, 2024 | Size: 450 KB"
         },{
             id: 4,
-            name: "Sophie's Chat \n\n with HR.2",
+            name: "Sophie's Chat-2",
             type: "image",
             content: "chatss2.jpeg",
             meta: "Last modified: December 25, 2024 | Size: 450 KB"
