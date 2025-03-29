@@ -376,6 +376,7 @@ document.addEventListener("click", function(event) {
 
 // Back Button Functionality
 document.getElementById("back-btn").addEventListener("click", function() {
+    localStorage.setItem("window", 'false');
     window.location.href = "welcome.html";
 });
 

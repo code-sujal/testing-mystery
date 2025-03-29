@@ -12,13 +12,17 @@ const alertSound = document.getElementById('alert-sound');
 const systemTime = document.getElementById('system-time');
 const mainFeedTime = document.getElementById('main-feed-time');
 const playPauseBtn = document.getElementById('play-pause');
-
+const backbutton= document.getElementById('backbutton');
 let alertHistory = [];
 let showingHistory = false;
 
 function goBack() { 
     window.history.back();
 }
+backbutton.addEventListener("click",()=>{
+    localStorage.setItem("window", 'false');
+    window.location.href = "welcome.html";
+})
 
 function updateTime() {
     const now = new Date();

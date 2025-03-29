@@ -7,21 +7,21 @@ const resultDiv = document.getElementById('result');
 let conversationStep = 0;
 let selectedSuspects = [];
 
-// Obfuscated correct answers using a hash function
+localStorage.setItem('evalauth','true');
 function generateCheckValue(str) {
   let hash = 0;
   for (let i = 0; i < str.length; i++) {
     hash = ((hash << 5) - hash) + str.charCodeAt(i);
-    hash = hash & hash; // Convert to 32bit integer
+    hash = hash & hash; 
   }
   return hash;
 }
 
 
 const checkValues = [
-  generateCheckValue('jake'),
-  generateCheckValue('ryan'),
-  generateCheckValue('ceo')
+  generateCheckValue(atob("amFrZQ==")),
+  generateCheckValue(atob("cnlhbg==")),
+  generateCheckValue(atob("Y2Vv"))
 ];
 
 

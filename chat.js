@@ -242,6 +242,7 @@ function resetChat() {
 
 // Handle back button click
 function handleBackClick() {
+    localStorage.setItem("window", 'false');
     window.location.href = 'welcome.html';
 }
 

@@ -444,6 +444,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 // Back to Welcome Page
 document.getElementById("home-back-btn").addEventListener("click", function() {
+    localStorage.setItem("window", 'false');
     window.location.href = "welcome.html";
 });
 

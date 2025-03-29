@@ -6,7 +6,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const mainContent = document.getElementById('mainContent');
     const proceedBtn = document.getElementById('proceedBtn');
     const blinkScreen = document.getElementById('blinkScreen');
+    const retreat= document.getElementById('retreat');
 
+    retreat.addEventListener('click', () => {
+        localStorage.setItem("window", 'false');
+        window.location.href = 'welcome.html';
+    })
     // Checkbox enables/disables Proceed button
     checkbox.addEventListener('change', () => {
         enterBtn.disabled = !checkbox.checked;
@@ -22,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Back button returns to investigation (welcome.html)
     backBtn.addEventListener('click', () => {
+        localStorage.setItem("window", 'false');
         window.location.href = 'welcome.html';
     });
 

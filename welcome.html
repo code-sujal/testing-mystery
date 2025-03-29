@@ -634,6 +634,15 @@
             window.location.href = './eval.html';
         }
 
+        if (localStorage.getItem("window") === 'true') {
+            // Redirect to the eval page immediately
+            alert("Multiple tabs are not allowed!");
+            window.location.href = './volunteer.html';
+        }else {
+            localStorage.setItem("window", 'true');
+        }
+        
+        
         document.addEventListener('DOMContentLoaded', function() {
     // Check localStorage for evalauth before the DOM loads (unchanged)
     if (localStorage.getItem('evalauth') === 'true') {

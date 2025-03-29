@@ -237,6 +237,7 @@ searchBar.addEventListener('input', () => {
 
 // Add event listener for back button
 backBtn.addEventListener('click', () => {
+    localStorage.setItem("window", 'false');
     window.location.href = 'welcome.html'; // Navigate to welcome.html
 });
 

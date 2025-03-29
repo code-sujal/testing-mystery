@@ -1,134 +1,140 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>OTP Validation</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-image: url('https://media3.giphy.com/media/11UhXwm8Ipd9C/giphy.webp?cid=ecf05e47cf14qpisjmueby3s31by8ra6deqktssp8kllok50&ep=v1_gifs_search&rid=giphy.webp&ct=g');
-        }
-        .container {
-    background: white;
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-    text-align: center;
-    width: 350px;
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-}
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-image: url("https://media3.giphy.com/media/11UhXwm8Ipd9C/giphy.webp?cid=ecf05e47cf14qpisjmueby3s31by8ra6deqktssp8kllok50&ep=v1_gifs_search&rid=giphy.webp&ct=g");
+      }
+      .container {
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        text-align: center;
+        width: 350px;
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+      }
 
-.container:hover {
-    transform: scale(1.03);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-}
+      .container:hover {
+        transform: scale(1.03);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      }
 
-input {
-    padding: 12px;
-    margin: 12px 0;
-    border: 2px solid #ddd;
-    border-radius: 8px;
-    width: 90%;
-    font-size: 16px;
-    transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-}
+      input {
+        padding: 12px;
+        margin: 12px 0;
+        border: 2px solid #ddd;
+        border-radius: 8px;
+        width: 90%;
+        font-size: 16px;
+        transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+      }
 
-input:focus {
-    border-color: #28a745;
-    outline: none;
-    box-shadow: 0 0 10px rgba(40, 167, 69, 0.3);
-}
+      input:focus {
+        border-color: #28a745;
+        outline: none;
+        box-shadow: 0 0 10px rgba(40, 167, 69, 0.3);
+      }
 
-button {
-    padding: 12px 25px;
-    border: none;
-    background: #28a745;
-    color: white;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
-    transition: background 0.3s ease-in-out, transform 0.2s ease-in-out;
-}
+      button {
+        padding: 12px 25px;
+        border: none;
+        background: #28a745;
+        color: white;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+        transition: background 0.3s ease-in-out, transform 0.2s ease-in-out;
+      }
 
-button:hover {
-    background: #218838;
-    transform: scale(1.05);
-}
+      button:hover {
+        background: #218838;
+        transform: scale(1.05);
+      }
 
-button:disabled {
-    background: #ccc;
-    cursor: not-allowed;
-    transform: none;
-}
+      button:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+        transform: none;
+      }
 
-#message {
-    margin-top: 12px;
-    font-weight: bold;
-    font-size: 14px;
-    color: #333;
-    transition: opacity 0.3s ease-in-out;
-}
+      #message {
+        margin-top: 12px;
+        font-weight: bold;
+        font-size: 14px;
+        color: #333;
+        transition: opacity 0.3s ease-in-out;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <h2>Enter OTP</h2>
-        <p style="color: red; font-weight: bold;">Request your volunteer nearby for OTP</p>
-        <input type="text" id="otp-code" placeholder="Enter OTP">
-        <button id="validate-otp">Validate OTP</button>
-        <p id="message"></p>
+      <h2>Enter OTP</h2>
+      <p style="color: red; font-weight: bold">
+        Request your volunteer nearby for OTP
+      </p>
+      <input type="text" id="otp-code" placeholder="Enter OTP" />
+      <button id="validate-otp">Validate OTP</button>
+      <p id="message"></p>
     </div>
-    
+
     <script>
-        const SHEET_ID = "1D6iyPTtkSn7LO0ibqgmAO8JLnim5UP12f7MUb87W_1Y";
-        const API_KEY = "AIzaSyBUU-gB-cZJwtQEOXb5w0VW9mBMWr2-oQM";
-        const RANGE = "Sheet1!A:A";
-        const MASTER_OTPS = ["123456", "260505"];
+      const SHEET_ID = "1D6iyPTtkSn7LO0ibqgmAO8JLnim5UP12f7MUb87W_1Y";
+      const API_KEY = "AIzaSyBUU-gB-cZJwtQEOXb5w0VW9mBMWr2-oQM";
+      const RANGE = "Sheet1!A:A";
+      const MASTER_OTPS = [atob("MTIzNDU2"), atob("MjYwNTA1")];
 
-        async function fetchOTPs() {
-            const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${RANGE}?key=${API_KEY}`;
-            const response = await fetch(url);
-            const data = await response.json();
-            return data.values ? data.values.flat() : [];
-        }
+      async function fetchOTPs() {
+        const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${RANGE}?key=${API_KEY}`;
+        const response = await fetch(url);
+        const data = await response.json();
+        return data.values ? data.values.flat() : [];
+      }
 
-        async function deleteOTP(otp) {
-            const scriptUrl = "https://script.google.com/macros/s/AKfycbwb353bciMl4ApTsU7SCAcm45y0RJIcS3VLnU-u9u5jnkgG6XmooNcw9H2zFbDr51IM/exec";
-            await fetch(scriptUrl + `?otp=${otp}`, { method: "GET" });
-        }
+      async function deleteOTP(otp) {
+        const scriptUrl =
+          "https://script.google.com/macros/s/AKfycbwb353bciMl4ApTsU7SCAcm45y0RJIcS3VLnU-u9u5jnkgG6XmooNcw9H2zFbDr51IM/exec";
+        await fetch(scriptUrl + `?otp=${otp}`, { method: "GET" });
+      }
 
-        document.getElementById("validate-otp").addEventListener("click", async () => {
-            const otpCode = document.getElementById("otp-code").value;
-            const message = document.getElementById("message");
-            const button = document.getElementById("validate-otp");
+      document
+        .getElementById("validate-otp")
+        .addEventListener("click", async () => {
+          const otpCode = document.getElementById("otp-code").value;
+          const message = document.getElementById("message");
+          const button = document.getElementById("validate-otp");
 
-            button.disabled = true;
+          button.disabled = true;
 
-            const otps = await fetchOTPs();
-            if (MASTER_OTPS.includes(otpCode) || otps.includes(otpCode)) {
-                if (!MASTER_OTPS.includes(otpCode)) {
-                    await deleteOTP(otpCode);
-                }
-                message.style.color = "green";
-                message.textContent = "OTP validated successfully!";
-                setTimeout(() => {
-                    window.location.href = "storyline.html";
-                }, 1000);
-            } else {
-                message.style.color = "red";
-                message.textContent = "Invalid OTP. Please try again.";
+          const otps = await fetchOTPs();
+          if (MASTER_OTPS.includes(otpCode) || otps.includes(otpCode)) {
+            if (!MASTER_OTPS.includes(otpCode)) {
+              await deleteOTP(otpCode);
             }
-
+            message.style.color = "green";
+            localStorage.setItem("window", 'false');
+            message.textContent = "OTP validated successfully!";
             setTimeout(() => {
-                button.disabled = false;
-            }, 2000);
+              window.location.href = "storyline.html";
+            }, 1000);
+          } else {
+            message.style.color = "red";
+            message.textContent = "Invalid OTP. Please try again.";
+          }
+
+          setTimeout(() => {
+            button.disabled = false;
+          }, 2000);
         });
     </script>
-</body>
+  </body>
 </html>
