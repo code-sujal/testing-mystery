@@ -30,11 +30,39 @@
         <h2 id="chat-header-title">Captain Harrison</h2>
         <button class="reset-button" id="reset-button" title="Reset Chat" style="display: none;">⟳</button>
       </header>
-      <div class="chat-messages" id="chat-messages"></div>
+      <div class="chat-messages" id="chat-messages">
+        <!-- Initial message with player's name -->
+        <div class="message received">
+          <span class="message-sender">Captain Harrison</span>
+          <p id="welcome-message">Detective [Loading...], glad you made it through the secure channel. What’s your report?</p>
+          <span class="message-time" id="message-time"></span>
+        </div>
+      </div>
       <div class="option-container" id="option-container" style="display: none;"></div>
       <div id="result" style="display: none;"></div>
     </main>
   </div>
+  <script>
+    // Redirect to index.html if not authorized
+    if (localStorage.getItem('evalauth') !== 'true') {
+      window.location.href = 'index.html';
+    }
+
+    // Retrieve player's name from localStorage
+    const playerName = localStorage.getItem('playerName') || 'Unknown';
+    
+    // Update welcome message with player's name
+    document.getElementById('welcome-message').textContent = 
+      `Detective ${playerName}, glad you made it through the secure channel. What’s your report?`;
+
+    // Set current time for the message
+    const now = new Date();
+    const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    document.getElementById('message-time').textContent = timeString;
+
+    // Optional: Clear evalauth after loading to enforce one-time access (uncomment if desired)
+    // localStorage.removeItem('evalauth');
+  </script>
   <script src="eval.js"></script>
 </body>
 </html>

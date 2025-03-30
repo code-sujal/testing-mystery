@@ -7,7 +7,8 @@ const resultDiv = document.getElementById('result');
 let conversationStep = 0;
 let selectedSuspects = [];
 
-localStorage.setItem('evalauth','true');
+localStorage.setItem('evalauth', 'true');
+
 function generateCheckValue(str) {
   let hash = 0;
   for (let i = 0; i < str.length; i++) {
@@ -17,13 +18,11 @@ function generateCheckValue(str) {
   return hash;
 }
 
-
 const checkValues = [
   generateCheckValue(atob("amFrZQ==")),
   generateCheckValue(atob("cnlhbg==")),
   generateCheckValue(atob("Y2Vv"))
 ];
-
 
 const conversation = [
   { 
@@ -174,15 +173,6 @@ function sendSuspects() {
   });
 }
 
-// Existing code remains unchanged until evaluateSelections...
-
-// Function to generate a unique player ID
-function generatePlayerId() {
-  const timestamp = Date.now();
-  const random = Math.floor(Math.random() * 10000); // Random 4-digit number
-  return `PID-${timestamp}-${random}`;
-}
-
 // Evaluate selections
 function evaluateSelections() {
   appendMessage('bot', "Let me review your picks…", () => {
@@ -194,7 +184,7 @@ function evaluateSelections() {
       }
     });
 
-    const playerId = generatePlayerId();
+    const playerName = localStorage.getItem('playerName') || 'Unknown'; // Use playerName instead of playerId
     const submissionTime = new Date().toLocaleString(); // Current date and time
     const status = correctCount >= 3 ? 'Pass' : 'Fail';
 
@@ -207,38 +197,38 @@ function evaluateSelections() {
         resultDiv.classList.add('passed');
         resultDiv.innerHTML = `
           You Passed! Good Job Detective<br>
-          Player ID: ${playerId}<br>
+          Name: ${playerName}<br>
           Submitted: ${submissionTime}
         `;
       } else {
         resultDiv.classList.add('eliminated');
         resultDiv.innerHTML = `
           Player Eliminated<br>
-          Player ID: ${playerId}<br>
+          Name: ${playerName}<br>
           Submitted: ${submissionTime}
         `;
       }
 
-      // Save to Google Spreadsheet, including selected suspects
-      saveToGoogleSpreadsheet(playerId, submissionTime, status, selectedSuspects);
+      // Save to Google Spreadsheet with playerName instead of playerId
+      saveToGoogleSpreadsheet(playerName, submissionTime, status, selectedSuspects);
     }, 1500); // Delay for dramatic effect
   });
 }
 
 // Function to save data to Google Spreadsheet
-function saveToGoogleSpreadsheet(playerId, submissionTime, status, selectedSuspects) {
+function saveToGoogleSpreadsheet(playerName, submissionTime, status, selectedSuspects) {
   const data = {
-    playerId: playerId,
+    playerName: playerName, // Changed from playerId to playerName
     submissionTime: submissionTime,
     status: status,
-    suspect1: selectedSuspects[0] || '', // Handle cases where fewer than 5 are selected (unlikely here)
+    suspect1: selectedSuspects[0] || '',
     suspect2: selectedSuspects[1] || '',
     suspect3: selectedSuspects[2] || '',
     suspect4: selectedSuspects[3] || '',
     suspect5: selectedSuspects[4] || ''
   };
 
-  fetch('https://script.google.com/macros/s/AKfycbwunviBRK6pnfrRInUbuavA9Z_uCLlRc4X1e2b3Ncd09sIIfTuoW8B7q2DN3peYN4WKyQ/exec', {
+  fetch('https://script.google.com/macros/s/AKfycbwDLH_exbcInJ19yyK4Id94dG4920e7ppgW4F_shwUyBcMin2SheeG5yFRIhJpU1oDkcw/exec', {
     method: 'POST',
     mode: 'no-cors', // Required for Google Apps Script due to CORS limitations
     headers: {
@@ -250,7 +240,6 @@ function saveToGoogleSpreadsheet(playerId, submissionTime, status, selectedSuspe
   .catch(error => console.error('Error saving to spreadsheet:', error));
 }
 
-// Rest of your existing code (progressChat, resetChat, etc.) remains unchanged
 // Progress chat
 function progressChat() {
   if (conversationStep >= conversation.length) return;

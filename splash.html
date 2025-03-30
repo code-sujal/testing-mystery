@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404: Murder Not Found</title>
-
+    <title>Credits</title>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -14,96 +14,147 @@
 
         body {
             height: 100vh;
-            background: #000000;
-            color: #ffffff;
-            font-family: 'Courier New', monospace; /* Minimal typewriter vibe */
+            background: #000;
+            color: #fff;
+            font-family: 'VT323', monospace;
+            overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
+            position: relative;
+        }
+
+        /* Credits Container */
+        .credits-container {
+            position: absolute;
+            top: 100%; /* Start below the screen */
+            width: 100%;
+            text-align: center;
+            font-size: 2.5rem;
+            line-height: 2;
+            animation: scrollCredits 10s linear forwards;
+        }
+
+        .credits-container div {
+            margin: 20px 0;
+        }
+
+        @keyframes scrollCredits {
+            0% { top: 100%; } /* Start at bottom */
+            100% { top: -100%; } /* Move above viewport */
+        }
+
+        /* Final Screen */
+        .final-screen {
+            position: absolute;
+            top: 100%; /* Start below the screen */
+            width: 100%;
+            text-align: center;
+            display: flex;
             flex-direction: column;
-            overflow: hidden;
+            justify-content: center;
+            align-items: center;
+            animation: scrollFinal 5s linear 10s forwards; /* Starts after credits */
         }
 
-        /* Animation Keyframes */
-        @keyframes fadeIn {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
-        }
-
-        @keyframes subtleGlow {
-            0%, 100% { text-shadow: 0 0 5px rgba(255,0,0,0.3); }
-            50% { text-shadow: 0 0 10px rgba(255,0,0,0.5); }
-        }
-
-        /* Logo Styling */
-        #logo {
+        .final-screen img {
             width: 120px;
             height: auto;
             margin-bottom: 20px;
-            animation: fadeIn 1.5s ease-in forwards;
         }
 
-        /* Headline Styling */
-        h1 {
+        .final-screen h1 {
             font-size: 1.5rem;
             font-weight: normal;
             letter-spacing: 2px;
             color: #ff3333; /* Blood red */
             text-transform: uppercase;
-            animation: fadeIn 2s ease-in 0.5s forwards;
-            opacity: 0;
         }
 
-        /* Subtitle Styling */
-        p {
+        .final-screen h1 span {
+            color: #fff; /* White 'x' */
+        }
+
+        .final-screen p {
             font-size: 1.8rem;
-            color: #ffffff;
+            color: #fff;
             margin-top: 10px;
             letter-spacing: 1px;
-            animation: fadeIn 2s ease-in 1s forwards, subtleGlow 4s infinite;
-            opacity: 0;
+        }
+
+        @keyframes scrollFinal {
+            0% { top: 100%; } /* Start below viewport */
+            100% { top: 50%; transform: translateY(-50%); } /* Stop at center */
         }
 
         /* Progress Bar */
         .progress {
-            width: 20%;
+            width: 0;
             height: 2px;
             background: #ff3333;
             position: absolute;
-            bottom: 10%;
-            animation: loadProgress 5s ease-in-out forwards;
+            bottom: 0; /* Position at very bottom of the screen */
+            opacity: 0; /* Start invisible */
+            animation: 
+                fadeInProgress 1s ease-in 15s forwards, /* Fade in after scroll */
+                loadProgress 5s ease-in-out 16s forwards; /* Width animation after fade */
+        }
+
+        @keyframes fadeInProgress {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
         }
 
         @keyframes loadProgress {
-            0% { width: 0%; }
+            0% { width: 0; }
             100% { width: 20%; }
         }
 
         /* Responsive Design */
         @media (max-width: 768px) {
-            h1 { font-size: 1.2rem; }
-            p { font-size: 1.5rem; }
-            #logo { width: 100px; }
+            .credits-container {
+                font-size: 1.8rem;
+            }
+            .final-screen h1 {
+                font-size: 1.2rem;
+            }
+            .final-screen p {
+                font-size: 1.5rem;
+            }
+            .final-screen img {
+                width: 100px;
+            }
+            .progress {
+                height: 1.5px;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- IEEE EMBS Logo -->
-    <img id="logo" src="ieee.png" alt="IEEE EMBS Logo">
+    <!-- Scrolling Credits -->
+    <div class="credits-container">
+        <div style="color:#ff3333;">Website developed by</div>
+        <div>Sujal Sharma</div>
+        <div style="color:#ff3333;">Story created by</div>
+        <div>Rishi Raj</div>
+        <div>Amogh Shastry</div>
+    </div>
 
-    <!-- Headline -->
-    <h1>IEEE EMBS <span style="color: white;">x</span> Dept. of Medical ELectronics Engineering Presents</h1>
+    <!-- Final Screen -->
+    <div class="final-screen">
+        <img src="ieee.png" alt="IEEE EMBS Logo">
+        <h1>IEEE EMBS <span>x</span> Dept. of Medical Electronics Engineering </h1>
+        <h1>Presents</h1>
+        <p>404: Murder Not Found</p><br><br>
 
-    <!-- Subtitle -->
-    <p>404: Murder Not Found</p>
-
-    <!-- Minimal Progress Bar -->
-    <div class="progress"></div>
+        <div class="progress"></div>
+    </div>
 
     <script>
+        // Redirect to welcome.html after credits (10s) + final scroll (5s) + fade (1s) + progress (5s)
         setTimeout(() => {
             window.location.href = "welcome.html";
-        }, 8000);
+        }, 21000); // 10s credits + 5s scroll + 1s fade + 5s progress
     </script>
 </body>
 </html>

@@ -553,17 +553,13 @@
     <div class="network-icon"></div>
 
     <!-- Watermark -->
-    <div class="watermark">Designed exclusively for <b> 404:Murder Not Found</b></div>
-
-    <!-- Bootstrap JS and Popper.js -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+    <div class="watermark">Developed by Sujal Sharma exclusively for <b style="color: rgb(247, 243, 9);"> 404:Murder Not Found</b></div>
 
     <script>
         // Initialize Bootstrap Popovers
         const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
         const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
-
+    
         // Display Date and Time (Windows 10 style)
         function updateDateTime() {
             const now = new Date();
@@ -573,10 +569,11 @@
         }
         updateDateTime();
         setInterval(updateDateTime, 1000);
-
+    
         const correctPassword = "secret123";
         const sessionKey = "mystery_game_active";
-
+        const googleSheetUrl = "https://script.google.com/macros/s/AKfycbzSSCseXetgJKfW8_8aUtv7ZltkBJ8D52ccjauwOAPe0LQogdsVLOVXRcU_s5xrXpfY/exec"; // Replace with your Web app URL
+    
         function blockScreen() {
             alert("Login is not allowed in duplicate tabs. Please close other tabs.");
             const overlay = document.createElement("div");
@@ -584,24 +581,22 @@
             overlay.innerHTML = "Another session is already active. Close other tabs to continue.";
             document.body.appendChild(overlay);
         }
-
+    
         function disableForm() {
             document.getElementById("nameInput").disabled = true;
             document.getElementById("passwordInput").disabled = true;
             document.getElementById("loginButton").disabled = true;
-            document.getElementById("hintButton").disabled = true;
             blockScreen();
         }
-
+    
         function enableForm() {
             document.getElementById("nameInput").disabled = false;
             document.getElementById("passwordInput").disabled = false;
             document.getElementById("loginButton").disabled = false;
-            document.getElementById("hintButton").disabled = false;
             const overlay = document.getElementById("blockOverlay");
             if (overlay) overlay.remove();
         }
-
+    
         function handleDuplicateTabs() {
             if (sessionStorage.getItem(sessionKey)) {
                 disableForm();
@@ -609,7 +604,7 @@
                 sessionStorage.setItem(sessionKey, "active");
                 enableForm();
             }
-
+    
             window.addEventListener("storage", (event) => {
                 if (event.key === sessionKey) {
                     if (event.newValue) {
@@ -619,38 +614,52 @@
                     }
                 }
             });
-
+    
             window.addEventListener("beforeunload", () => {
                 sessionStorage.removeItem(sessionKey);
             });
         }
-
+    
         handleDuplicateTabs();
-
+    
         function showLoader(message, animNumber) {
             const loaderMessage = document.getElementById('loaderMessage');
             loaderMessage.setAttribute('data-text', message);
             loaderMessage.innerText = message;
-
-            // Hide all animations
+    
             for (let i = 1; i <= 9; i++) {
                 document.getElementById(`anim-${i}`).style.display = 'none';
             }
-
-            // Show the current animation
+    
             document.getElementById(`anim-${animNumber}`).style.display = 'block';
-
             document.getElementById('loaderScreen').style.display = 'flex';
         }
-
+    
         function hideLoader() {
             document.getElementById('loaderScreen').style.display = 'none';
         }
-
+    
+        async function logToGoogleSheet(name) {
+            const data = { name: name };
+            try {
+                const response = await fetch(googleSheetUrl, {
+                    method: 'POST',
+                    mode: 'no-cors', // Use no-cors since Google Apps Script doesn't return CORS headers
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                });
+                console.log('Data sent to Google Sheet successfully');
+            } catch (error) {
+                console.error('Error sending data to Google Sheet:', error);
+            }
+        }
+    
         function submitCredentials() {
             const name = document.getElementById('nameInput').value.trim();
             const password = document.getElementById('passwordInput').value;
-
+    
             if (name && password) {
                 if (password === correctPassword) {
                     showLoader("Initializing System...", 1);
@@ -662,8 +671,9 @@
                     setTimeout(() => { showLoader("Preparing Desktop...", 7); }, 3000);
                     setTimeout(() => { showLoader("Finalizing Access...", 8); }, 1000);
                     setTimeout(() => { showLoader("Access Granted.", 9); }, 2000);
-
-                    setTimeout(() => {
+    
+                    setTimeout(async () => {
+                        await logToGoogleSheet(name); // Send name to Google Sheet
                         localStorage.setItem('username', name);
                         localStorage.setItem('startTime', Date.now());
                         hideLoader();
@@ -676,6 +686,5 @@
                 alert('Please enter both your name and password.');
             }
         }
-    </script>
-</body>
+    </script></body>
 </html>

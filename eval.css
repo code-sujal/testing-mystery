@@ -46,6 +46,39 @@ body {
   overflow-y: auto;
 }
 
+.name-input {
+  padding: 8px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.message {
+  margin: 10px;
+  padding: 10px;
+  border-radius: 5px;
+}
+.received {
+  background: #e0e0e0;
+  align-self: flex-start;
+}
+.message-sender {
+  font-weight: bold;
+  color: #333;
+}
+.message-time {
+  font-size: 0.8em;
+  color: #666;
+  margin-left: 10px;
+}
+
+#option-container {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
 .contact {
   display: flex;
   align-items: center;
