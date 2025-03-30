@@ -228,7 +228,7 @@ function saveToGoogleSpreadsheet(playerName, submissionTime, status, selectedSus
     suspect5: selectedSuspects[4] || ''
   };
 
-  fetch('https://script.google.com/macros/s/AKfycbwDLH_exbcInJ19yyK4Id94dG4920e7ppgW4F_shwUyBcMin2SheeG5yFRIhJpU1oDkcw/exec', {
+  fetch('https://script.google.com/macros/s/AKfycbyKaTAwzIz6OjZ5CWqFvYYcAVGQ2q_3FI9o78gbqWqdYhTA5yOOTfEvsZ2A0oVurR_t0Q/exec', {
     method: 'POST',
     mode: 'no-cors', // Required for Google Apps Script due to CORS limitations
     headers: {
